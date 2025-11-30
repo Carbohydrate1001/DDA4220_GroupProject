@@ -1,0 +1,20 @@
+{
+  "test_info": {
+    "timestamp": "2025-11-30T02:49:34.970694",
+    "parquet_dir": "Datasets/AudioSet",
+    "num_samples": 100,
+    "audio_dir": null,
+    "device": "cuda:0"
+  },
+  "model_info": {
+    "status": "failed",
+    "error": "Torch not compiled with CUDA enabled"
+  },
+  "data_info": {},
+  "test_results": {
+    "audio_embedding": {},
+    "text_embedding": {},
+    "similarity": {}
+  },
+  "samples": []
+}

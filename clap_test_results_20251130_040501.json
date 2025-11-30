@@ -1,0 +1,134 @@
+{
+  "test_info": {
+    "timestamp": "2025-11-30T04:05:01.888419",
+    "parquet_dir": "Datasets/AudioSet",
+    "num_samples": 100,
+    "audio_dir": null,
+    "device": "cuda:0"
+  },
+  "model_info": {
+    "status": "success",
+    "enable_fusion": false,
+    "device": "cuda:0"
+  },
+  "data_info": {
+    "status": "success",
+    "num_parquet_files": 38,
+    "parquet_files": [
+      "00.parquet",
+      "01.parquet",
+      "02.parquet",
+      "03.parquet",
+      "04.parquet",
+      "05.parquet",
+      "06.parquet",
+      "07.parquet",
+      "08.parquet",
+      "09.parquet",
+      "10.parquet",
+      "11.parquet",
+      "12.parquet",
+      "13.parquet",
+      "14.parquet",
+      "15.parquet",
+      "16.parquet",
+      "17.parquet",
+      "18.parquet",
+      "19.parquet",
+      "20.parquet",
+      "21.parquet",
+      "22.parquet",
+      "23.parquet",
+      "24.parquet",
+      "25.parquet",
+      "26.parquet",
+      "27.parquet",
+      "28.parquet",
+      "29.parquet",
+      "30.parquet",
+      "31.parquet",
+      "32.parquet",
+      "33.parquet",
+      "34.parquet",
+      "35.parquet",
+      "36.parquet",
+      "37.parquet"
+    ],
+    "columns": [
+      "video_id",
+      "audio",
+      "labels",
+      "human_labels"
+    ],
+    "total_rows": 500
+  },
+  "test_results": {
+    "audio_embedding": {
+      "status": "success",
+      "num_samples": 100,
+      "embedding_shape": [
+        100,
+        512
+      ]
+    },
+    "text_embedding": {
+      "status": "success",
+      "num_samples": 100,
+      "embedding_shape": [
+        100,
+        512
+      ]
+    },
+    "similarity": {
+      "status": "success",
+      "mean": 0.12739364802837372,
+      "std": 0.11120738834142685,
+      "max": 0.6061880588531494,
+      "min": -0.05297544598579407
+    },
+    "classification": {
+      "status": "success",
+      "num_classes": 527,
+      "top_k": 5
+    }
+  },
+  "samples": [
+    {
+      "sample_id": 0,
+      "video_id": "--PJHxphWEs",
+      "predicted_labels": [
+        {
+          "rank": 1,
+          "classname": "Silence",
+          "similarity": 0.5508362054824829
+        },
+        {
+          "rank": 2,
+          "classname": "Gong",
+          "similarity": 0.3922438621520996
+        },
+        {
+          "rank": 3,
+          "classname": "Steam",
+          "similarity": 0.3865243196487427
+        },
+        {
+          "rank": 4,
+          "classname": "Cattle, bovinae",
+          "similarity": 0.3829658031463623
+        },
+        {
+          "rank": 5,
+          "classname": "Harpsichord",
+          "similarity": 0.3751997947692871
+        }
+      ],
+      "predicted_top1": "Silence",
+      "text": "The sounds of Speech, Gush",
+      "matching_similarity": 0.03950163349509239,
+      "top_5_text_matches": [
+        {
+          "rank": 1,
+          "text": "The sounds of Lawn mower, Music, Vehicle",
+          "similarity": 0.26722779870033264,
+          "is_match": 

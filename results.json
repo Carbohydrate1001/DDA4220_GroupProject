@@ -1,0 +1,80 @@
+{
+  "test_info": {
+    "timestamp": "2025-11-30T02:00:10.338340",
+    "parquet_dir": "Datasets/AudioSet",
+    "num_samples": 100,
+    "audio_dir": null,
+    "device": "cpu"
+  },
+  "model_info": {
+    "status": "success",
+    "enable_fusion": false,
+    "device": "cpu"
+  },
+  "data_info": {
+    "status": "success",
+    "num_parquet_files": 38,
+    "parquet_files": [
+      "00.parquet",
+      "01.parquet",
+      "02.parquet",
+      "03.parquet",
+      "04.parquet",
+      "05.parquet",
+      "06.parquet",
+      "07.parquet",
+      "08.parquet",
+      "09.parquet",
+      "10.parquet",
+      "11.parquet",
+      "12.parquet",
+      "13.parquet",
+      "14.parquet",
+      "15.parquet",
+      "16.parquet",
+      "17.parquet",
+      "18.parquet",
+      "19.parquet",
+      "20.parquet",
+      "21.parquet",
+      "22.parquet",
+      "23.parquet",
+      "24.parquet",
+      "25.parquet",
+      "26.parquet",
+      "27.parquet",
+      "28.parquet",
+      "29.parquet",
+      "30.parquet",
+      "31.parquet",
+      "32.parquet",
+      "33.parquet",
+      "34.parquet",
+      "35.parquet",
+      "36.parquet",
+      "37.parquet"
+    ],
+    "columns": [
+      "video_id",
+      "audio",
+      "labels",
+      "human_labels"
+    ],
+    "total_rows": 500,
+    "test_samples": {
+      "status": "failed",
+      "error": "未找到有效的测试样本",
+      "hints": [
+        "检查parquet文件是否包含音频路径和文本列",
+        "如果音频路径是相对路径，请使用 --audio-dir 指定音频文件目录",
+        "或者修改脚本中的列名以匹配您的parquet文件结构"
+      ]
+    }
+  },
+  "test_results": {
+    "audio_embedding": {},
+    "text_embedding": {},
+    "similarity": {}
+  },
+  "samples": []
+}

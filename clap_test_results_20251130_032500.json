@@ -1,0 +1,89 @@
+{
+  "test_info": {
+    "timestamp": "2025-11-30T03:25:00.462828",
+    "parquet_dir": "Datasets/AudioSet",
+    "num_samples": 100,
+    "audio_dir": null,
+    "device": "cuda:0"
+  },
+  "model_info": {
+    "status": "success",
+    "enable_fusion": false,
+    "device": "cuda:0"
+  },
+  "data_info": {
+    "status": "success",
+    "num_parquet_files": 38,
+    "parquet_files": [
+      "00.parquet",
+      "01.parquet",
+      "02.parquet",
+      "03.parquet",
+      "04.parquet",
+      "05.parquet",
+      "06.parquet",
+      "07.parquet",
+      "08.parquet",
+      "09.parquet",
+      "10.parquet",
+      "11.parquet",
+      "12.parquet",
+      "13.parquet",
+      "14.parquet",
+      "15.parquet",
+      "16.parquet",
+      "17.parquet",
+      "18.parquet",
+      "19.parquet",
+      "20.parquet",
+      "21.parquet",
+      "22.parquet",
+      "23.parquet",
+      "24.parquet",
+      "25.parquet",
+      "26.parquet",
+      "27.parquet",
+      "28.parquet",
+      "29.parquet",
+      "30.parquet",
+      "31.parquet",
+      "32.parquet",
+      "33.parquet",
+      "34.parquet",
+      "35.parquet",
+      "36.parquet",
+      "37.parquet"
+    ],
+    "columns": [
+      "video_id",
+      "audio",
+      "labels",
+      "human_labels"
+    ],
+    "total_rows": 500
+  },
+  "test_results": {
+    "audio_embedding": {
+      "status": "success",
+      "num_samples": 100,
+      "embedding_shape": [
+        100,
+        512
+      ]
+    },
+    "text_embedding": {
+      "status": "success",
+      "num_samples": 100,
+      "embedding_shape": [
+        100,
+        512
+      ]
+    },
+    "similarity": {
+      "status": "success",
+      "mean": 0.12740319967269897,
+      "std": 0.111202672123909
+    }
+  },
+  "samples": []
+}

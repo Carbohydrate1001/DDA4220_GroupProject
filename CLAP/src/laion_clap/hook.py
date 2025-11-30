@@ -111,7 +111,7 @@ class CLAP_Module(torch.nn.Module):
                 ckpt = wget.download(download_link + weight_file_name, os.path.dirname(ckpt))
                 logging.info('Download completed!')
         logging.info('Load Checkpoint...')
-        ckpt = load_state_dict(ckpt, skip_params=True, )
+        ckpt = load_state_dict(ckpt, skip_params=True)
         self.model.load_state_dict(ckpt)
         if verbose:
             param_names = [n for n, p in self.model.named_parameters()]
