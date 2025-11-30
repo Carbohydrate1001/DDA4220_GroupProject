@@ -23,6 +23,14 @@ import random
 from modelscope import ClapModel, ClapProcessor
 from hyperbolic_projection import HyperbolicProjection, HyperbolicContrastiveLoss
 
+# 可选导入swanlab
+try:
+    import swanlab
+    SWANLAB_AVAILABLE = True
+except ImportError:
+    SWANLAB_AVAILABLE = False
+    print("⚠ 警告: swanlab未安装，将跳过swanlab日志记录")
+
 
 class AudioSetDataset(Dataset):
     """AudioSet数据集类"""
@@ -193,6 +201,8 @@ def train_epoch(model, clap_model, clap_processor, projection, criterion, datalo
     
     total_loss = 0.0
     num_batches = 0
+    total_positive_sim = 0.0
+    total_negative_sim = 0.0
     
     pbar = tqdm(dataloader, desc=f"  Epoch {epoch+1} 训练", unit="批次", leave=False)
     
@@ -234,12 +244,28 @@ def train_epoch(model, clap_model, clap_processor, projection, criterion, datalo
             labels = torch.arange(len(audio_hyperbolic), device=device)
             loss = criterion(audio_hyperbolic, text_hyperbolic, labels)
             
+            # 计算相似度统计（用于记录，不参与梯度计算）
+            with torch.no_grad():
+                from hyperbolic_projection import hyperbolic_similarity_matrix_batch
+                similarity_matrix = hyperbolic_similarity_matrix_batch(
+                    audio_hyperbolic, text_hyperbolic, c=criterion.c, temperature=criterion.temperature
+                )
+                # 正样本对的相似度（对角线）
+                positive_similarities = torch.diag(similarity_matrix)
+                avg_positive_sim = positive_similarities.mean().item()
+                # 负样本对的平均相似度（非对角线）
+                mask = ~torch.eye(len(audio_hyperbolic), dtype=torch.bool, device=device)
+                negative_similarities = similarity_matrix[mask]
+                avg_negative_sim = negative_similarities.mean().item()
+            
             # 反向传播
             optimizer.zero_grad()
             loss.backward()
             optimizer.step()
             
             total_loss += loss.item()
+            total_positive_sim += avg_positive_sim
+            total_negative_sim += avg_negative_sim
             num_batches += 1
             
             # 更新进度条
@@ -252,7 +278,10 @@ def train_epoch(model, clap_model, clap_processor, projection, criterion, datalo
     pbar.close()
     
     avg_loss = total_loss / num_batches if num_batches > 0 else 0.0
-    return avg_loss
+    avg_positive_sim = total_positive_sim / num_batches if num_batches > 0 else 0.0
+    avg_negative_sim = total_negative_sim / num_batches if num_batches > 0 else 0.0
+    
+    return avg_loss, avg_positive_sim, avg_negative_sim
 
 
 def validate_epoch(model, clap_model, clap_processor, projection, criterion, dataloader, device, epoch):
@@ -262,6 +291,8 @@ def validate_epoch(model, clap_model, clap_processor, projection, criterion, dat
     
     total_loss = 0.0
     num_batches = 0
+    total_positive_sim = 0.0
+    total_negative_sim = 0.0
     
     pbar = tqdm(dataloader, desc=f"  Epoch {epoch+1} 验证", unit="批次", leave=False)
     
@@ -300,7 +331,22 @@ def validate_epoch(model, clap_model, clap_processor, projection, criterion, dat
                 labels = torch.arange(len(audio_hyperbolic), device=device)
                 loss = criterion(audio_hyperbolic, text_hyperbolic, labels)
                 
+                # 计算相似度统计
+                from hyperbolic_projection import hyperbolic_similarity_matrix_batch
+                similarity_matrix = hyperbolic_similarity_matrix_batch(
+                    audio_hyperbolic, text_hyperbolic, c=criterion.c, temperature=criterion.temperature
+                )
+                # 正样本对的相似度（对角线）
+                positive_similarities = torch.diag(similarity_matrix)
+                avg_positive_sim = positive_similarities.mean().item()
+                # 负样本对的平均相似度（非对角线）
+                mask = ~torch.eye(len(audio_hyperbolic), dtype=torch.bool, device=device)
+                negative_similarities = similarity_matrix[mask]
+                avg_negative_sim = negative_similarities.mean().item()
+                
                 total_loss += loss.item()
+                total_positive_sim += avg_positive_sim
+                total_negative_sim += avg_negative_sim
                 num_batches += 1
                 
                 pbar.set_postfix({'loss': f'{loss.item():.4f}'})
@@ -312,7 +358,10 @@ def validate_epoch(model, clap_model, clap_processor, projection, criterion, dat
     pbar.close()
     
     avg_loss = total_loss / num_batches if num_batches > 0 else 0.0
-    return avg_loss
+    avg_positive_sim = total_positive_sim / num_batches if num_batches > 0 else 0.0
+    avg_negative_sim = total_negative_sim / num_batches if num_batches > 0 else 0.0
+    
+    return avg_loss, avg_positive_sim, avg_negative_sim
 
 
 def main():
@@ -331,6 +380,9 @@ def main():
     parser.add_argument('--temperature', type=float, default=1.0, help='温度参数')
     parser.add_argument('--train-ratio', type=float, default=0.8, help='训练集比例')
     parser.add_argument('--seed', type=int, default=42, help='随机种子')
+    parser.add_argument('--use-swanlab', action='store_true', help='使用swanlab记录训练过程')
+    parser.add_argument('--swanlab-project', type=str, default='Hyperbolic_CLAP', help='SwanLab项目名称')
+    parser.add_argument('--swanlab-workspace', type=str, default='Centauri', help='SwanLab工作空间')
     
     args = parser.parse_args()
     
@@ -352,6 +404,37 @@ def main():
     
     # 创建输出目录
     os.makedirs(args.output_dir, exist_ok=True)
+    
+    # 初始化SwanLab（如果启用）
+    swanlab_initialized = False
+    if args.use_swanlab:
+        if SWANLAB_AVAILABLE:
+            try:
+                swanlab.init(
+                    project=args.swanlab_project,
+                    workspace=args.swanlab_workspace,
+                    config={
+                        "parquet_dir": args.parquet_dir,
+                        "num_samples": args.num_samples,
+                        "device": str(device),
+                        "checkpoint": args.checkpoint,
+                        "output_dir": args.output_dir,
+                        "epochs": args.epochs,
+                        "batch_size": args.batch_size,
+                        "learning_rate": args.learning_rate,
+                        "c": args.c,
+                        "temperature": args.temperature,
+                        "train_ratio": args.train_ratio,
+                        "seed": args.seed,
+                    }
+                )
+                swanlab_initialized = True
+                print("  ✓ SwanLab初始化成功")
+            except Exception as e:
+                print(f"  ⚠ SwanLab初始化失败: {e}")
+                swanlab_initialized = False
+        else:
+            print("  ⚠ SwanLab未安装，跳过日志记录")
     
     # 1. 加载CLAP模型
     print("\n[1/4] 加载ModelScope CLAP模型...")
@@ -461,6 +544,39 @@ def main():
     print(f"  ✓ 优化器: Adam (lr={args.learning_rate})")
     print(f"  ✓ 损失函数: 双曲对比损失 (c={args.c}, temperature={args.temperature})")
     
+    # 5. 初始化训练记录
+    setup_json_path = os.path.join(args.output_dir, 'setup.json')
+    
+    # 加载或创建setup.json
+    if os.path.exists(setup_json_path):
+        with open(setup_json_path, 'r', encoding='utf-8') as f:
+            setup_data = json.load(f)
+    else:
+        setup_data = {
+            'training_runs': []
+        }
+    
+    # 创建本次训练的记录
+    current_run = {
+        'timestamp': datetime.now().isoformat(),
+        'parameters': {
+            'parquet_dir': args.parquet_dir,
+            'num_samples': args.num_samples,
+            'device': str(device),
+            'checkpoint': args.checkpoint,
+            'output_dir': args.output_dir,
+            'epochs': args.epochs,
+            'batch_size': args.batch_size,
+            'learning_rate': args.learning_rate,
+            'c': args.c,
+            'temperature': args.temperature,
+            'train_ratio': args.train_ratio,
+            'seed': args.seed,
+            'embed_dim': embed_dim,
+        },
+        'epochs': []
+    }
+    
     # 5. 训练循环
     print("\n" + "="*60)
     print("开始训练")
@@ -473,13 +589,13 @@ def main():
         print("-" * 60)
         
         # 训练
-        train_loss = train_epoch(
+        train_loss, train_positive_sim, train_negative_sim = train_epoch(
             None, clap_model, clap_processor, projection, criterion,
             train_loader, optimizer, device, epoch
         )
         
         # 验证
-        val_loss = validate_epoch(
+        val_loss, val_positive_sim, val_negative_sim = validate_epoch(
             None, clap_model, clap_processor, projection, criterion,
             val_loader, device, epoch
         )
@@ -488,6 +604,38 @@ def main():
         print(f"  Epoch {epoch+1} 结果:")
         print(f"    训练损失: {train_loss:.4f}")
         print(f"    验证损失: {val_loss:.4f}")
+        print(f"    训练正样本相似度: {train_positive_sim:.4f}")
+        print(f"    训练负样本相似度: {train_negative_sim:.4f}")
+        print(f"    验证正样本相似度: {val_positive_sim:.4f}")
+        print(f"    验证负样本相似度: {val_negative_sim:.4f}")
+        
+        # 记录epoch结果到当前训练记录
+        epoch_record = {
+            'epoch': epoch + 1,
+            'train_loss': float(train_loss),
+            'val_loss': float(val_loss),
+            'train_positive_sim': float(train_positive_sim),
+            'train_negative_sim': float(train_negative_sim),
+            'val_positive_sim': float(val_positive_sim),
+            'val_negative_sim': float(val_negative_sim),
+            'timestamp': datetime.now().isoformat()
+        }
+        current_run['epochs'].append(epoch_record)
+        
+        # 记录到SwanLab
+        if swanlab_initialized:
+            try:
+                swanlab.log({
+                    "train_loss": float(train_loss),
+                    "val_loss": float(val_loss),
+                    "train_positive_similarity": float(train_positive_sim),
+                    "train_negative_similarity": float(train_negative_sim),
+                    "val_positive_similarity": float(val_positive_sim),
+                    "val_negative_similarity": float(val_negative_sim),
+                    "epoch": epoch + 1
+                })
+            except Exception as e:
+                print(f"    ⚠ SwanLab记录失败: {e}")
         
         # 保存最佳模型
         if val_loss < best_val_loss:
@@ -518,11 +666,52 @@ def main():
             'embed_dim': embed_dim,
         }, checkpoint_path)
     
+    # 6. 保存训练记录到setup.json
+    # 添加最佳损失和总结信息
+    if current_run['epochs']:
+        best_epoch_idx = min(range(len(current_run['epochs'])), 
+                            key=lambda i: current_run['epochs'][i]['val_loss'])
+        current_run['summary'] = {
+            'best_val_loss': float(best_val_loss),
+            'final_train_loss': float(current_run['epochs'][-1]['train_loss']),
+            'final_val_loss': float(current_run['epochs'][-1]['val_loss']),
+            'total_epochs': args.epochs,
+            'best_epoch': best_epoch_idx + 1,
+            'best_epoch_train_loss': float(current_run['epochs'][best_epoch_idx]['train_loss']),
+            'best_epoch_val_loss': float(current_run['epochs'][best_epoch_idx]['val_loss'])
+        }
+    else:
+        current_run['summary'] = {
+            'best_val_loss': float(best_val_loss),
+            'total_epochs': args.epochs
+        }
+    
+    # 添加到训练记录列表
+    setup_data['training_runs'].append(current_run)
+    
+    # 保存到文件
+    with open(setup_json_path, 'w', encoding='utf-8') as f:
+        json.dump(setup_data, f, indent=2, ensure_ascii=False)
+    
+    # 记录最终结果到SwanLab
+    if swanlab_initialized:
+        try:
+            swanlab.log({
+                "best_val_loss": float(best_val_loss),
+                "final_train_loss": float(current_run['epochs'][-1]['train_loss']) if current_run['epochs'] else None,
+                "final_val_loss": float(current_run['epochs'][-1]['val_loss']) if current_run['epochs'] else None,
+            })
+            swanlab.finish()
+            print("  ✓ SwanLab记录完成")
+        except Exception as e:
+            print(f"  ⚠ SwanLab完成记录失败: {e}")
+    
     print("\n" + "="*60)
     print("训练完成！")
     print("="*60)
     print(f"最佳验证损失: {best_val_loss:.4f}")
     print(f"模型保存在: {args.output_dir}")
+    print(f"训练记录已保存到: {setup_json_path}")
 
 
 if __name__ == "__main__":

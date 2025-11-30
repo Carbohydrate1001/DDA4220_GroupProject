@@ -964,8 +964,18 @@ def main():
     
     # 7. Save results
     if args.output_json:
-        output_file = args.output_json
+        # 如果指定了输出文件，添加序号后缀避免覆盖
+        base_name = args.output_json
+        if base_name.endswith('.json'):
+            base_name = base_name[:-5]  # 移除.json后缀
+        
+        output_file = f"{base_name}.json"
+        counter = 1
+        while os.path.exists(output_file):
+            output_file = f"{base_name}_{counter}.json"
+            counter += 1
     else:
+        # 默认文件名使用时间戳
         output_file = f"clap_modelscope_results_{datetime.now().strftime('%Y%m%d_%H%M%S')}.json"
     
     # Prepare data to save

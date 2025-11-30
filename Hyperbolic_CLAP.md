@@ -21,7 +21,7 @@
 
 ### 2. 安装依赖
 
-所有必需的依赖包都在 `requirements.txt` 中。安装命令：
+所有必需的依赖包都在 `requirements.txt` 中（注：python==3.10, torch使用2.9.1+cu128）。安装命令：
 
 ```bash
 pip install -r requirements.txt
@@ -105,6 +105,22 @@ python train_hyperbolic_clap.py \
     --c 1.0 \
     --temperature 1.0 \
     --train-ratio 0.8
+
+# 启用SwanLab记录训练过程
+python train_hyperbolic_clap.py \
+    --parquet-dir ./Datasets/AudioSet/train_balanced \
+    --num-samples 10000 \
+    --device cuda:0 \
+    --output-dir ./checkpoints_hyperbolic \
+    --epochs 10 \
+    --batch-size 16 \
+    --learning-rate 1e-4 \
+    --c 1.0 \
+    --temperature 1.0 \
+    --train-ratio 0.8 \
+    --use-swanlab \
+    --swanlab-project Hyperbolic_CLAP \
+    --swanlab-workspace Centauri
 ```
 
 ### 2. 训练过程说明
@@ -125,12 +141,15 @@ python train_hyperbolic_clap.py \
 训练过程中会显示：
 
 - 每个epoch的训练损失和验证损失
+- 训练和验证的正样本相似度（匹配对的平均相似度）
+- 训练和验证的负样本相似度（不匹配对的平均相似度）
 - 进度条显示训练进度
 - 最佳模型会自动保存
 
 **输出文件**:
 - `{output_dir}/projection_epoch_{epoch}.pth`: 每个epoch的检查点
 - `{output_dir}/best_projection_epoch_{epoch}.pth`: 最佳模型（验证损失最低）
+- `{output_dir}/setup.json`: 训练记录文件（包含所有参数和每个epoch的loss）
 
 ### 4. 检查点文件内容
 
@@ -139,7 +158,7 @@ python train_hyperbolic_clap.py \
 ```python
 {
     'epoch': 训练轮数,
-    'projection_state_dict': 投影层参数,
+    'projection_state_dict': 投影层参数（包含linear层的weight和bias）,
     'optimizer_state_dict': 优化器状态,
     'train_loss': 训练损失,
     'val_loss': 验证损失,
@@ -149,41 +168,74 @@ python train_hyperbolic_clap.py \
 }
 ```
 
+### 5. setup.json训练记录
+
+`setup.json`文件记录每次训练的完整信息：
+
+```json
+{
+  "training_runs": [
+    {
+      "timestamp": "训练开始时间",
+      "parameters": {
+        "所有训练超参数"
+      },
+      "epochs": [
+        {
+          "epoch": 1,
+          "train_loss": 训练损失,
+          "val_loss": 验证损失,
+          "train_positive_sim": 训练正样本相似度,
+          "train_negative_sim": 训练负样本相似度,
+          "val_positive_sim": 验证正样本相似度,
+          "val_negative_sim": 验证负样本相似度,
+          "timestamp": "epoch时间戳"
+        },
+        ...
+      ],
+      "summary": {
+        "best_val_loss": 最佳验证损失,
+        "final_train_loss": 最终训练损失,
+        "final_val_loss": 最终验证损失,
+        "total_epochs": 总epoch数,
+        "best_epoch": 最佳epoch编号,
+        "best_epoch_train_loss": 最佳epoch的训练损失,
+        "best_epoch_val_loss": 最佳epoch的验证损失
+      }
+    },
+    ...
+  ]
+}
+```
+
 ---
 
 ## 推理测试
 
-### 方法1: 使用专门的测试脚本（推荐）
+### 方法1: 使用原始测试脚本（带双曲选项，推荐）
 
 ```bash
-python test_hyperbolic_clap_modelscope.py \
-    --parquet-dir ./Datasets/AudioSet/eval \
-    --projection-checkpoint ./checkpoints_hyperbolic/best_projection_epoch_X.pth \
-    --num-samples 100 \
-    --device cuda:0 \
-    --output-json results_hyperbolic.json \
-    --class-labels CLAP/class_labels/audioset_class_labels_indices.json \
-    --top-k 5 \
-    --c 1.0 \
-    --temperature 1.0
-```
-
-### 方法2: 使用原始测试脚本（带双曲选项）
-
-```bash
-# 原始CLAP（cosine相似度）
-python test_clap_modelscope.py \
-    --parquet-dir ./Datasets/AudioSet/eval \
-    --num-samples 100
-
 # 双曲CLAP（双曲相似度）
 python test_clap_modelscope.py \
     --parquet-dir ./Datasets/AudioSet/eval \
     --num-samples 100 \
     --use-hyperbolic \
     --projection-checkpoint ./checkpoints_hyperbolic/best_projection_epoch_X.pth \
+    --output-json results_hyperbolic.json \
     --c 1.0 \
     --temperature 1.0
+```
+
+**注意**: 如果`results_hyperbolic.json`已存在，会自动添加序号后缀（如`results_hyperbolic_1.json`）避免覆盖。
+
+### 方法2: 使用原始CLAP（cosine相似度）
+
+```bash
+# 原始CLAP（cosine相似度）
+python test_clap_modelscope.py \
+    --parquet-dir ./Datasets/AudioSet/eval \
+    --num-samples 100 \
+    --output-json results_original.json
 ```
 
 ### 推理过程说明
@@ -232,6 +284,9 @@ python test_clap_modelscope.py \
 | `--temperature` | float | 1.0 | 温度参数（用于缩放相似度） |
 | `--train-ratio` | float | 0.8 | 训练集比例（剩余为验证集） |
 | `--seed` | int | 42 | 随机种子 |
+| `--use-swanlab` | flag | False | 启用SwanLab日志记录 |
+| `--swanlab-project` | str | Hyperbolic_CLAP | SwanLab项目名称 |
+| `--swanlab-workspace` | str | Centauri | SwanLab工作空间 |
 
 ### 测试脚本参数 (`test_hyperbolic_clap_modelscope.py`)
 
@@ -359,11 +414,12 @@ python train_hyperbolic_clap.py \
     --train-ratio 0.8
 
 # 2. 使用训练好的模型进行测试
-python test_hyperbolic_clap_modelscope.py \
+python test_clap_modelscope.py \
     --parquet-dir ./Datasets/AudioSet/eval \
-    --projection-checkpoint ./checkpoints_hyperbolic/best_projection_epoch_10.pth \
     --num-samples 1000 \
     --device cuda:0 \
+    --use-hyperbolic \
+    --projection-checkpoint ./checkpoints_hyperbolic/best_projection_epoch_10.pth \
     --output-json results_hyperbolic.json \
     --top-k 5 \
     --c 1.0 \
@@ -382,10 +438,11 @@ python train_hyperbolic_clap.py \
     --output-dir ./checkpoints_test
 
 # 测试
-python test_hyperbolic_clap_modelscope.py \
+python test_clap_modelscope.py \
     --parquet-dir ./Datasets/AudioSet/eval \
-    --projection-checkpoint ./checkpoints_test/best_projection_epoch_3.pth \
-    --num-samples 100
+    --num-samples 100 \
+    --use-hyperbolic \
+    --projection-checkpoint ./checkpoints_test/best_projection_epoch_3.pth
 ```
 
 ### CPU模式示例
@@ -442,42 +499,176 @@ python test_clap_modelscope.py \
 - 使用`--num-samples`限制数据量
 - 考虑使用梯度累积（需要修改代码）
 
+### 4. SwanLab监控
+
+- 使用`--use-swanlab`启用实时训练监控
+- 在SwanLab平台查看训练曲线和指标变化
+- 记录的训练指标包括：
+  - `train_loss`, `val_loss`: 训练和验证损失
+  - `train_positive_similarity`, `train_negative_similarity`: 训练集相似度统计
+  - `val_positive_similarity`, `val_negative_similarity`: 验证集相似度统计
+
 ---
 
 ## 技术细节
 
-### 双曲空间投影
+### 双曲投影层结构
 
-本项目使用**Poincaré球模型**实现双曲空间投影：
+本项目使用**Poincaré球模型**实现双曲空间投影。双曲投影层由两个主要组件组成：
 
-1. **指数映射（expmap）**: 将欧几里得空间的点映射到Poincaré球模型
-2. **Poincaré距离**: 计算双曲空间中两点之间的距离
-3. **双曲相似度**: 使用Poincaré距离的负值作为相似度度量
+#### 1. 线性投影层
 
-### 对比损失
+首先通过一个可学习的线性变换将CLAP嵌入映射到目标维度：
 
-训练使用**双曲对比损失**：
-- 将音频和文本嵌入投影到双曲空间
-- 使用双曲相似度计算对比损失
-- 优化投影层参数，使匹配的音频-文本对在双曲空间中更接近
+```
+x_proj = Linear(x) = W·x + b
+```
+
+其中：
+- `x`: CLAP嵌入 [batch_size, 512]
+- `W`: 可学习权重矩阵 [512, 512]
+- `b`: 可学习偏置向量 [512]
+- `x_proj`: 线性投影后的特征 [batch_size, 512]
+
+**初始化**: 使用Xavier均匀初始化权重，偏置初始化为0。
+
+#### 2. 指数映射（Exponential Map）
+
+将欧几里得空间的点映射到Poincaré球模型：
+
+```
+y = expmap(x_proj) = (tanh(√c · ||x_proj||) / (√c · ||x_proj||)) · x_proj
+```
+
+**数学公式**：
+
+对于输入向量 `x_proj`，指数映射定义为：
+
+\[
+\text{expmap}(x) = \frac{\tanh(\sqrt{c} \|x\|)}{\sqrt{c} \|x\|} \cdot x
+\]
+
+其中：
+- `c`: 曲率参数（默认1.0）
+- `||x||`: 向量的L2范数
+- `tanh`: 双曲正切函数
+
+**数值稳定性处理**：
+- 如果 `||x||` 接近0，使用 `tanh(√c·||x||) / (√c·||x||) ≈ 1` 避免除零
+- 投影后裁剪到半径为 `clip_r`（默认0.9）的球内，防止数值不稳定
+
+**输出约束**: 投影后的点满足 `||y|| < 1`（在Poincaré球内）
+
+### Poincaré距离计算
+
+在Poincaré球模型中，两点 `x` 和 `y` 之间的双曲距离定义为：
+
+\[
+d_{\mathbb{H}}(x, y) = \frac{1}{\sqrt{c}} \cdot \text{arccosh}\left(1 + \frac{2\|x - y\|^2}{(1 - \|x\|^2)(1 - \|y\|^2)}\right)
+\]
+
+其中：
+- `c`: 曲率参数
+- `||x||²`, `||y||²`: 点的欧几里得范数的平方
+- `||x - y||²`: 两点差值的欧几里得距离的平方
+- `arccosh`: 反双曲余弦函数
+
+**约束条件**: 
+- `||x|| < 1` 且 `||y|| < 1`（必须在Poincaré球内）
+- `arccosh` 的参数必须 ≥ 1
+
+### 双曲相似度
+
+双曲相似度定义为Poincaré距离的负值，并应用温度缩放：
+
+\[
+\text{sim}(x, y) = -\frac{d_{\mathbb{H}}(x, y)}{\tau}
+\]
+
+其中：
+- `τ`: 温度参数（默认1.0）
+- 相似度值域: `(-∞, 0]`，值越大（越接近0）表示越相似
+
+### 双曲对比损失函数
+
+训练使用**双曲对比损失**，计算过程如下：
+
+#### 步骤1: 计算相似度矩阵
+
+对于批次大小为 `B` 的音频-文本对：
+
+\[
+S_{ij} = \text{sim}(h_a^{(i)}, h_t^{(j)}) = -\frac{d_{\mathbb{H}}(h_a^{(i)}, h_t^{(j)})}{\tau}
+\]
+
+其中：
+- `h_a^{(i)}`: 第i个音频的双曲嵌入
+- `h_t^{(j)}`: 第j个文本的双曲嵌入
+- `S`: 相似度矩阵 [B, B]
+
+#### 步骤2: 计算交叉熵损失
+
+**音频到文本的损失**：
+
+\[
+\mathcal{L}_{a \to t} = -\frac{1}{B}\sum_{i=1}^{B} \log \frac{\exp(S_{ii} / \tau)}{\sum_{j=1}^{B} \exp(S_{ij} / \tau)}
+\]
+
+**文本到音频的损失**：
+
+\[
+\mathcal{L}_{t \to a} = -\frac{1}{B}\sum_{i=1}^{B} \log \frac{\exp(S_{ii} / \tau)}{\sum_{j=1}^{B} \exp(S_{ji} / \tau)}
+\]
+
+**总损失**：
+
+\[
+\mathcal{L} = \frac{\mathcal{L}_{a \to t} + \mathcal{L}_{t \to a}}{2}
+\]
+
+#### 损失函数解释
+
+- **正样本对**: 对角线元素 `S_{ii}` 表示匹配的音频-文本对的相似度
+- **负样本对**: 非对角线元素 `S_{ij}` (i≠j) 表示不匹配的音频-文本对的相似度
+- **优化目标**: 最大化正样本对的相似度，最小化负样本对的相似度
+- **温度参数**: `τ` 控制softmax分布的尖锐程度，`τ` 越小，分布越尖锐
 
 ### 模型架构
 
 ```
-音频输入 → CLAP音频编码器 → 音频嵌入（512维）
+音频输入 → CLAP音频编码器 → 音频嵌入（512维，归一化）
                                     ↓
-                            双曲投影层（可训练）
+                            线性投影层（可训练）
                                     ↓
-                            双曲音频嵌入
+                            指数映射（expmap）
+                                    ↓
+                            双曲音频嵌入（||h_a|| < 1）
 
-文本输入 → CLAP文本编码器 → 文本嵌入（512维）
+文本输入 → CLAP文本编码器 → 文本嵌入（512维，归一化）
                                     ↓
-                            双曲投影层（可训练）
+                            线性投影层（可训练）
                                     ↓
-                            双曲文本嵌入
+                            指数映射（expmap）
+                                    ↓
+                            双曲文本嵌入（||h_t|| < 1）
 
-双曲音频嵌入 ↔ 双曲相似度 ↔ 双曲文本嵌入
+双曲音频嵌入 ↔ Poincaré距离 ↔ 双曲文本嵌入
+                    ↓
+            双曲相似度矩阵 S
+                    ↓
+            双曲对比损失 L
 ```
+
+### 训练过程
+
+1. **冻结CLAP参数**: CLAP编码器的参数保持不变，只训练投影层
+2. **前向传播**: 
+   - 提取CLAP嵌入（音频和文本）
+   - 通过线性投影层
+   - 应用指数映射到双曲空间
+3. **计算损失**: 使用双曲相似度矩阵计算对比损失
+4. **反向传播**: 更新投影层的参数（W和b）
+5. **优化目标**: 使匹配的音频-文本对在双曲空间中更接近（距离更小，相似度更大）
 
 ---
 
