@@ -39,13 +39,15 @@ class AudioSetDataset(Dataset):
         self.samples = []
         
         print(f"  加载数据...")
-        pbar = tqdm(total=min(num_samples or 10000, 10000), desc="    读取样本", unit="样本", leave=False)
+        # 如果num_samples为None，使用None表示未知总数（使用全部样本）
+        # 如果num_samples有值，使用该值作为上限
+        pbar = tqdm(total=num_samples, desc="    读取样本", unit="样本", leave=False)
         
         for parquet_file in parquet_files:
             try:
                 df = pd.read_parquet(parquet_file)
                 for idx, row in df.iterrows():
-                    if num_samples and len(self.samples) >= num_samples:
+                    if num_samples is not None and len(self.samples) >= num_samples:
                         break
                     
                     sample = self.process_audio_from_parquet(row)
@@ -53,7 +55,7 @@ class AudioSetDataset(Dataset):
                         self.samples.append(sample)
                         pbar.update(1)
                 
-                if num_samples and len(self.samples) >= num_samples:
+                if num_samples is not None and len(self.samples) >= num_samples:
                     break
             except Exception as e:
                 print(f"    ⚠ 读取文件 {parquet_file} 失败: {e}")
