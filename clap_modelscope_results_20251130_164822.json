@@ -1,0 +1,6602 @@
+{
+  "test_info": {
+    "timestamp": "2025-11-30T16:48:22.120085",
+    "parquet_dir": "E:\\Desktop\\DDA4220\\Project\\Datasets\\AudioSet",
+    "num_samples": 100,
+    "device": "cuda:0",
+    "model_path": "C:\\Users\\Centauri\\.cache\\modelscope\\hub\\models\\laion\\larger_clap_general"
+  },
+  "model_info": {
+    "model_type": "modelscope",
+    "model_path": "C:\\Users\\Centauri\\.cache\\modelscope\\hub\\models\\laion\\larger_clap_general"
+  },
+  "similarity_stats": {
+    "min": -0.3623359203338623,
+    "max": 0.5256497263908386,
+    "mean": 0.006887909024953842,
+    "std": 0.1060425415635109
+  },
+  "metrics": {
+    "acc@1": 0.31,
+    "acc@3": 0.6,
+    "acc@5": 0.7,
+    "acc@10": 0.83,
+    "f1_micro": 0.2892223738062756,
+    "precision_micro": 0.212,
+    "recall_micro": 0.45493562231759654,
+    "f1_macro": 0.1217398742881408,
+    "precision_macro": 0.11603076714556791,
+    "recall_macro": 0.12803987000807,
+    "map": 0.36786073861766977,
+    "valid_samples": 100,
+    "total_samples": 100
+  },
+  "predictions": [
+    {
+      "sample_id": 0,
+      "video_id": "--PJHxphWEs",
+      "predicted_top1": "Speech",
+      "top_k_predictions": [
+        {
+          "rank": 1,
+          "classname": "Speech",
+          "similarity": 0.2908940613269806
+        },
+        {
+          "rank": 2,
+          "classname": "Children playing",
+          "similarity": 0.240778386592865
+        },
+        {
+          "rank": 3,
+          "classname": "Male speech, man speaking",
+          "similarity": 0.1953277885913849
+        },
+        {
+          "rank": 4,
+          "classname": "Child speech, kid speaking",
+          "similarity": 0.1947401463985443
+        },
+        {
+          "rank": 5,
+          "classname": "Outside, urban or manmade",
+          "similarity": 0.18423709273338318
+        },
+        {
+          "rank": 6,
+          "classname": "Conversation",
+          "similarity": 0.18200337886810303
+        },
+        {
+          "rank": 7,
+          "classname": "Hubbub, speech noise, speech babble",
+          "similarity": 0.17564862966537476
+        },
+        {
+          "rank": 8,
+          "classname": "Boat, Water vehicle",
+          "similarity": 0.17410162091255188
+        },
+        {
+          "rank": 9,
+          "classname": "Children shouting",
+          "similarity": 0.16466054320335388
+        },
+        {
+          "rank": 10,
+          "classname": "Snake",
+          "similarity": 0.16280357539653778
+        }
+      ],
+      "ground_truth_labels": [
+        "/m/09x0r",
+        "/t/dd00088"
+      ],
+      "ground_truth_human_labels": [
+        "Speech",
+        "Gush"
+      ]
+    },
+    {
+      "sample_id": 1,
+      "video_id": "--aE2O5G5WE",
+      "predicted_top1": "Basketball bounce",
+      "top_k_predictions": [
+        {
+          "rank": 1,
+          "classname": "Basketball bounce",
+          "similarity": 0.19533506035804749
+        },
+        {
+          "rank": 2,
+          "classname": "Percussion",
+          "similarity": 0.1832190304994583
+        },
+        {
+          "rank": 3,
+          "classname": "Arrow",
+          "similarity": 0.16955476999282837
+        },
+        {
+          "rank": 4,
+          "classname": "Child speech, kid speaking",
+          "similarity": 0.15235450863838196
+        },
+        {
+          "rank": 5,
+          "classname": "Music of Bollywood",
+          "similarity": 0.1470736563205719
+        },
+        {
+          "rank": 6,
+          "classname": "Hands",
+          "similarity": 0.14501553773880005
+        },
+        {
+          "rank": 7,
+          "classname": "Music of Asia",
+          "similarity": 0.14056313037872314
+        },
+        {
+          "rank": 8,
+          "classname": "Rapping",
+          "similarity": 0.14036060869693756
+        },
+        {
+          "rank": 9,
+          "classname": "Musical instrument",
+          "similarity": 0.1360141485929489
+        },
+        {
+          "rank": 10,
+          "classname": "Wood block",
+          "similarity": 0.13374918699264526
+        }
+      ],
+      "ground_truth_labels": [
+        "/m/03fwl",
+        "/m/04rlf",
+        "/m/09x0r"
+      ],
+      "ground_truth_human_labels": [
+        "Goat",
+        "Music",
+        "Speech"
+      ]
+    },
+    {
+      "sample_id": 2,
+      "video_id": "--cB2ZVjpnA",
+      "predicted_top1": "Alarm clock",
+      "top_k_predictions": [
+        {
+          "rank": 1,
+          "classname": "Alarm clock",
+          "similarity": 0.3781929910182953
+        },
+        {
+          "rank": 2,
+          "classname": "Telephone",
+          "similarity": 0.31546586751937866
+        },
+        {
+          "rank": 3,
+          "classname": "Beep, bleep",
+          "similarity": 0.3116915225982666
+        },
+        {
+          "rank": 4,
+          "classname": "Cluck",
+          "similarity": 0.30490654706954956
+        },
+        {
+          "rank": 5,
+          "classname": "Clock",
+          "similarity": 0.30270838737487793
+        },
+        {
+          "rank": 6,
+          "classname": "Jingle (music)",
+          "similarity": 0.301651269197464
+        },
+        {
+          "rank": 7,
+          "classname": "Reversing beeps",
+          "similarity": 0.29706594347953796
+        },
+        {
+          "rank": 8,
+          "classname": "Tick-tock",
+          "similarity": 0.2957119643688202
+        },
+        {
+          "rank": 9,
+          "classname": "Cash register",
+          "similarity": 0.2945276200771332
+        },
+        {
+          "rank": 10,
+          "classname": "Alarm",
+          "similarity": 0.28639787435531616
+        }
+      ],
+      "ground_truth_labels": [
+        "/m/01y3hg"
+      ],
+      "ground_truth_human_labels": [
+        "Smoke detector, smoke alarm"
+      ]
+    },
+    {
+      "sample_id": 3,
+      "video_id": "--aaILOrkII",
+      "predicted_top1": "Cap gun",
+      "top_k_predictions": [
+        {
+          "rank": 1,
+          "classname": "Cap gun",
+          "similarity": 0.412176251411438
+        },
+        {
+          "rank": 2,
+          "classname": "Inside, small room",
+          "similarity": 0.3355218768119812
+        },
+        {
+          "rank": 3,
+          "classname": "Camera",
+          "similarity": 0.31794917583465576
+        },
+        {
+          "rank": 4,
+          "classname": "Shuffling cards",
+          "similarity": 0.30185362696647644
+        },
+        {
+          "rank": 5,
+          "classname": "Speech",
+          "similarity": 0.2790323793888092
+        },
+        {
+          "rank": 6,
+          "classname": "Gunshot, gunfire",
+          "similarity": 0.25745776295661926
+        },
+        {
+          "rank": 7,
+          "classname": "Gears",
+          "similarity": 0.25466758012771606
+        },
+        {
+          "rank": 8,
+          "classname": "Turkey",
+          "similarity": 0.2513517141342163
+        },
+        {
+          "rank": 9,
+          "classname": "Gobble",
+          "similarity": 0.24824970960617065
+        },
+        {
+          "rank": 10,
+          "classname": "Television",
+          "similarity": 0.2461121678352356
+        }
+      ],
+      "ground_truth_labels": [
+        "/m/032s66",
+        "/m/073cg4"
+      ],
+      "ground_truth_human_labels": [
+        "Gunshot, gunfire",
+        "Cap gun"
+      ]
+    },
+    {
+      "sample_id": 4,
+      "video_id": "-0DLPzsiXXE",
+      "predicted_top1": "Background music",
+      "top_k_predictions": [
+        {
+          "rank": 1,
+          "classname": "Background music",
+          "similarity": 0.306134432554245
+        },
+        {
+          "rank": 2,
+          "classname": "Tender music",
+          "similarity": 0.2957290709018707
+        },
+        {
+          "rank": 3,
+          "classname": "Electric piano",
+          "similarity": 0.26439982652664185
+        },
+        {
+          "rank": 4,
+          "classname": "New-age music",
+          "similarity": 0.2579653263092041
+        },
+        {
+          "rank": 5,
+          "classname": "Happy music",
+          "similarity": 0.25653526186943054
+        },
+        {
+          "rank": 6,
+          "classname": "Lullaby",
+          "similarity": 0.24688208103179932
+        },
+        {
+          "rank": 7,
+          "classname": "Wedding music",
+          "similarity": 0.24328744411468506
+        },
+        {
+          "rank": 8,
+          "classname": "Piano",
+          "similarity": 0.2379579246044159
+        },
+        {
+          "rank": 9,
+          "classname": "Vibraphone",
+          "similarity": 0.2333160638809204
+        },
+        {
+          "rank": 10,
+          "classname": "Sad music",
+          "similarity": 0.23241639137268066
+        }
+      ],
+      "ground_truth_labels": [
+        "/m/04rlf",
+        "/m/07qwdck"
+      ],
+      "ground_truth_human_labels": [
+        "Music",
+        "Ping"
+      ]
+    },
+    {
+      "sample_id": 5,
+      "video_id": "--ekDLDTUXA",
+      "predicted_top1": "Singing",
+      "top_k_predictions": [
+        {
+          "rank": 1,
+          "classname": "Singing",
+          "similarity": 0.25822052359580994
+        },
+        {
+          "rank": 2,
+          "classname": "Music of Asia",
+          "similarity": 0.23281100392341614
+        },
+        {
+          "rank": 3,
+          "classname": "Pop music",
+          "similarity": 0.196594700217247
+        },
+        {
+          "rank": 4,
+          "classname": "Vocal music",
+          "similarity": 0.19186586141586304
+        },
+        {
+          "rank": 5,
+          "classname": "Rock and roll",
+          "similarity": 0.17916330695152283
+        },
+        {
+          "rank": 6,
+          "classname": "Music",
+          "similarity": 0.17847111821174622
+        },
+        {
+          "rank": 7,
+          "classname": "Rhythm and blues",
+          "similarity": 0.17427074909210205
+        },
+        {
+          "rank": 8,
+          "classname": "Song",
+          "similarity": 0.16872018575668335
+        },
+        {
+          "rank": 9,
+          "classname": "Musical instrument",
+          "similarity": 0.15416815876960754
+        },
+        {
+          "rank": 10,
+          "classname": "Male singing",
+          "similarity": 0.147779181599617
+        }
+      ],
+      "ground_truth_labels": [
+        "/m/015lz1",
+        "/m/07pws3f"
+      ],
+      "ground_truth_human_labels": [
+        "Singing",
+        "Bang"
+      ]
+    },
+    {
+      "sample_id": 6,
+      "video_id": "-0DdlOuIFUI",
+      "predicted_top1": "Bathtub (filling or washing)",
+      "top_k_predictions": [
+        {
+          "rank": 1,
+          "classname": "Bathtub (filling or washing)",
+          "similarity": 0.24902504682540894
+        },
+        {
+          "rank": 2,
+          "classname": "Gush",
+          "similarity": 0.24203823506832123
+        },
+        {
+          "rank": 3,
+          "classname": "Water tap, faucet",
+          "similarity": 0.2384357452392578
+        },
+        {
+          "rank": 4,
+          "classname": "Water",
+          "similarity": 0.1945449858903885
+        },
+        {
+          "rank": 5,
+          "classname": "Trickle, dribble",
+          "similarity": 0.1935797780752182
+        },
+        {
+          "rank": 6,
+          "classname": "Fill (with liquid)",
+          "similarity": 0.1935187578201294
+        },
+        {
+          "rank": 7,
+          "classname": "Music",
+          "similarity": 0.1921246349811554
+        },
+        {
+          "rank": 8,
+          "classname": "Harmonic",
+          "similarity": 0.18706922233104706
+        },
+        {
+          "rank": 9,
+          "classname": "Raindrop",
+          "similarity": 0.18683528900146484
+        },
+        {
+          "rank": 10,
+          "classname": "Pump (liquid)",
+          "similarity": 0.18041180074214935
+        }
+      ],
+      "ground_truth_labels": [
+        "/m/0130jx",
+        "/m/02jz0l",
+        "/m/0838f"
+      ],
+      "ground_truth_human_labels": [
+        "Sink (filling or washing)",
+        "Water tap, faucet",
+        "Water"
+      ]
+    },
+    {
+      "sample_id": 7,
+      "video_id": "-0SdAVK79lg",
+      "predicted_top1": "Steel guitar, slide guitar",
+      "top_k_predictions": [
+        {
+          "rank": 1,
+          "classname": "Steel guitar, slide guitar",
+          "similarity": 0.31026965379714966
+        },
+        {
+          "rank": 2,
+          "classname": "Blues",
+          "similarity": 0.30539077520370483
+        },
+        {
+          "rank": 3,
+          "classname": "Electric guitar",
+          "similarity": 0.2695959508419037
+        },
+        {
+          "rank": 4,
+          "classname": "Musical instrument",
+          "similarity": 0.24292875826358795
+        },
+        {
+          "rank": 5,
+          "classname": "Wedding music",
+          "similarity": 0.24037474393844604
+        },
+        {
+          "rank": 6,
+          "classname": "Tender music",
+          "similarity": 0.23752114176750183
+        },
+        {
+          "rank": 7,
+          "classname": "Music",
+          "similarity": 0.2215198129415512
+        },
+        {
+          "rank": 8,
+          "classname": "Chorus effect",
+          "similarity": 0.20694488286972046
+        },
+        {
+          "rank": 9,
+          "classname": "Jazz",
+          "similarity": 0.2061319351196289
+        },
+        {
+          "rank": 10,
+          "classname": "Soul music",
+          "similarity": 0.20290133357048035
+        }
+      ],
+      "ground_truth_labels": [
+        "/m/0155w",
+        "/m/01lyv",
+        "/m/0342h",
+        "/m/042v_gx",
+        "/m/04rlf",
+        "/m/04szw",
+        "/m/07s0s5r",
+        "/m/0fx80y",
+        "/m/0gg8l"
+      ],
+      "ground_truth_human_labels": [
+        "Blues",
+        "Country",
+        "Guitar",
+        "Acoustic guitar",
+        "Music",
+        "Musical instrument",
+        "Strum",
+        "Plucked string instrument",
+        "Bluegrass"
+      ]
+    },
+    {
+      "sample_id": 8,
+      "video_id": "-1LrH01Ei1w",
+      "predicted_top1": "Bluegrass",
+      "top_k_predictions": [
+        {
+          "rank": 1,
+          "classname": "Bluegrass",
+          "similarity": 0.40704888105392456
+        },
+        {
+          "rank": 2,
+          "classname": "Mandolin",
+          "similarity": 0.38538819551467896
+        },
+        {
+          "rank": 3,
+          "classname": "Banjo",
+          "similarity": 0.37056970596313477
+        },
+        {
+          "rank": 4,
+          "classname": "Sitar",
+          "similarity": 0.3688080608844757
+        },
+        {
+          "rank": 5,
+          "classname": "Bowed string instrument",
+          "similarity": 0.36420738697052
+        },
+        {
+          "rank": 6,
+          "classname": "Middle Eastern music",
+          "similarity": 0.34863314032554626
+        },
+        {
+          "rank": 7,
+          "classname": "Plucked string instrument",
+          "similarity": 0.3393276333808899
+        },
+        {
+          "rank": 8,
+          "classname": "Classical music",
+          "similarity": 0.3336636424064636
+        },
+        {
+          "rank": 9,
+          "classname": "Zither",
+          "similarity": 0.32745590806007385
+        },
+        {
+          "rank": 10,
+          "classname": "Violin, fiddle",
+          "similarity": 0.3155790865421295
+        }
+      ],
+      "ground_truth_labels": [
+        "/m/02p0sh1",
+        "/m/04rlf"
+      ],
+      "ground_truth_human_labels": [
+        "Traditional music",
+        "Music"
+      ]
+    },
+    {
+      "sample_id": 9,
+      "video_id": "-0O3e95y4gE",
+      "predicted_top1": "Thunk",
+      "top_k_predictions": [
+        {
+          "rank": 1,
+          "classname": "Thunk",
+          "similarity": 0.35833466053009033
+        },
+        {
+          "rank": 2,
+          "classname": "Inside, large room or hall",
+          "similarity": 0.3255690932273865
+        },
+        {
+          "rank": 3,
+          "classname": "Inside, small room",
+          "similarity": 0.30319836735725403
+        },
+        {
+          "rank": 4,
+          "classname": "Outside, urban or manmade",
+          "similarity": 0.3024333119392395
+        },
+        {
+          "rank": 5,
+          "classname": "Knock",
+          "similarity": 0.29990577697753906
+        },
+        {
+          "rank": 6,
+          "classname": "Singing",
+          "similarity": 0.29767662286758423
+        },
+        {
+          "rank": 7,
+          "classname": "Outside, rural or natural",
+          "similarity": 0.295904278755188
+        },
+        {
+          "rank": 8,
+          "classname": "Silence",
+          "similarity": 0.2848893404006958
+        },
+        {
+          "rank": 9,
+          "classname": "Song",
+          "similarity": 0.2720557451248169
+        },
+        {
+          "rank": 10,
+          "classname": "Sound effect",
+          "similarity": 0.26609474420547485
+        }
+      ],
+      "ground_truth_labels": [
+        "/m/07r4wb8",
+        "/t/dd00125"
+      ],
+      "ground_truth_human_labels": [
+        "Knock",
+        "Inside, small room"
+      ]
+    },
+    {
+      "sample_id": 10,
+      "video_id": "-28U1_qW0sU",
+      "predicted_top1": "Rodents, rats, mice",
+      "top_k_predictions": [
+        {
+          "rank": 1,
+          "classname": "Rodents, rats, mice",
+          "similarity": 0.39836791157722473
+        },
+        {
+          "rank": 2,
+          "classname": "Cupboard open or close",
+          "similarity": 0.3764536678791046
+        },
+        {
+          "rank": 3,
+          "classname": "Door",
+          "similarity": 0.34516632556915283
+        },
+        {
+          "rank": 4,
+          "classname": "Squawk",
+          "similarity": 0.33332258462905884
+        },
+        {
+          "rank": 5,
+          "classname": "Mouse",
+          "similarity": 0.3261200189590454
+        },
+        {
+          "rank": 6,
+          "classname": "Squeak",
+          "similarity": 0.3258707523345947
+        },
+        {
+          "rank": 7,
+          "classname": "Air brake",
+          "similarity": 0.32179194688796997
+        },
+        {
+          "rank": 8,
+          "classname": "Squeal",
+          "similarity": 0.3205861449241638
+        },
+        {
+          "rank": 9,
+          "classname": "Television",
+          "similarity": 0.3172757923603058
+        },
+        {
+          "rank": 10,
+          "classname": "Power windows, electric windows",
+          "similarity": 0.31625911593437195
+        }
+      ],
+      "ground_truth_labels": [
+        "/m/07qwdck"
+      ],
+      "ground_truth_human_labels": [
+        "Ping"
+      ]
+    },
+    {
+      "sample_id": 11,
+      "video_id": "-0mjrMposBM",
+      "predicted_top1": "Steam whistle",
+      "top_k_predictions": [
+        {
+          "rank": 1,
+          "classname": "Steam whistle",
+          "similarity": 0.29102200269699097
+        },
+        {
+          "rank": 2,
+          "classname": "Train whistle",
+          "similarity": 0.2720155417919159
+        },
+        {
+          "rank": 3,
+          "classname": "Train",
+          "similarity": 0.26335787773132324
+        },
+        {
+          "rank": 4,
+          "classname": "Steam",
+          "similarity": 0.22993986308574677
+        },
+        {
+          "rank": 5,
+          "classname": "Sound effect",
+          "similarity": 0.2014700323343277
+        },
+        {
+          "rank": 6,
+          "classname": "Medium engine (mid frequency)",
+          "similarity": 0.2007201910018921
+        },
+        {
+          "rank": 7,
+          "classname": "Outside, rural or natural",
+          "similarity": 0.19959008693695068
+        },
+        {
+          "rank": 8,
+          "classname": "Truck",
+          "similarity": 0.19621311128139496
+        },
+        {
+          "rank": 9,
+          "classname": "Rail transport",
+          "similarity": 0.19379088282585144
+        },
+        {
+          "rank": 10,
+          "classname": "Vehicle",
+          "similarity": 0.18698643147945404
+        }
+      ],
+      "ground_truth_labels": [
+        "/m/04zmvq"
+      ],
+      "ground_truth_human_labels": [
+        "Train whistle"
+      ]
+    },
+    {
+      "sample_id": 12,
+      "video_id": "-11LhdJgBb8",
+      "predicted_top1": "Orchestra",
+      "top_k_predictions": [
+        {
+          "rank": 1,
+          "classname": "Orchestra",
+          "similarity": 0.3282959759235382
+        },
+        {
+          "rank": 2,
+          "classname": "Jazz",
+          "similarity": 0.3053848147392273
+        },
+        {
+          "rank": 3,
+          "classname": "Classical music",
+          "similarity": 0.2676163911819458
+        },
+        {
+          "rank": 4,
+          "classname": "Brass instrument",
+          "similarity": 0.24092555046081543
+        },
+        {
+          "rank": 5,
+          "classname": "Music",
+          "similarity": 0.23720809817314148
+        },
+        {
+          "rank": 6,
+          "classname": "Swing music",
+          "similarity": 0.23577123880386353
+        },
+        {
+          "rank": 7,
+          "classname": "Steelpan",
+          "similarity": 0.22993972897529602
+        },
+        {
+          "rank": 8,
+          "classname": "Trombone",
+          "similarity": 0.22408422827720642
+        },
+        {
+          "rank": 9,
+          "classname": "Wedding music",
+          "similarity": 0.21729004383087158
+        },
+        {
+          "rank": 10,
+          "classname": "French horn",
+          "similarity": 0.2097848355770111
+        }
+      ],
+      "ground_truth_labels": [
+        "/m/04rlf",
+        "/m/07qn4z3"
+      ],
+      "ground_truth_human_labels": [
+        "Music",
+        "Rattle"
+      ]
+    },
+    {
+      "sample_id": 13,
+      "video_id": "-1iKLvsRBbE",
+      "predicted_top1": "Music of Asia",
+      "top_k_predictions": [
+        {
+          "rank": 1,
+          "classname": "Music of Asia",
+          "similarity": 0.3546026349067688
+        },
+        {
+          "rank": 2,
+          "classname": "Rhythm and blues",
+          "similarity": 0.2457772046327591
+        },
+        {
+          "rank": 3,
+          "classname": "Singing",
+          "similarity": 0.22190937399864197
+        },
+        {
+          "rank": 4,
+          "classname": "Music",
+          "similarity": 0.1974683552980423
+        },
+        {
+          "rank": 5,
+          "classname": "Song",
+          "similarity": 0.1925908327102661
+        },
+        {
+          "rank": 6,
+          "classname": "Throbbing",
+          "similarity": 0.1865798532962799
+        },
+        {
+          "rank": 7,
+          "classname": "Pop music",
+          "similarity": 0.18472877144813538
+        },
+        {
+          "rank": 8,
+          "classname": "Cheering",
+          "similarity": 0.15605944395065308
+        },
+        {
+          "rank": 9,
+          "classname": "Jazz",
+          "similarity": 0.15300267934799194
+        },
+        {
+          "rank": 10,
+          "classname": "Tender music",
+          "similarity": 0.14531490206718445
+        }
+      ],
+      "ground_truth_labels": [
+        "/m/015lz1",
+        "/m/07pws3f"
+      ],
+      "ground_truth_human_labels": [
+        "Singing",
+        "Bang"
+      ]
+    },
+    {
+      "sample_id": 14,
+      "video_id": "-2PDE7hUArE",
+      "predicted_top1": "Heavy engine (low frequency)",
+      "top_k_predictions": [
+        {
+          "rank": 1,
+          "classname": "Heavy engine (low frequency)",
+          "similarity": 0.35781580209732056
+        },
+        {
+          "rank": 2,
+          "classname": "Medium engine (mid frequency)",
+          "similarity": 0.32324719429016113
+        },
+        {
+          "rank": 3,
+          "classname": "Vehicle",
+          "similarity": 0.2888220548629761
+        },
+        {
+          "rank": 4,
+          "classname": "Light engine (high frequency)",
+          "similarity": 0.2816379964351654
+        },
+        {
+          "rank": 5,
+          "classname": "Idling",
+          "similarity": 0.2506628632545471
+        },
+        {
+          "rank": 6,
+          "classname": "Propeller, airscrew",
+          "similarity": 0.25016695261001587
+        },
+        {
+          "rank": 7,
+          "classname": "Truck",
+          "similarity": 0.24748410284519196
+        },
+        {
+          "rank": 8,
+          "classname": "Engine",
+          "similarity": 0.24499408900737762
+        },
+        {
+          "rank": 9,
+          "classname": "Accelerating, revving, vroom",
+          "similarity": 0.23396269977092743
+        },
+        {
+          "rank": 10,
+          "classname": "Outside, urban or manmade",
+          "similarity": 0.23013119399547577
+        }
+      ],
+      "ground_truth_labels": [
+        "/m/02mk9",
+        "/m/07pb8fc",
+        "/t/dd00066"
+      ],
+      "ground_truth_human_labels": [
+        "Engine",
+        "Idling",
+        "Medium engine (mid frequency)"
+      ]
+    },
+    {
+      "sample_id": 15,
+      "video_id": "-275_wTLm-4",
+      "predicted_top1": "Chirp, tweet",
+      "top_k_predictions": [
+        {
+          "rank": 1,
+          "classname": "Chirp, tweet",
+          "similarity": 0.35526806116104126
+        },
+        {
+          "rank": 2,
+          "classname": "Squeal",
+          "similarity": 0.3044751286506653
+        },
+        {
+          "rank": 3,
+          "classname": "Squawk",
+          "similarity": 0.30349087715148926
+        },
+        {
+          "rank": 4,
+          "classname": "Bird",
+          "similarity": 0.2853420674800873
+        },
+        {
+          "rank": 5,
+          "classname": "Squeak",
+          "similarity": 0.2822575569152832
+        },
+        {
+          "rank": 6,
+          "classname": "Owl",
+          "similarity": 0.27911603450775146
+        },
+        {
+          "rank": 7,
+          "classname": "Coo",
+          "similarity": 0.2481887936592102
+        },
+        {
+          "rank": 8,
+          "classname": "Animal",
+          "similarity": 0.24669252336025238
+        },
+        {
+          "rank": 9,
+          "classname": "Mouse",
+          "similarity": 0.24538469314575195
+        },
+        {
+          "rank": 10,
+          "classname": "Bird vocalization, bird call, bird song",
+          "similarity": 0.24362745881080627
+        }
+      ],
+      "ground_truth_labels": [
+        "/m/07q6cd_"
+      ],
+      "ground_truth_human_labels": [
+        "Squeak"
+      ]
+    },
+    {
+      "sample_id": 16,
+      "video_id": "-2hQKCE-oTI",
+      "predicted_top1": "Vehicle",
+      "top_k_predictions": [
+        {
+          "rank": 1,
+          "classname": "Vehicle",
+          "similarity": 0.36908647418022156
+        },
+        {
+          "rank": 2,
+          "classname": "Outside, urban or manmade",
+          "similarity": 0.36647841334342957
+        },
+        {
+          "rank": 3,
+          "classname": "Outside, rural or natural",
+          "similarity": 0.3611595034599304
+        },
+        {
+          "rank": 4,
+          "classname": "Idling",
+          "similarity": 0.3527924418449402
+        },
+        {
+          "rank": 5,
+          "classname": "Truck",
+          "similarity": 0.3370017409324646
+        },
+        {
+          "rank": 6,
+          "classname": "Clip-clop",
+          "similarity": 0.3359724283218384
+        },
+        {
+          "rank": 7,
+          "classname": "Animal",
+          "similarity": 0.3294406831264496
+        },
+        {
+          "rank": 8,
+          "classname": "Propeller, airscrew",
+          "similarity": 0.32853424549102783
+        },
+        {
+          "rank": 9,
+          "classname": "Rowboat, canoe, kayak",
+          "similarity": 0.317310094833374
+        },
+        {
+          "rank": 10,
+          "classname": "Train",
+          "similarity": 0.3151871860027313
+        }
+      ],
+      "ground_truth_labels": [
+        "/m/07pbtc8"
+      ],
+      "ground_truth_human_labels": [
+        "Walk, footsteps"
+      ]
+    },
+    {
+      "sample_id": 17,
+      "video_id": "-2X03mO3T_U",
+      "predicted_top1": "Bathtub (filling or washing)",
+      "top_k_predictions": [
+        {
+          "rank": 1,
+          "classname": "Bathtub (filling or washing)",
+          "similarity": 0.39604926109313965
+        },
+        {
+          "rank": 2,
+          "classname": "Fill (with liquid)",
+          "similarity": 0.3585485816001892
+        },
+        {
+          "rank": 3,
+          "classname": "Gush",
+          "similarity": 0.3549824655056
+        },
+        {
+          "rank": 4,
+          "classname": "Toilet flush",
+          "similarity": 0.3501020669937134
+        },
+        {
+          "rank": 5,
+          "classname": "Boiling",
+          "similarity": 0.34765273332595825
+        },
+        {
+          "rank": 6,
+          "classname": "Trickle, dribble",
+          "similarity": 0.345064252614975
+        },
+        {
+          "rank": 7,
+          "classname": "Rain",
+          "similarity": 0.3397960364818573
+        },
+        {
+          "rank": 8,
+          "classname": "Sink (filling or washing)",
+          "similarity": 0.3177156448364258
+        },
+        {
+          "rank": 9,
+          "classname": "Rain on surface",
+          "similarity": 0.3071547746658325
+        },
+        {
+          "rank": 10,
+          "classname": "Frying (food)",
+          "similarity": 0.30507853627204895
+        }
+      ],
+      "ground_truth_labels": [
+        "/m/04k94",
+        "/m/0dv3j"
+      ],
+      "ground_truth_human_labels": [
+        "Liquid",
+        "Boiling"
+      ]
+    },
+    {
+      "sample_id": 18,
+      "video_id": "-30H9V1IKps",
+      "predicted_top1": "Truck",
+      "top_k_predictions": [
+        {
+          "rank": 1,
+          "classname": "Truck",
+          "similarity": 0.42297446727752686
+        },
+        {
+          "rank": 2,
+          "classname": "Bus",
+          "similarity": 0.35885709524154663
+        },
+        {
+          "rank": 3,
+          "classname": "Traffic noise, roadway noise",
+          "similarity": 0.3126458525657654
+        },
+        {
+          "rank": 4,
+          "classname": "Fire engine, fire truck (siren)",
+          "similarity": 0.30787956714630127
+        },
+        {
+          "rank": 5,
+          "classname": "Ice cream truck, ice cream van",
+          "similarity": 0.2966190576553345
+        },
+        {
+          "rank": 6,
+          "classname": "Railroad car, train wagon",
+          "similarity": 0.29629066586494446
+        },
+        {
+          "rank": 7,
+          "classname": "Television",
+          "similarity": 0.2801195979118347
+        },
+        {
+          "rank": 8,
+          "classname": "Sewing machine",
+          "similarity": 0.2777026295661926
+        },
+        {
+          "rank": 9,
+          "classname": "Race car, auto racing",
+          "similarity": 0.2757653594017029
+        },
+        {
+          "rank": 10,
+          "classname": "Toilet flush",
+          "similarity": 0.274499773979187
+        }
+      ],
+      "ground_truth_labels": [
+        "/m/07yv9",
+        "/m/09x0r",
+        "/m/0gvgw0"
+      ],
+      "ground_truth_human_labels": [
+        "Vehicle",
+        "Speech",
+        "Air brake"
+      ]
+    },
+    {
+      "sample_id": 19,
+      "video_id": "-3IGxVTJvgI",
+      "predicted_top1": "Speech",
+      "top_k_predictions": [
+        {
+          "rank": 1,
+          "classname": "Speech",
+          "similarity": 0.2830356955528259
+        },
+        {
+          "rank": 2,
+          "classname": "Snicker",
+          "similarity": 0.24082323908805847
+        },
+        {
+          "rank": 3,
+          "classname": "Chatter",
+          "similarity": 0.22434329986572266
+        },
+        {
+          "rank": 4,
+          "classname": "Laughter",
+          "similarity": 0.22287675738334656
+        },
+        {
+          "rank": 5,
+          "classname": "Conversation",
+          "similarity": 0.21124690771102905
+        },
+        {
+          "rank": 6,
+          "classname": "Music of Asia",
+          "similarity": 0.21121768653392792
+        },
+        {
+          "rank": 7,
+          "classname": "Rapping",
+          "similarity": 0.20987921953201294
+        },
+        {
+          "rank": 8,
+          "classname": "Male speech, man speaking",
+          "similarity": 0.1984063684940338
+        },
+        {
+          "rank": 9,
+          "classname": "Reggae",
+          "similarity": 0.19629037380218506
+        },
+        {
+          "rank": 10,
+          "classname": "Television",
+          "similarity": 0.18800947070121765
+        }
+      ],
+      "ground_truth_labels": [
+        "/m/06bz3",
+        "/m/09x0r"
+      ],
+      "ground_truth_human_labels": [
+        "Radio",
+        "Speech"
+      ]
+    },
+    {
+      "sample_id": 20,
+      "video_id": "-38Qgsbh7NQ",
+      "predicted_top1": "Hammond organ",
+      "top_k_predictions": [
+        {
+          "rank": 1,
+          "classname": "Hammond organ",
+          "similarity": 0.325464129447937
+        },
+        {
+          "rank": 2,
+          "classname": "Musical instrument",
+          "similarity": 0.2773231863975525
+        },
+        {
+          "rank": 3,
+          "classname": "Jazz",
+          "similarity": 0.2537446916103363
+        },
+        {
+          "rank": 4,
+          "classname": "Blues",
+          "similarity": 0.21134509146213531
+        },
+        {
+          "rank": 5,
+          "classname": "Organ",
+          "similarity": 0.21095149219036102
+        },
+        {
+          "rank": 6,
+          "classname": "Keyboard (musical)",
+          "similarity": 0.20370930433273315
+        },
+        {
+          "rank": 7,
+          "classname": "Harmonic",
+          "similarity": 0.1881200522184372
+        },
+        {
+          "rank": 8,
+          "classname": "Electronic organ",
+          "similarity": 0.18474045395851135
+        },
+        {
+          "rank": 9,
+          "classname": "Music",
+          "similarity": 0.18392810225486755
+        },
+        {
+          "rank": 10,
+          "classname": "Steelpan",
+          "similarity": 0.15971976518630981
+        }
+      ],
+      "ground_truth_labels": [
+        "/m/013y1f",
+        "/m/03xq_f"
+      ],
+      "ground_truth_human_labels": [
+        "Organ",
+        "Electronic organ"
+      ]
+    },
+    {
+      "sample_id": 21,
+      "video_id": "-3hKkjKmIGE",
+      "predicted_top1": "Mechanical fan",
+      "top_k_predictions": [
+        {
+          "rank": 1,
+          "classname": "Mechanical fan",
+          "similarity": 0.41433507204055786
+        },
+        {
+          "rank": 2,
+          "classname": "Boiling",
+          "similarity": 0.40315142273902893
+        },
+        {
+          "rank": 3,
+          "classname": "Air conditioning",
+          "similarity": 0.4019356071949005
+        },
+        {
+          "rank": 4,
+          "classname": "Pump (liquid)",
+          "similarity": 0.3849314749240875
+        },
+        {
+          "rank": 5,
+          "classname": "Idling",
+          "similarity": 0.36959537863731384
+        },
+        {
+          "rank": 6,
+          "classname": "Truck",
+          "similarity": 0.3657276928424835
+        },
+        {
+          "rank": 7,
+          "classname": "Aircraft engine",
+          "similarity": 0.3627840280532837
+        },
+        {
+          "rank": 8,
+          "classname": "Toilet flush",
+          "similarity": 0.35809165239334106
+        },
+        {
+          "rank": 9,
+          "classname": "Propeller, airscrew",
+          "similarity": 0.3540647327899933
+        },
+        {
+          "rank": 10,
+          "classname": "Microwave oven",
+          "similarity": 0.35238781571388245
+        }
+      ],
+      "ground_truth_labels": [
+        "/m/019jd",
+        "/m/06q74"
+      ],
+      "ground_truth_human_labels": [
+        "Boat, Water vehicle",
+        "Ship"
+      ]
+    },
+    {
+      "sample_id": 22,
+      "video_id": "-3HYdaJyF4U",
+      "predicted_top1": "Music of Asia",
+      "top_k_predictions": [
+        {
+          "rank": 1,
+          "classname": "Music of Asia",
+          "similarity": 0.28572607040405273
+        },
+        {
+          "rank": 2,
+          "classname": "Song",
+          "similarity": 0.2729838788509369
+        },
+        {
+          "rank": 3,
+          "classname": "Music of Bollywood",
+          "similarity": 0.2680772840976715
+        },
+        {
+          "rank": 4,
+          "classname": "Folk music",
+          "similarity": 0.2514065206050873
+        },
+        {
+          "rank": 5,
+          "classname": "Traditional music",
+          "similarity": 0.23103934526443481
+        },
+        {
+          "rank": 6,
+          "classname": "Middle Eastern music",
+          "similarity": 0.22899684309959412
+        },
+        {
+          "rank": 7,
+          "classname": "Singing",
+          "similarity": 0.21928076446056366
+        },
+        {
+          "rank": 8,
+          "classname": "Music",
+          "similarity": 0.21643973886966705
+        },
+        {
+          "rank": 9,
+          "classname": "Musical instrument",
+          "similarity": 0.21413332223892212
+        },
+        {
+          "rank": 10,
+          "classname": "Salsa music",
+          "similarity": 0.2080429494380951
+        }
+      ],
+      "ground_truth_labels": [
+        "/m/04rlf",
+        "/m/06rqw"
+      ],
+      "ground_truth_human_labels": [
+        "Music",
+        "Ska"
+      ]
+    },
+    {
+      "sample_id": 23,
+      "video_id": "-3pPrlCm6gg",
+      "predicted_top1": "Saxophone",
+      "top_k_predictions": [
+        {
+          "rank": 1,
+          "classname": "Saxophone",
+          "similarity": 0.3551532030105591
+        },
+        {
+          "rank": 2,
+          "classname": "Wind instrument, woodwind instrument",
+          "similarity": 0.3389718532562256
+        },
+        {
+          "rank": 3,
+          "classname": "Middle Eastern music",
+          "similarity": 0.31676870584487915
+        },
+        {
+          "rank": 4,
+          "classname": "Clarinet",
+          "similarity": 0.29794543981552124
+        },
+        {
+          "rank": 5,
+          "classname": "Music of Bollywood",
+          "similarity": 0.29062581062316895
+        },
+        {
+          "rank": 6,
+          "classname": "Sitar",
+          "similarity": 0.2894361913204193
+        },
+        {
+          "rank": 7,
+          "classname": "Sad music",
+          "similarity": 0.2777320444583893
+        },
+        {
+          "rank": 8,
+          "classname": "Bagpipes",
+          "similarity": 0.2768804728984833
+        },
+        {
+          "rank": 9,
+          "classname": "Traditional music",
+          "similarity": 0.27581900358200073
+        },
+        {
+          "rank": 10,
+          "classname": "Tender music",
+          "similarity": 0.274353563785553
+        }
+      ],
+      "ground_truth_labels": [
+        "/m/01wy6"
+      ],
+      "ground_truth_human_labels": [
+        "Clarinet"
+      ]
+    },
+    {
+      "sample_id": 24,
+      "video_id": "-3IYpJfLVJk",
+      "predicted_top1": "Neigh, whinny",
+      "top_k_predictions": [
+        {
+          "rank": 1,
+          "classname": "Neigh, whinny",
+          "similarity": 0.4367159605026245
+        },
+        {
+          "rank": 2,
+          "classname": "Horse",
+          "similarity": 0.42881685495376587
+        },
+        {
+          "rank": 3,
+          "classname": "Wild animals",
+          "similarity": 0.3793869912624359
+        },
+        {
+          "rank": 4,
+          "classname": "Cattle, bovinae",
+          "similarity": 0.37813496589660645
+        },
+        {
+          "rank": 5,
+          "classname": "Sound effect",
+          "similarity": 0.3168231248855591
+        },
+        {
+          "rank": 6,
+          "classname": "Animal",
+          "similarity": 0.3077681064605713
+        },
+        {
+          "rank": 7,
+          "classname": "Livestock, farm animals, working animals",
+          "similarity": 0.30557048320770264
+        },
+        {
+          "rank": 8,
+          "classname": "Moo",
+          "similarity": 0.29123666882514954
+        },
+        {
+          "rank": 9,
+          "classname": "Roaring cats (lions, tigers)",
+          "similarity": 0.28932055830955505
+        },
+        {
+          "rank": 10,
+          "classname": "Dog",
+          "similarity": 0.2886207699775696
+        }
+      ],
+      "ground_truth_labels": [
+        "/m/03k3r",
+        "/m/07q5rw0",
+        "/m/0jbk"
+      ],
+      "ground_truth_human_labels": [
+        "Horse",
+        "Neigh, whinny",
+        "Animal"
+      ]
+    },
+    {
+      "sample_id": 25,
+      "video_id": "-4NLarMj4xU",
+      "predicted_top1": "Rhythm and blues",
+      "top_k_predictions": [
+        {
+          "rank": 1,
+          "classname": "Rhythm and blues",
+          "similarity": 0.3205215036869049
+        },
+        {
+          "rank": 2,
+          "classname": "Pop music",
+          "similarity": 0.30113738775253296
+        },
+        {
+          "rank": 3,
+          "classname": "Song",
+          "similarity": 0.2719995081424713
+        },
+        {
+          "rank": 4,
+          "classname": "Afrobeat",
+          "similarity": 0.2698199450969696
+        },
+        {
+          "rank": 5,
+          "classname": "Tender music",
+          "similarity": 0.2609660029411316
+        },
+        {
+          "rank": 6,
+          "classname": "Music of Asia",
+          "similarity": 0.25707703828811646
+        },
+        {
+          "rank": 7,
+          "classname": "Soul music",
+          "similarity": 0.24204781651496887
+        },
+        {
+          "rank": 8,
+          "classname": "Throbbing",
+          "similarity": 0.2386254370212555
+        },
+        {
+          "rank": 9,
+          "classname": "Music",
+          "similarity": 0.22755330801010132
+        },
+        {
+          "rank": 10,
+          "classname": "Electronica",
+          "similarity": 0.21158969402313232
+        }
+      ],
+      "ground_truth_labels": [
+        "/m/04rlf",
+        "/t/dd00034"
+      ],
+      "ground_truth_human_labels": [
+        "Music",
+        "Tender music"
+      ]
+    },
+    {
+      "sample_id": 26,
+      "video_id": "-4xJv59_zcA",
+      "predicted_top1": "Wood",
+      "top_k_predictions": [
+        {
+          "rank": 1,
+          "classname": "Wood",
+          "similarity": 0.4152708351612091
+        },
+        {
+          "rank": 2,
+          "classname": "Splinter",
+          "similarity": 0.36114344000816345
+        },
+        {
+          "rank": 3,
+          "classname": "Crack",
+          "similarity": 0.3469586670398712
+        },
+        {
+          "rank": 4,
+          "classname": "Chop",
+          "similarity": 0.34056371450424194
+        },
+        {
+          "rank": 5,
+          "classname": "Breaking",
+          "similarity": 0.33928900957107544
+        },
+        {
+          "rank": 6,
+          "classname": "Crushing",
+          "similarity": 0.3257560729980469
+        },
+        {
+          "rank": 7,
+          "classname": "Drill",
+          "similarity": 0.3236306309700012
+        },
+        {
+          "rank": 8,
+          "classname": "Tools",
+          "similarity": 0.3180719017982483
+        },
+        {
+          "rank": 9,
+          "classname": "Whack, thwack",
+          "similarity": 0.2889596223831177
+        },
+        {
+          "rank": 10,
+          "classname": "Inside, small room",
+          "similarity": 0.2833120822906494
+        }
+      ],
+      "ground_truth_labels": [
+        "/m/07pl1bw",
+        "/m/083vt"
+      ],
+      "ground_truth_human_labels": [
+        "Splinter",
+        "Wood"
+      ]
+    },
+    {
+      "sample_id": 27,
+      "video_id": "-4hZyOdm7EI",
+      "predicted_top1": "Carnatic music",
+      "top_k_predictions": [
+        {
+          "rank": 1,
+          "classname": "Carnatic music",
+          "similarity": 0.4174853563308716
+        },
+        {
+          "rank": 2,
+          "classname": "Music of Bollywood",
+          "similarity": 0.27638769149780273
+        },
+        {
+          "rank": 3,
+          "classname": "Song",
+          "similarity": 0.2709779143333435
+        },
+        {
+          "rank": 4,
+          "classname": "Singing",
+          "similarity": 0.26793479919433594
+        },
+        {
+          "rank": 5,
+          "classname": "Classical music",
+          "similarity": 0.23305943608283997
+        },
+        {
+          "rank": 6,
+          "classname": "Traditional music",
+          "similarity": 0.22932453453540802
+        },
+        {
+          "rank": 7,
+          "classname": "Folk music",
+          "similarity": 0.2251373529434204
+        },
+        {
+          "rank": 8,
+          "classname": "Musical instrument",
+          "similarity": 0.20797930657863617
+        },
+        {
+          "rank": 9,
+          "classname": "Middle Eastern music",
+          "similarity": 0.20503266155719757
+        },
+        {
+          "rank": 10,
+          "classname": "Music of Asia",
+          "similarity": 0.20346316695213318
+        }
+      ],
+      "ground_truth_labels": [
+        "/m/015lz1",
+        "/m/015vgc"
+      ],
+      "ground_truth_human_labels": [
+        "Singing",
+        "Carnatic music"
+      ]
+    },
+    {
+      "sample_id": 28,
+      "video_id": "-4RWqM0UCCY",
+      "predicted_top1": "Police car (siren)",
+      "top_k_predictions": [
+        {
+          "rank": 1,
+          "classname": "Police car (siren)",
+          "similarity": 0.47472694516181946
+        },
+        {
+          "rank": 2,
+          "classname": "Emergency vehicle",
+          "similarity": 0.47079819440841675
+        },
+        {
+          "rank": 3,
+          "classname": "Ambulance (siren)",
+          "similarity": 0.4691808223724365
+        },
+        {
+          "rank": 4,
+          "classname": "Fire engine, fire truck (siren)",
+          "similarity": 0.4631572961807251
+        },
+        {
+          "rank": 5,
+          "classname": "Truck",
+          "similarity": 0.4215407073497772
+        },
+        {
+          "rank": 6,
+          "classname": "Car alarm",
+          "similarity": 0.36980268359184265
+        },
+        {
+          "rank": 7,
+          "classname": "Siren",
+          "similarity": 0.34867188334465027
+        },
+        {
+          "rank": 8,
+          "classname": "Reversing beeps",
+          "similarity": 0.3370417058467865
+        },
+        {
+          "rank": 9,
+          "classname": "Air horn, truck horn",
+          "similarity": 0.3369777202606201
+        },
+        {
+          "rank": 10,
+          "classname": "Vehicle",
+          "similarity": 0.32853907346725464
+        }
+      ],
+      "ground_truth_labels": [
+        "/m/012n7d",
+        "/m/02mfyn",
+        "/m/03j1ly",
+        "/m/03kmc9"
+      ],
+      "ground_truth_human_labels": [
+        "Ambulance (siren)",
+        "Car alarm",
+        "Emergency vehicle",
+        "Siren"
+      ]
+    },
+    {
+      "sample_id": 29,
+      "video_id": "-5-vmt2iKT0",
+      "predicted_top1": "Speech",
+      "top_k_predictions": [
+        {
+          "rank": 1,
+          "classname": "Speech",
+          "similarity": 0.2996003031730652
+        },
+        {
+          "rank": 2,
+          "classname": "Female speech, woman speaking",
+          "similarity": 0.27585479617118835
+        },
+        {
+          "rank": 3,
+          "classname": "Conversation",
+          "similarity": 0.25320231914520264
+        },
+        {
+          "rank": 4,
+          "classname": "Television",
+          "similarity": 0.18416841328144073
+        },
+        {
+          "rank": 5,
+          "classname": "Narration, monologue",
+          "similarity": 0.18304835259914398
+        },
+        {
+          "rank": 6,
+          "classname": "Child speech, kid speaking",
+          "similarity": 0.14274820685386658
+        },
+        {
+          "rank": 7,
+          "classname": "Musical instrument",
+          "similarity": 0.13620120286941528
+        },
+        {
+          "rank": 8,
+          "classname": "Hum",
+          "similarity": 0.1303275227546692
+        },
+        {
+          "rank": 9,
+          "classname": "Electronica",
+          "similarity": 0.11599615216255188
+        },
+        {
+          "rank": 10,
+          "classname": "Punk rock",
+          "similarity": 0.115289106965065
+        }
+      ],
+      "ground_truth_labels": [
+        "/m/02zsn",
+        "/m/09x0r"
+      ],
+      "ground_truth_human_labels": [
+        "Female speech, woman speaking",
+        "Speech"
+      ]
+    },
+    {
+      "sample_id": 30,
+      "video_id": "-5DdYkYOjy0",
+      "predicted_top1": "Inside, large room or hall",
+      "top_k_predictions": [
+        {
+          "rank": 1,
+          "classname": "Inside, large room or hall",
+          "similarity": 0.3816312253475189
+        },
+        {
+          "rank": 2,
+          "classname": "Throbbing",
+          "similarity": 0.34168675541877747
+        },
+        {
+          "rank": 3,
+          "classname": "Sound effect",
+          "similarity": 0.33657678961753845
+        },
+        {
+          "rank": 4,
+          "classname": "Walk, footsteps",
+          "similarity": 0.314023494720459
+        },
+        {
+          "rank": 5,
+          "classname": "Outside, rural or natural",
+          "similarity": 0.31136050820350647
+        },
+        {
+          "rank": 6,
+          "classname": "Outside, urban or manmade",
+          "similarity": 0.3102521598339081
+        },
+        {
+          "rank": 7,
+          "classname": "Electronic music",
+          "similarity": 0.2912122905254364
+        },
+        {
+          "rank": 8,
+          "classname": "Smash, crash",
+          "similarity": 0.28829219937324524
+        },
+        {
+          "rank": 9,
+          "classname": "Whack, thwack",
+          "similarity": 0.28186455368995667
+        },
+        {
+          "rank": 10,
+          "classname": "Shatter",
+          "similarity": 0.27596670389175415
+        }
+      ],
+      "ground_truth_labels": [
+        "/m/06h7j"
+      ],
+      "ground_truth_human_labels": [
+        "Run"
+      ]
+    },
+    {
+      "sample_id": 31,
+      "video_id": "-5GhUbDLYkQ",
+      "predicted_top1": "Toilet flush",
+      "top_k_predictions": [
+        {
+          "rank": 1,
+          "classname": "Toilet flush",
+          "similarity": 0.4305965304374695
+        },
+        {
+          "rank": 2,
+          "classname": "Fill (with liquid)",
+          "similarity": 0.4115367829799652
+        },
+        {
+          "rank": 3,
+          "classname": "Sink (filling or washing)",
+          "similarity": 0.4073028862476349
+        },
+        {
+          "rank": 4,
+          "classname": "Rowboat, canoe, kayak",
+          "similarity": 0.4041821360588074
+        },
+        {
+          "rank": 5,
+          "classname": "Bathtub (filling or washing)",
+          "similarity": 0.3942383825778961
+        },
+        {
+          "rank": 6,
+          "classname": "Boat, Water vehicle",
+          "similarity": 0.3877725303173065
+        },
+        {
+          "rank": 7,
+          "classname": "Frying (food)",
+          "similarity": 0.38301247358322144
+        },
+        {
+          "rank": 8,
+          "classname": "Trickle, dribble",
+          "similarity": 0.37904155254364014
+        },
+        {
+          "rank": 9,
+          "classname": "Boiling",
+          "similarity": 0.36647170782089233
+        },
+        {
+          "rank": 10,
+          "classname": "Pump (liquid)",
+          "similarity": 0.36563676595687866
+        }
+      ],
+      "ground_truth_labels": [
+        "/m/0130jx",
+        "/m/02jz0l",
+        "/m/0838f"
+      ],
+      "ground_truth_human_labels": [
+        "Sink (filling or washing)",
+        "Water tap, faucet",
+        "Water"
+      ]
+    },
+    {
+      "sample_id": 32,
+      "video_id": "-5Jlimvsuwo",
+      "predicted_top1": "Orchestra",
+      "top_k_predictions": [
+        {
+          "rank": 1,
+          "classname": "Orchestra",
+          "similarity": 0.3654601573944092
+        },
+        {
+          "rank": 2,
+          "classname": "Timpani",
+          "similarity": 0.2871203124523163
+        },
+        {
+          "rank": 3,
+          "classname": "Classical music",
+          "similarity": 0.27665555477142334
+        },
+        {
+          "rank": 4,
+          "classname": "Soundtrack music",
+          "similarity": 0.2456713318824768
+        },
+        {
+          "rank": 5,
+          "classname": "Theme music",
+          "similarity": 0.24499888718128204
+        },
+        {
+          "rank": 6,
+          "classname": "Wind instrument, woodwind instrument",
+          "similarity": 0.24086372554302216
+        },
+        {
+          "rank": 7,
+          "classname": "Jazz",
+          "similarity": 0.23890875279903412
+        },
+        {
+          "rank": 8,
+          "classname": "Opera",
+          "similarity": 0.23365125060081482
+        },
+        {
+          "rank": 9,
+          "classname": "Traditional music",
+          "similarity": 0.2334766536951065
+        },
+        {
+          "rank": 10,
+          "classname": "Wedding music",
+          "similarity": 0.22560365498065948
+        }
+      ],
+      "ground_truth_labels": [
+        "/m/011k_j",
+        "/m/04rlf"
+      ],
+      "ground_truth_human_labels": [
+        "Timpani",
+        "Music"
+      ]
+    },
+    {
+      "sample_id": 33,
+      "video_id": "-5S70zOSw30",
+      "predicted_top1": "Smoke detector, smoke alarm",
+      "top_k_predictions": [
+        {
+          "rank": 1,
+          "classname": "Smoke detector, smoke alarm",
+          "similarity": 0.364629328250885
+        },
+        {
+          "rank": 2,
+          "classname": "Fire alarm",
+          "similarity": 0.3011701703071594
+        },
+        {
+          "rank": 3,
+          "classname": "Car alarm",
+          "similarity": 0.2752830386161804
+        },
+        {
+          "rank": 4,
+          "classname": "Buzzer",
+          "similarity": 0.27299225330352783
+        },
+        {
+          "rank": 5,
+          "classname": "Reversing beeps",
+          "similarity": 0.27153050899505615
+        },
+        {
+          "rank": 6,
+          "classname": "Fire",
+          "similarity": 0.2684914171695709
+        },
+        {
+          "rank": 7,
+          "classname": "Speech",
+          "similarity": 0.2538280487060547
+        },
+        {
+          "rank": 8,
+          "classname": "Truck",
+          "similarity": 0.24020642042160034
+        },
+        {
+          "rank": 9,
+          "classname": "Emergency vehicle",
+          "similarity": 0.22980253398418427
+        },
+        {
+          "rank": 10,
+          "classname": "Fire engine, fire truck (siren)",
+          "similarity": 0.2256278693675995
+        }
+      ],
+      "ground_truth_labels": [
+        "/m/030rvx",
+        "/m/07pzfmf",
+        "/m/09x0r"
+      ],
+      "ground_truth_human_labels": [
+        "Buzzer",
+        "Crackle",
+        "Speech"
+      ]
+    },
+    {
+      "sample_id": 34,
+      "video_id": "-5Kk-m7BmiE",
+      "predicted_top1": "Accelerating, revving, vroom",
+      "top_k_predictions": [
+        {
+          "rank": 1,
+          "classname": "Accelerating, revving, vroom",
+          "similarity": 0.34100472927093506
+        },
+        {
+          "rank": 2,
+          "classname": "Sound effect",
+          "similarity": 0.29451853036880493
+        },
+        {
+          "rank": 3,
+          "classname": "Clatter",
+          "similarity": 0.2753037214279175
+        },
+        {
+          "rank": 4,
+          "classname": "Car",
+          "similarity": 0.2645222544670105
+        },
+        {
+          "rank": 5,
+          "classname": "Outside, urban or manmade",
+          "similarity": 0.26161280274391174
+        },
+        {
+          "rank": 6,
+          "classname": "Whir",
+          "similarity": 0.23889923095703125
+        },
+        {
+          "rank": 7,
+          "classname": "Motor vehicle (road)",
+          "similarity": 0.23668254911899567
+        },
+        {
+          "rank": 8,
+          "classname": "Outside, rural or natural",
+          "similarity": 0.21127396821975708
+        },
+        {
+          "rank": 9,
+          "classname": "Reverberation",
+          "similarity": 0.20930570363998413
+        },
+        {
+          "rank": 10,
+          "classname": "Vehicle",
+          "similarity": 0.1919177770614624
+        }
+      ],
+      "ground_truth_labels": [
+        "/m/07pyf11",
+        "/m/07qmpdm"
+      ],
+      "ground_truth_human_labels": [
+        "Flap",
+        "Clatter"
+      ]
+    },
+    {
+      "sample_id": 35,
+      "video_id": "-5f6hjZf9Yw",
+      "predicted_top1": "Middle Eastern music",
+      "top_k_predictions": [
+        {
+          "rank": 1,
+          "classname": "Middle Eastern music",
+          "similarity": 0.44133031368255615
+        },
+        {
+          "rank": 2,
+          "classname": "Traditional music",
+          "similarity": 0.3147331178188324
+        },
+        {
+          "rank": 3,
+          "classname": "Folk music",
+          "similarity": 0.30582788586616516
+        },
+        {
+          "rank": 4,
+          "classname": "Wedding music",
+          "similarity": 0.27145445346832275
+        },
+        {
+          "rank": 5,
+          "classname": "Song",
+          "similarity": 0.22800010442733765
+        },
+        {
+          "rank": 6,
+          "classname": "Chant",
+          "similarity": 0.2194889783859253
+        },
+        {
+          "rank": 7,
+          "classname": "Singing",
+          "similarity": 0.21748536825180054
+        },
+        {
+          "rank": 8,
+          "classname": "Male speech, man speaking",
+          "similarity": 0.21691909432411194
+        },
+        {
+          "rank": 9,
+          "classname": "Music of Asia",
+          "similarity": 0.21000628173351288
+        },
+        {
+          "rank": 10,
+          "classname": "Bowed string instrument",
+          "similarity": 0.2098744511604309
+        }
+      ],
+      "ground_truth_labels": [
+        "/m/02w4v",
+        "/m/04rlf"
+      ],
+      "ground_truth_human_labels": [
+        "Folk music",
+        "Music"
+      ]
+    },
+    {
+      "sample_id": 36,
+      "video_id": "-60XojQWWoc",
+      "predicted_top1": "Outside, urban or manmade",
+      "top_k_predictions": [
+        {
+          "rank": 1,
+          "classname": "Outside, urban or manmade",
+          "similarity": 0.3552913963794708
+        },
+        {
+          "rank": 2,
+          "classname": "Truck",
+          "similarity": 0.3323092460632324
+        },
+        {
+          "rank": 3,
+          "classname": "Outside, rural or natural",
+          "similarity": 0.3097079396247864
+        },
+        {
+          "rank": 4,
+          "classname": "Radio",
+          "similarity": 0.3046311140060425
+        },
+        {
+          "rank": 5,
+          "classname": "Sound effect",
+          "similarity": 0.28558462858200073
+        },
+        {
+          "rank": 6,
+          "classname": "Vehicle",
+          "similarity": 0.28338563442230225
+        },
+        {
+          "rank": 7,
+          "classname": "Electronic music",
+          "similarity": 0.2747076153755188
+        },
+        {
+          "rank": 8,
+          "classname": "Chant",
+          "similarity": 0.2634941339492798
+        },
+        {
+          "rank": 9,
+          "classname": "Cacophony",
+          "similarity": 0.26105695962905884
+        },
+        {
+          "rank": 10,
+          "classname": "Traffic noise, roadway noise",
+          "similarity": 0.260273814201355
+        }
+      ],
+      "ground_truth_labels": [
+        "/m/02rhddq",
+        "/m/07r04",
+        "/m/07yv9"
+      ],
+      "ground_truth_human_labels": [
+        "Reversing beeps",
+        "Truck",
+        "Vehicle"
+      ]
+    },
+    {
+      "sample_id": 37,
+      "video_id": "-6QGvxvaTkI",
+      "predicted_top1": "Middle Eastern music",
+      "top_k_predictions": [
+        {
+          "rank": 1,
+          "classname": "Middle Eastern music",
+          "similarity": 0.4405505359172821
+        },
+        {
+          "rank": 2,
+          "classname": "Carnatic music",
+          "similarity": 0.4075736999511719
+        },
+        {
+          "rank": 3,
+          "classname": "Sitar",
+          "similarity": 0.3997029662132263
+        },
+        {
+          "rank": 4,
+          "classname": "Folk music",
+          "similarity": 0.3715413808822632
+        },
+        {
+          "rank": 5,
+          "classname": "Song",
+          "similarity": 0.32681143283843994
+        },
+        {
+          "rank": 6,
+          "classname": "Tabla",
+          "similarity": 0.32661691308021545
+        },
+        {
+          "rank": 7,
+          "classname": "Gospel music",
+          "similarity": 0.3154924809932709
+        },
+        {
+          "rank": 8,
+          "classname": "Christian music",
+          "similarity": 0.308265745639801
+        },
+        {
+          "rank": 9,
+          "classname": "Music of Bollywood",
+          "similarity": 0.306083619594574
+        },
+        {
+          "rank": 10,
+          "classname": "Singing",
+          "similarity": 0.30468231439590454
+        }
+      ],
+      "ground_truth_labels": [
+        "/m/01p970",
+        "/m/026t6",
+        "/m/0l14md"
+      ],
+      "ground_truth_human_labels": [
+        "Tabla",
+        "Drum",
+        "Percussion"
+      ]
+    },
+    {
+      "sample_id": 38,
+      "video_id": "-5xOcMJpTUk",
+      "predicted_top1": "Plucked string instrument",
+      "top_k_predictions": [
+        {
+          "rank": 1,
+          "classname": "Plucked string instrument",
+          "similarity": 0.24743585288524628
+        },
+        {
+          "rank": 2,
+          "classname": "Guitar",
+          "similarity": 0.2439422756433487
+        },
+        {
+          "rank": 3,
+          "classname": "Blues",
+          "similarity": 0.21296775341033936
+        },
+        {
+          "rank": 4,
+          "classname": "Bass guitar",
+          "similarity": 0.21237201988697052
+        },
+        {
+          "rank": 5,
+          "classname": "Strum",
+          "similarity": 0.20067301392555237
+        },
+        {
+          "rank": 6,
+          "classname": "Musical instrument",
+          "similarity": 0.20064297318458557
+        },
+        {
+          "rank": 7,
+          "classname": "Electronic tuner",
+          "similarity": 0.19331179559230804
+        },
+        {
+          "rank": 8,
+          "classname": "Electric guitar",
+          "similarity": 0.18186715245246887
+        },
+        {
+          "rank": 9,
+          "classname": "Tapping (guitar technique)",
+          "similarity": 0.18065708875656128
+        },
+        {
+          "rank": 10,
+          "classname": "Pizzicato",
+          "similarity": 0.15752041339874268
+        }
+      ],
+      "ground_truth_labels": [
+        "/m/018vs",
+        "/m/0342h",
+        "/m/042v_gx",
+        "/m/04rlf",
+        "/m/04szw",
+        "/m/09x0r",
+        "/m/0fx80y"
+      ],
+      "ground_truth_human_labels": [
+        "Bass guitar",
+        "Guitar",
+        "Acoustic guitar",
+        "Music",
+        "Musical instrument",
+        "Speech",
+        "Plucked string instrument"
+      ]
+    },
+    {
+      "sample_id": 39,
+      "video_id": "-64xnyOswXA",
+      "predicted_top1": "Caterwaul",
+      "top_k_predictions": [
+        {
+          "rank": 1,
+          "classname": "Caterwaul",
+          "similarity": 0.3842107057571411
+        },
+        {
+          "rank": 2,
+          "classname": "Meow",
+          "similarity": 0.372783362865448
+        },
+        {
+          "rank": 3,
+          "classname": "Domestic animals, pets",
+          "similarity": 0.3600616455078125
+        },
+        {
+          "rank": 4,
+          "classname": "Dog",
+          "similarity": 0.3419637084007263
+        },
+        {
+          "rank": 5,
+          "classname": "Cat",
+          "similarity": 0.3400062322616577
+        },
+        {
+          "rank": 6,
+          "classname": "Bow-wow",
+          "similarity": 0.3334132432937622
+        },
+        {
+          "rank": 7,
+          "classname": "Bark",
+          "similarity": 0.3330238461494446
+        },
+        {
+          "rank": 8,
+          "classname": "Animal",
+          "similarity": 0.331489235162735
+        },
+        {
+          "rank": 9,
+          "classname": "Yip",
+          "similarity": 0.3178935945034027
+        },
+        {
+          "rank": 10,
+          "classname": "Canidae, dogs, wolves",
+          "similarity": 0.31485283374786377
+        }
+      ],
+      "ground_truth_labels": [
+        "/m/0cdnk"
+      ],
+      "ground_truth_human_labels": [
+        "Roaring cats (lions, tigers)"
+      ]
+    },
+    {
+      "sample_id": 40,
+      "video_id": "-6RN8skIHU4",
+      "predicted_top1": "Speech",
+      "top_k_predictions": [
+        {
+          "rank": 1,
+          "classname": "Speech",
+          "similarity": 0.28225040435791016
+        },
+        {
+          "rank": 2,
+          "classname": "Inside, large room or hall",
+          "similarity": 0.15940967202186584
+        },
+        {
+          "rank": 3,
+          "classname": "Inside, small room",
+          "similarity": 0.14948490262031555
+        },
+        {
+          "rank": 4,
+          "classname": "Dishes, pots, and pans",
+          "similarity": 0.14441879093647003
+        },
+        {
+          "rank": 5,
+          "classname": "Television",
+          "similarity": 0.13989204168319702
+        },
+        {
+          "rank": 6,
+          "classname": "Camera",
+          "similarity": 0.13789235055446625
+        },
+        {
+          "rank": 7,
+          "classname": "Musical instrument",
+          "similarity": 0.12625060975551605
+        },
+        {
+          "rank": 8,
+          "classname": "Cash register",
+          "similarity": 0.12382111698389053
+        },
+        {
+          "rank": 9,
+          "classname": "Cutlery, silverware",
+          "similarity": 0.11380335688591003
+        },
+        {
+          "rank": 10,
+          "classname": "Inside, public space",
+          "similarity": 0.10966989398002625
+        }
+      ],
+      "ground_truth_labels": [
+        "/m/09x0r",
+        "/m/0dv5r",
+        "/t/dd00125"
+      ],
+      "ground_truth_human_labels": [
+        "Speech",
+        "Camera",
+        "Inside, small room"
+      ]
+    },
+    {
+      "sample_id": 41,
+      "video_id": "-693sNKI3iM",
+      "predicted_top1": "Classical music",
+      "top_k_predictions": [
+        {
+          "rank": 1,
+          "classname": "Classical music",
+          "similarity": 0.36011165380477905
+        },
+        {
+          "rank": 2,
+          "classname": "Yodeling",
+          "similarity": 0.2983839213848114
+        },
+        {
+          "rank": 3,
+          "classname": "Opera",
+          "similarity": 0.2898781895637512
+        },
+        {
+          "rank": 4,
+          "classname": "Singing",
+          "similarity": 0.2833184003829956
+        },
+        {
+          "rank": 5,
+          "classname": "Wedding music",
+          "similarity": 0.27416884899139404
+        },
+        {
+          "rank": 6,
+          "classname": "Synthetic singing",
+          "similarity": 0.26293349266052246
+        },
+        {
+          "rank": 7,
+          "classname": "Christmas music",
+          "similarity": 0.2603530287742615
+        },
+        {
+          "rank": 8,
+          "classname": "Bowed string instrument",
+          "similarity": 0.25862979888916016
+        },
+        {
+          "rank": 9,
+          "classname": "Middle Eastern music",
+          "similarity": 0.254357248544693
+        },
+        {
+          "rank": 10,
+          "classname": "Song",
+          "similarity": 0.25410982966423035
+        }
+      ],
+      "ground_truth_labels": [
+        "/m/015lz1",
+        "/m/01swy6",
+        "/m/04rlf"
+      ],
+      "ground_truth_human_labels": [
+        "Singing",
+        "Yodeling",
+        "Music"
+      ]
+    },
+    {
+      "sample_id": 42,
+      "video_id": "-6krAYK2LLo",
+      "predicted_top1": "Angry music",
+      "top_k_predictions": [
+        {
+          "rank": 1,
+          "classname": "Angry music",
+          "similarity": 0.26043665409088135
+        },
+        {
+          "rank": 2,
+          "classname": "Sound effect",
+          "similarity": 0.20593702793121338
+        },
+        {
+          "rank": 3,
+          "classname": "Soundtrack music",
+          "similarity": 0.2036740928888321
+        },
+        {
+          "rank": 4,
+          "classname": "Music",
+          "similarity": 0.20193126797676086
+        },
+        {
+          "rank": 5,
+          "classname": "Music of Asia",
+          "similarity": 0.19600029289722443
+        },
+        {
+          "rank": 6,
+          "classname": "Theme music",
+          "similarity": 0.17853327095508575
+        },
+        {
+          "rank": 7,
+          "classname": "Throbbing",
+          "similarity": 0.17636416852474213
+        },
+        {
+          "rank": 8,
+          "classname": "Electronic dance music",
+          "similarity": 0.1522492915391922
+        },
+        {
+          "rank": 9,
+          "classname": "Scary music",
+          "similarity": 0.1485365927219391
+        },
+        {
+          "rank": 10,
+          "classname": "Wood block",
+          "similarity": 0.14235368371009827
+        }
+      ],
+      "ground_truth_labels": [
+        "/m/04rlf",
+        "/m/06j64v",
+        "/m/0l14gg"
+      ],
+      "ground_truth_human_labels": [
+        "Music",
+        "Middle Eastern music",
+        "Soundtrack music"
+      ]
+    },
+    {
+      "sample_id": 43,
+      "video_id": "-6gC_nlUBfA",
+      "predicted_top1": "Speech",
+      "top_k_predictions": [
+        {
+          "rank": 1,
+          "classname": "Speech",
+          "similarity": 0.2969093918800354
+        },
+        {
+          "rank": 2,
+          "classname": "Dishes, pots, and pans",
+          "similarity": 0.2105349451303482
+        },
+        {
+          "rank": 3,
+          "classname": "Cupboard open or close",
+          "similarity": 0.18998126685619354
+        },
+        {
+          "rank": 4,
+          "classname": "Drawer open or close",
+          "similarity": 0.18038396537303925
+        },
+        {
+          "rank": 5,
+          "classname": "Inside, small room",
+          "similarity": 0.17122526466846466
+        },
+        {
+          "rank": 6,
+          "classname": "Door",
+          "similarity": 0.1640041470527649
+        },
+        {
+          "rank": 7,
+          "classname": "Walk, footsteps",
+          "similarity": 0.16321459412574768
+        },
+        {
+          "rank": 8,
+          "classname": "Guitar",
+          "similarity": 0.153023362159729
+        },
+        {
+          "rank": 9,
+          "classname": "Gears",
+          "similarity": 0.1475333273410797
+        },
+        {
+          "rank": 10,
+          "classname": "Conversation",
+          "similarity": 0.14625465869903564
+        }
+      ],
+      "ground_truth_labels": [
+        "/m/02y_763",
+        "/m/09x0r"
+      ],
+      "ground_truth_human_labels": [
+        "Sliding door",
+        "Speech"
+      ]
+    },
+    {
+      "sample_id": 44,
+      "video_id": "-6pcgdLfb_A",
+      "predicted_top1": "Afrobeat",
+      "top_k_predictions": [
+        {
+          "rank": 1,
+          "classname": "Afrobeat",
+          "similarity": 0.3081505298614502
+        },
+        {
+          "rank": 2,
+          "classname": "Music of Africa",
+          "similarity": 0.30293044447898865
+        },
+        {
+          "rank": 3,
+          "classname": "Hip hop music",
+          "similarity": 0.2544490098953247
+        },
+        {
+          "rank": 4,
+          "classname": "Reggae",
+          "similarity": 0.25395506620407104
+        },
+        {
+          "rank": 5,
+          "classname": "Rapping",
+          "similarity": 0.24809448421001434
+        },
+        {
+          "rank": 6,
+          "classname": "Rhythm and blues",
+          "similarity": 0.23903602361679077
+        },
+        {
+          "rank": 7,
+          "classname": "Music",
+          "similarity": 0.21391059458255768
+        },
+        {
+          "rank": 8,
+          "classname": "Song",
+          "similarity": 0.18308159708976746
+        },
+        {
+          "rank": 9,
+          "classname": "Soul music",
+          "similarity": 0.1759750247001648
+        },
+        {
+          "rank": 10,
+          "classname": "Ska",
+          "similarity": 0.16367237269878387
+        }
+      ],
+      "ground_truth_labels": [
+        "/m/04rlf",
+        "/t/dd00035"
+      ],
+      "ground_truth_human_labels": [
+        "Music",
+        "Exciting music"
+      ]
+    },
+    {
+      "sample_id": 45,
+      "video_id": "-70wVF5u-gg",
+      "predicted_top1": "Chopping (food)",
+      "top_k_predictions": [
+        {
+          "rank": 1,
+          "classname": "Chopping (food)",
+          "similarity": 0.48697081208229065
+        },
+        {
+          "rank": 2,
+          "classname": "Chop",
+          "similarity": 0.402732789516449
+        },
+        {
+          "rank": 3,
+          "classname": "Shuffling cards",
+          "similarity": 0.37393486499786377
+        },
+        {
+          "rank": 4,
+          "classname": "Wood",
+          "similarity": 0.3354811668395996
+        },
+        {
+          "rank": 5,
+          "classname": "Scissors",
+          "similarity": 0.3318626284599304
+        },
+        {
+          "rank": 6,
+          "classname": "Tap",
+          "similarity": 0.328879714012146
+        },
+        {
+          "rank": 7,
+          "classname": "Dishes, pots, and pans",
+          "similarity": 0.30537480115890503
+        },
+        {
+          "rank": 8,
+          "classname": "Gobble",
+          "similarity": 0.30217570066452026
+        },
+        {
+          "rank": 9,
+          "classname": "Domestic animals, pets",
+          "similarity": 0.3003217279911041
+        },
+        {
+          "rank": 10,
+          "classname": "Bouncing",
+          "similarity": 0.2947544455528259
+        }
+      ],
+      "ground_truth_labels": [
+        "/m/07pn_8q"
+      ],
+      "ground_truth_human_labels": [
+        "Chopping (food)"
+      ]
+    },
+    {
+      "sample_id": 46,
+      "video_id": "-6x2PtSRfJU",
+      "predicted_top1": "Speech",
+      "top_k_predictions": [
+        {
+          "rank": 1,
+          "classname": "Speech",
+          "similarity": 0.2508781850337982
+        },
+        {
+          "rank": 2,
+          "classname": "Male speech, man speaking",
+          "similarity": 0.15318217873573303
+        },
+        {
+          "rank": 3,
+          "classname": "Boat, Water vehicle",
+          "similarity": 0.12096285820007324
+        },
+        {
+          "rank": 4,
+          "classname": "Hubbub, speech noise, speech babble",
+          "similarity": 0.1115422174334526
+        },
+        {
+          "rank": 5,
+          "classname": "Musical instrument",
+          "similarity": 0.10289905220270157
+        },
+        {
+          "rank": 6,
+          "classname": "Jazz",
+          "similarity": 0.09923364222049713
+        },
+        {
+          "rank": 7,
+          "classname": "Inside, public space",
+          "similarity": 0.0992138683795929
+        },
+        {
+          "rank": 8,
+          "classname": "Crowd",
+          "similarity": 0.09551472961902618
+        },
+        {
+          "rank": 9,
+          "classname": "Male singing",
+          "similarity": 0.09434318542480469
+        },
+        {
+          "rank": 10,
+          "classname": "Bluegrass",
+          "similarity": 0.09281283617019653
+        }
+      ],
+      "ground_truth_labels": [
+        "/m/01yrx",
+        "/m/068hy",
+        "/m/07qrkrw",
+        "/m/09x0r"
+      ],
+      "ground_truth_human_labels": [
+        "Cat",
+        "Domestic animals, pets",
+        "Meow",
+        "Speech"
+      ]
+    },
+    {
+      "sample_id": 47,
+      "video_id": "-70MzkgSsHQ",
+      "predicted_top1": "Ukulele",
+      "top_k_predictions": [
+        {
+          "rank": 1,
+          "classname": "Ukulele",
+          "similarity": 0.4129796028137207
+        },
+        {
+          "rank": 2,
+          "classname": "Mandolin",
+          "similarity": 0.30987340211868286
+        },
+        {
+          "rank": 3,
+          "classname": "Happy music",
+          "similarity": 0.28593021631240845
+        },
+        {
+          "rank": 4,
+          "classname": "Music for children",
+          "similarity": 0.25326818227767944
+        },
+        {
+          "rank": 5,
+          "classname": "Lullaby",
+          "similarity": 0.23978406190872192
+        },
+        {
+          "rank": 6,
+          "classname": "Music",
+          "similarity": 0.23327429592609406
+        },
+        {
+          "rank": 7,
+          "classname": "Song",
+          "similarity": 0.2275409698486328
+        },
+        {
+          "rank": 8,
+          "classname": "Musical instrument",
+          "similarity": 0.22138972580432892
+        },
+        {
+          "rank": 9,
+          "classname": "Banjo",
+          "similarity": 0.20241743326187134
+        },
+        {
+          "rank": 10,
+          "classname": "Steel guitar, slide guitar",
+          "similarity": 0.20129558444023132
+        }
+      ],
+      "ground_truth_labels": [
+        "/m/04rlf",
+        "/m/04rzd"
+      ],
+      "ground_truth_human_labels": [
+        "Music",
+        "Mandolin"
+      ]
+    },
+    {
+      "sample_id": 48,
+      "video_id": "-7J4109yM7w",
+      "predicted_top1": "Percussion",
+      "top_k_predictions": [
+        {
+          "rank": 1,
+          "classname": "Percussion",
+          "similarity": 0.36220085620880127
+        },
+        {
+          "rank": 2,
+          "classname": "Hammer",
+          "similarity": 0.3343234360218048
+        },
+        {
+          "rank": 3,
+          "classname": "Tools",
+          "similarity": 0.33307936787605286
+        },
+        {
+          "rank": 4,
+          "classname": "Tambourine",
+          "similarity": 0.31576380133628845
+        },
+        {
+          "rank": 5,
+          "classname": "Medium engine (mid frequency)",
+          "similarity": 0.30878061056137085
+        },
+        {
+          "rank": 6,
+          "classname": "Heavy engine (low frequency)",
+          "similarity": 0.3083125054836273
+        },
+        {
+          "rank": 7,
+          "classname": "Light engine (high frequency)",
+          "similarity": 0.3014848232269287
+        },
+        {
+          "rank": 8,
+          "classname": "Musical instrument",
+          "similarity": 0.3000064790248871
+        },
+        {
+          "rank": 9,
+          "classname": "Inside, small room",
+          "similarity": 0.2851373553276062
+        },
+        {
+          "rank": 10,
+          "classname": "Vehicle",
+          "similarity": 0.2848895788192749
+        }
+      ],
+      "ground_truth_labels": [
+        "/m/02mk9",
+        "/m/07yv9",
+        "/t/dd00130"
+      ],
+      "ground_truth_human_labels": [
+        "Engine",
+        "Vehicle",
+        "Engine starting"
+      ]
+    },
+    {
+      "sample_id": 49,
+      "video_id": "-76P3VHPuus",
+      "predicted_top1": "Throbbing",
+      "top_k_predictions": [
+        {
+          "rank": 1,
+          "classname": "Throbbing",
+          "similarity": 0.32091784477233887
+        },
+        {
+          "rank": 2,
+          "classname": "Heart sounds, heartbeat",
+          "similarity": 0.31869742274284363
+        },
+        {
+          "rank": 3,
+          "classname": "Music",
+          "similarity": 0.29222041368484497
+        },
+        {
+          "rank": 4,
+          "classname": "Hum",
+          "similarity": 0.24751751124858856
+        },
+        {
+          "rank": 5,
+          "classname": "Sigh",
+          "similarity": 0.24076922237873077
+        },
+        {
+          "rank": 6,
+          "classname": "Opera",
+          "similarity": 0.23800280690193176
+        },
+        {
+          "rank": 7,
+          "classname": "Sound effect",
+          "similarity": 0.23184876143932343
+        },
+        {
+          "rank": 8,
+          "classname": "Heart murmur",
+          "similarity": 0.23064137995243073
+        },
+        {
+          "rank": 9,
+          "classname": "Gasp",
+          "similarity": 0.22889366745948792
+        },
+        {
+          "rank": 10,
+          "classname": "Sad music",
+          "similarity": 0.22704684734344482
+        }
+      ],
+      "ground_truth_labels": [
+        "/m/01jg1z"
+      ],
+      "ground_truth_human_labels": [
+        "Heart murmur"
+      ]
+    },
+    {
+      "sample_id": 50,
+      "video_id": "-75IwDlkzDQ",
+      "predicted_top1": "Lawn mower",
+      "top_k_predictions": [
+        {
+          "rank": 1,
+          "classname": "Lawn mower",
+          "similarity": 0.40746551752090454
+        },
+        {
+          "rank": 2,
+          "classname": "Engine starting",
+          "similarity": 0.4006602466106415
+        },
+        {
+          "rank": 3,
+          "classname": "Sewing machine",
+          "similarity": 0.3965883255004883
+        },
+        {
+          "rank": 4,
+          "classname": "Truck",
+          "similarity": 0.36403414607048035
+        },
+        {
+          "rank": 5,
+          "classname": "Motorcycle",
+          "similarity": 0.35084474086761475
+        },
+        {
+          "rank": 6,
+          "classname": "Engine",
+          "similarity": 0.3480360805988312
+        },
+        {
+          "rank": 7,
+          "classname": "Idling",
+          "similarity": 0.34334880113601685
+        },
+        {
+          "rank": 8,
+          "classname": "Motor vehicle (road)",
+          "similarity": 0.33834344148635864
+        },
+        {
+          "rank": 9,
+          "classname": "Race car, auto racing",
+          "similarity": 0.32460740208625793
+        },
+        {
+          "rank": 10,
+          "classname": "Light engine (high frequency)",
+          "similarity": 0.3210589289665222
+        }
+      ],
+      "ground_truth_labels": [
+        "/m/01h82_",
+        "/m/02mk9"
+      ],
+      "ground_truth_human_labels": [
+        "Engine knocking",
+        "Engine"
+      ]
+    },
+    {
+      "sample_id": 51,
+      "video_id": "-7QVE8o9uk4",
+      "predicted_top1": "Music",
+      "top_k_predictions": [
+        {
+          "rank": 1,
+          "classname": "Music",
+          "similarity": 0.21413207054138184
+        },
+        {
+          "rank": 2,
+          "classname": "Vehicle",
+          "similarity": 0.20219457149505615
+        },
+        {
+          "rank": 3,
+          "classname": "Heavy engine (low frequency)",
+          "similarity": 0.19353215396404266
+        },
+        {
+          "rank": 4,
+          "classname": "Medium engine (mid frequency)",
+          "similarity": 0.18736478686332703
+        },
+        {
+          "rank": 5,
+          "classname": "Light engine (high frequency)",
+          "similarity": 0.1530281901359558
+        },
+        {
+          "rank": 6,
+          "classname": "Boat, Water vehicle",
+          "similarity": 0.150577574968338
+        },
+        {
+          "rank": 7,
+          "classname": "Static",
+          "similarity": 0.15039388835430145
+        },
+        {
+          "rank": 8,
+          "classname": "Vacuum cleaner",
+          "similarity": 0.1463901847600937
+        },
+        {
+          "rank": 9,
+          "classname": "Pump (liquid)",
+          "similarity": 0.14324261248111725
+        },
+        {
+          "rank": 10,
+          "classname": "Musical instrument",
+          "similarity": 0.1418445110321045
+        }
+      ],
+      "ground_truth_labels": [
+        "/m/01yg9g",
+        "/m/04rlf",
+        "/m/07yv9"
+      ],
+      "ground_truth_human_labels": [
+        "Lawn mower",
+        "Music",
+        "Vehicle"
+      ]
+    },
+    {
+      "sample_id": 52,
+      "video_id": "-7ye24UFRng",
+      "predicted_top1": "Whale vocalization",
+      "top_k_predictions": [
+        {
+          "rank": 1,
+          "classname": "Whale vocalization",
+          "similarity": 0.4412928521633148
+        },
+        {
+          "rank": 2,
+          "classname": "Soundtrack music",
+          "similarity": 0.38003283739089966
+        },
+        {
+          "rank": 3,
+          "classname": "Sound effect",
+          "similarity": 0.3714697062969208
+        },
+        {
+          "rank": 4,
+          "classname": "Music",
+          "similarity": 0.3712749183177948
+        },
+        {
+          "rank": 5,
+          "classname": "Ship",
+          "similarity": 0.35562360286712646
+        },
+        {
+          "rank": 6,
+          "classname": "Electronic music",
+          "similarity": 0.3256315290927887
+        },
+        {
+          "rank": 7,
+          "classname": "Wild animals",
+          "similarity": 0.3054531514644623
+        },
+        {
+          "rank": 8,
+          "classname": "Throbbing",
+          "similarity": 0.3029462695121765
+        },
+        {
+          "rank": 9,
+          "classname": "Song",
+          "similarity": 0.298611044883728
+        },
+        {
+          "rank": 10,
+          "classname": "Wind instrument, woodwind instrument",
+          "similarity": 0.2927580177783966
+        }
+      ],
+      "ground_truth_labels": [
+        "/m/032n05",
+        "/m/04rlf"
+      ],
+      "ground_truth_human_labels": [
+        "Whale vocalization",
+        "Music"
+      ]
+    },
+    {
+      "sample_id": 53,
+      "video_id": "-7z662AsuTE",
+      "predicted_top1": "Sound effect",
+      "top_k_predictions": [
+        {
+          "rank": 1,
+          "classname": "Sound effect",
+          "similarity": 0.20332957804203033
+        },
+        {
+          "rank": 2,
+          "classname": "Speech",
+          "similarity": 0.2024901807308197
+        },
+        {
+          "rank": 3,
+          "classname": "Gong",
+          "similarity": 0.20154041051864624
+        },
+        {
+          "rank": 4,
+          "classname": "Wail, moan",
+          "similarity": 0.19822032749652863
+        },
+        {
+          "rank": 5,
+          "classname": "Zing",
+          "similarity": 0.19803352653980255
+        },
+        {
+          "rank": 6,
+          "classname": "Scary music",
+          "similarity": 0.19598890841007233
+        },
+        {
+          "rank": 7,
+          "classname": "Narration, monologue",
+          "similarity": 0.19033145904541016
+        },
+        {
+          "rank": 8,
+          "classname": "Music",
+          "similarity": 0.18852227926254272
+        },
+        {
+          "rank": 9,
+          "classname": "Sad music",
+          "similarity": 0.18757279217243195
+        },
+        {
+          "rank": 10,
+          "classname": "Musical instrument",
+          "similarity": 0.18462064862251282
+        }
+      ],
+      "ground_truth_labels": [
+        "/m/0mbct"
+      ],
+      "ground_truth_human_labels": [
+        "Gong"
+      ]
+    },
+    {
+      "sample_id": 54,
+      "video_id": "-7wUQP6G5EQ",
+      "predicted_top1": "Sad music",
+      "top_k_predictions": [
+        {
+          "rank": 1,
+          "classname": "Sad music",
+          "similarity": 0.33160409331321716
+        },
+        {
+          "rank": 2,
+          "classname": "Tender music",
+          "similarity": 0.3265112042427063
+        },
+        {
+          "rank": 3,
+          "classname": "Flute",
+          "similarity": 0.3130963444709778
+        },
+        {
+          "rank": 4,
+          "classname": "Soundtrack music",
+          "similarity": 0.3093026876449585
+        },
+        {
+          "rank": 5,
+          "classname": "Traditional music",
+          "similarity": 0.2974584102630615
+        },
+        {
+          "rank": 6,
+          "classname": "Wind instrument, woodwind instrument",
+          "similarity": 0.29230090975761414
+        },
+        {
+          "rank": 7,
+          "classname": "Background music",
+          "similarity": 0.2874968945980072
+        },
+        {
+          "rank": 8,
+          "classname": "Video game music",
+          "similarity": 0.2799038290977478
+        },
+        {
+          "rank": 9,
+          "classname": "Wedding music",
+          "similarity": 0.2726297080516815
+        },
+        {
+          "rank": 10,
+          "classname": "Clarinet",
+          "similarity": 0.2639569044113159
+        }
+      ],
+      "ground_truth_labels": [
+        "/m/02cjck",
+        "/m/02w4v",
+        "/m/04rlf"
+      ],
+      "ground_truth_human_labels": [
+        "Theme music",
+        "Folk music",
+        "Music"
+      ]
+    },
+    {
+      "sample_id": 55,
+      "video_id": "-8Ezw9946g8",
+      "predicted_top1": "Inside, small room",
+      "top_k_predictions": [
+        {
+          "rank": 1,
+          "classname": "Inside, small room",
+          "similarity": 0.3474525809288025
+        },
+        {
+          "rank": 2,
+          "classname": "Drawer open or close",
+          "similarity": 0.3303929269313812
+        },
+        {
+          "rank": 3,
+          "classname": "Inside, large room or hall",
+          "similarity": 0.3271241784095764
+        },
+        {
+          "rank": 4,
+          "classname": "Cupboard open or close",
+          "similarity": 0.2823006212711334
+        },
+        {
+          "rank": 5,
+          "classname": "Dishes, pots, and pans",
+          "similarity": 0.2540028989315033
+        },
+        {
+          "rank": 6,
+          "classname": "Vacuum cleaner",
+          "similarity": 0.23811331391334534
+        },
+        {
+          "rank": 7,
+          "classname": "Tools",
+          "similarity": 0.22506821155548096
+        },
+        {
+          "rank": 8,
+          "classname": "Microwave oven",
+          "similarity": 0.21726596355438232
+        },
+        {
+          "rank": 9,
+          "classname": "Field recording",
+          "similarity": 0.2073277235031128
+        },
+        {
+          "rank": 10,
+          "classname": "Slam",
+          "similarity": 0.20672959089279175
+        }
+      ],
+      "ground_truth_labels": [
+        "/m/0fqfqc"
+      ],
+      "ground_truth_human_labels": [
+        "Drawer open or close"
+      ]
+    },
+    {
+      "sample_id": 56,
+      "video_id": "-8S_tLKfeJg",
+      "predicted_top1": "Electric toothbrush",
+      "top_k_predictions": [
+        {
+          "rank": 1,
+          "classname": "Electric toothbrush",
+          "similarity": 0.35598018765449524
+        },
+        {
+          "rank": 2,
+          "classname": "Power tool",
+          "similarity": 0.32057368755340576
+        },
+        {
+          "rank": 3,
+          "classname": "Electric shaver, electric razor",
+          "similarity": 0.3074776232242584
+        },
+        {
+          "rank": 4,
+          "classname": "Blender",
+          "similarity": 0.3064364492893219
+        },
+        {
+          "rank": 5,
+          "classname": "Speech",
+          "similarity": 0.28721269965171814
+        },
+        {
+          "rank": 6,
+          "classname": "Drill",
+          "similarity": 0.28581082820892334
+        },
+        {
+          "rank": 7,
+          "classname": "Dental drill, dentist's drill",
+          "similarity": 0.27062341570854187
+        },
+        {
+          "rank": 8,
+          "classname": "Pump (liquid)",
+          "similarity": 0.2668605446815491
+        },
+        {
+          "rank": 9,
+          "classname": "Tire squeal",
+          "similarity": 0.2604203224182129
+        },
+        {
+          "rank": 10,
+          "classname": "Engine",
+          "similarity": 0.2353171408176422
+        }
+      ],
+      "ground_truth_labels": [
+        "/m/04fgwm",
+        "/m/09x0r",
+        "/t/dd00125"
+      ],
+      "ground_truth_human_labels": [
+        "Electric toothbrush",
+        "Speech",
+        "Inside, small room"
+      ]
+    },
+    {
+      "sample_id": 57,
+      "video_id": "-8CrCItCO24",
+      "predicted_top1": "Zing",
+      "top_k_predictions": [
+        {
+          "rank": 1,
+          "classname": "Zing",
+          "similarity": 0.4308118522167206
+        },
+        {
+          "rank": 2,
+          "classname": "Bicycle bell",
+          "similarity": 0.4121161103248596
+        },
+        {
+          "rank": 3,
+          "classname": "Ping",
+          "similarity": 0.3981427252292633
+        },
+        {
+          "rank": 4,
+          "classname": "Beep, bleep",
+          "similarity": 0.3940521478652954
+        },
+        {
+          "rank": 5,
+          "classname": "Ding",
+          "similarity": 0.38128727674484253
+        },
+        {
+          "rank": 6,
+          "classname": "Smoke detector, smoke alarm",
+          "similarity": 0.3708454966545105
+        },
+        {
+          "rank": 7,
+          "classname": "Tuning fork",
+          "similarity": 0.36356449127197266
+        },
+        {
+          "rank": 8,
+          "classname": "Fire alarm",
+          "similarity": 0.35640227794647217
+        },
+        {
+          "rank": 9,
+          "classname": "Wind chime",
+          "similarity": 0.3470107913017273
+        },
+        {
+          "rank": 10,
+          "classname": "Doorbell",
+          "similarity": 0.34651899337768555
+        }
+      ],
+      "ground_truth_labels": [
+        "/m/07q7njn"
+      ],
+      "ground_truth_human_labels": [
+        "Chink, clink"
+      ]
+    },
+    {
+      "sample_id": 58,
+      "video_id": "-8_HpHg6nCw",
+      "predicted_top1": "Speech",
+      "top_k_predictions": [
+        {
+          "rank": 1,
+          "classname": "Speech",
+          "similarity": 0.29263776540756226
+        },
+        {
+          "rank": 2,
+          "classname": "Television",
+          "similarity": 0.24697041511535645
+        },
+        {
+          "rank": 3,
+          "classname": "Snake",
+          "similarity": 0.24452897906303406
+        },
+        {
+          "rank": 4,
+          "classname": "Rain",
+          "similarity": 0.24342039227485657
+        },
+        {
+          "rank": 5,
+          "classname": "Rain on surface",
+          "similarity": 0.23241977393627167
+        },
+        {
+          "rank": 6,
+          "classname": "Air conditioning",
+          "similarity": 0.22803179919719696
+        },
+        {
+          "rank": 7,
+          "classname": "Subway, metro, underground",
+          "similarity": 0.22517861425876617
+        },
+        {
+          "rank": 8,
+          "classname": "Wind noise (microphone)",
+          "similarity": 0.22504399716854095
+        },
+        {
+          "rank": 9,
+          "classname": "Inside, public space",
+          "similarity": 0.22415056824684143
+        },
+        {
+          "rank": 10,
+          "classname": "Traffic noise, roadway noise",
+          "similarity": 0.21805426478385925
+        }
+      ],
+      "ground_truth_labels": [
+        "/m/07ptzwd",
+        "/m/0838f"
+      ],
+      "ground_truth_human_labels": [
+        "Pump (liquid)",
+        "Water"
+      ]
+    },
+    {
+      "sample_id": 59,
+      "video_id": "-8H4GKg-mYQ",
+      "predicted_top1": "Disco",
+      "top_k_predictions": [
+        {
+          "rank": 1,
+          "classname": "Disco",
+          "similarity": 0.2700667083263397
+        },
+        {
+          "rank": 2,
+          "classname": "Electronic music",
+          "similarity": 0.2654877007007599
+        },
+        {
+          "rank": 3,
+          "classname": "Throbbing",
+          "similarity": 0.2558419108390808
+        },
+        {
+          "rank": 4,
+          "classname": "Music",
+          "similarity": 0.2531527578830719
+        },
+        {
+          "rank": 5,
+          "classname": "Techno",
+          "similarity": 0.2470216453075409
+        },
+        {
+          "rank": 6,
+          "classname": "Trance music",
+          "similarity": 0.22561469674110413
+        },
+        {
+          "rank": 7,
+          "classname": "Sound effect",
+          "similarity": 0.22212691605091095
+        },
+        {
+          "rank": 8,
+          "classname": "Exciting music",
+          "similarity": 0.21670600771903992
+        },
+        {
+          "rank": 9,
+          "classname": "Beatboxing",
+          "similarity": 0.21520650386810303
+        },
+        {
+          "rank": 10,
+          "classname": "Drum and bass",
+          "similarity": 0.20045122504234314
+        }
+      ],
+      "ground_truth_labels": [
+        "/m/04rlf",
+        "/m/07gxw"
+      ],
+      "ground_truth_human_labels": [
+        "Music",
+        "Techno"
+      ]
+    },
+    {
+      "sample_id": 60,
+      "video_id": "-8n2NqDFRko",
+      "predicted_top1": "Truck",
+      "top_k_predictions": [
+        {
+          "rank": 1,
+          "classname": "Truck",
+          "similarity": 0.28414037823677063
+        },
+        {
+          "rank": 2,
+          "classname": "Reversing beeps",
+          "similarity": 0.26758843660354614
+        },
+        {
+          "rank": 3,
+          "classname": "Ice cream truck, ice cream van",
+          "similarity": 0.26355114579200745
+        },
+        {
+          "rank": 4,
+          "classname": "Vehicle",
+          "similarity": 0.2454402595758438
+        },
+        {
+          "rank": 5,
+          "classname": "Bus",
+          "similarity": 0.23502188920974731
+        },
+        {
+          "rank": 6,
+          "classname": "Speech",
+          "similarity": 0.22857539355754852
+        },
+        {
+          "rank": 7,
+          "classname": "Outside, urban or manmade",
+          "similarity": 0.20246347784996033
+        },
+        {
+          "rank": 8,
+          "classname": "Race car, auto racing",
+          "similarity": 0.19223105907440186
+        },
+        {
+          "rank": 9,
+          "classname": "Motor vehicle (road)",
+          "similarity": 0.1883629560470581
+        },
+        {
+          "rank": 10,
+          "classname": "Traffic noise, roadway noise",
+          "similarity": 0.17513710260391235
+        }
+      ],
+      "ground_truth_labels": [
+        "/m/02rhddq",
+        "/m/07r04",
+        "/m/07yv9",
+        "/m/09x0r"
+      ],
+      "ground_truth_human_labels": [
+        "Reversing beeps",
+        "Truck",
+        "Vehicle",
+        "Speech"
+      ]
+    },
+    {
+      "sample_id": 61,
+      "video_id": "-8fQePz4FcE",
+      "predicted_top1": "Bluegrass",
+      "top_k_predictions": [
+        {
+          "rank": 1,
+          "classname": "Bluegrass",
+          "similarity": 0.3899575471878052
+        },
+        {
+          "rank": 2,
+          "classname": "Banjo",
+          "similarity": 0.3603639006614685
+        },
+        {
+          "rank": 3,
+          "classname": "Mandolin",
+          "similarity": 0.3528386354446411
+        },
+        {
+          "rank": 4,
+          "classname": "Folk music",
+          "similarity": 0.34295839071273804
+        },
+        {
+          "rank": 5,
+          "classname": "Violin, fiddle",
+          "similarity": 0.33710259199142456
+        },
+        {
+          "rank": 6,
+          "classname": "String section",
+          "similarity": 0.3340997099876404
+        },
+        {
+          "rank": 7,
+          "classname": "Ukulele",
+          "similarity": 0.3264530301094055
+        },
+        {
+          "rank": 8,
+          "classname": "Traditional music",
+          "similarity": 0.3138137757778168
+        },
+        {
+          "rank": 9,
+          "classname": "Bowed string instrument",
+          "similarity": 0.3072763979434967
+        },
+        {
+          "rank": 10,
+          "classname": "Middle Eastern music",
+          "similarity": 0.3049909174442291
+        }
+      ],
+      "ground_truth_labels": [
+        "/m/04rlf",
+        "/m/07xzm",
+        "/t/dd00126"
+      ],
+      "ground_truth_human_labels": [
+        "Music",
+        "Ukulele",
+        "Inside, large room or hall"
+      ]
+    },
+    {
+      "sample_id": 62,
+      "video_id": "-99daJhXYJY",
+      "predicted_top1": "Motorboat, speedboat",
+      "top_k_predictions": [
+        {
+          "rank": 1,
+          "classname": "Motorboat, speedboat",
+          "similarity": 0.2727900445461273
+        },
+        {
+          "rank": 2,
+          "classname": "Propeller, airscrew",
+          "similarity": 0.25687375664711
+        },
+        {
+          "rank": 3,
+          "classname": "Outside, rural or natural",
+          "similarity": 0.23895198106765747
+        },
+        {
+          "rank": 4,
+          "classname": "Wind noise (microphone)",
+          "similarity": 0.23059578239917755
+        },
+        {
+          "rank": 5,
+          "classname": "Race car, auto racing",
+          "similarity": 0.21077944338321686
+        },
+        {
+          "rank": 6,
+          "classname": "Motorcycle",
+          "similarity": 0.20559722185134888
+        },
+        {
+          "rank": 7,
+          "classname": "Fixed-wing aircraft, airplane",
+          "similarity": 0.1991240680217743
+        },
+        {
+          "rank": 8,
+          "classname": "Sailboat, sailing ship",
+          "similarity": 0.19694174826145172
+        },
+        {
+          "rank": 9,
+          "classname": "Vehicle",
+          "similarity": 0.18858473002910614
+        },
+        {
+          "rank": 10,
+          "classname": "Aircraft",
+          "similarity": 0.17985299229621887
+        }
+      ],
+      "ground_truth_labels": [
+        "/m/019jd",
+        "/m/02rlv9",
+        "/m/03m9d0z",
+        "/t/dd00092"
+      ],
+      "ground_truth_human_labels": [
+        "Boat, Water vehicle",
+        "Motorboat, speedboat",
+        "Wind",
+        "Wind noise (microphone)"
+      ]
+    },
+    {
+      "sample_id": 63,
+      "video_id": "-9Nl3LZBCOo",
+      "predicted_top1": "Speech",
+      "top_k_predictions": [
+        {
+          "rank": 1,
+          "classname": "Speech",
+          "similarity": 0.2622229754924774
+        },
+        {
+          "rank": 2,
+          "classname": "Child speech, kid speaking",
+          "similarity": 0.21228885650634766
+        },
+        {
+          "rank": 3,
+          "classname": "Squish",
+          "similarity": 0.20423197746276855
+        },
+        {
+          "rank": 4,
+          "classname": "Inside, small room",
+          "similarity": 0.19133351743221283
+        },
+        {
+          "rank": 5,
+          "classname": "Biting",
+          "similarity": 0.18705204129219055
+        },
+        {
+          "rank": 6,
+          "classname": "Chewing, mastication",
+          "similarity": 0.1745692789554596
+        },
+        {
+          "rank": 7,
+          "classname": "Scissors",
+          "similarity": 0.174442857503891
+        },
+        {
+          "rank": 8,
+          "classname": "Patter",
+          "similarity": 0.17364555597305298
+        },
+        {
+          "rank": 9,
+          "classname": "Gears",
+          "similarity": 0.16928859055042267
+        },
+        {
+          "rank": 10,
+          "classname": "Crying, sobbing",
+          "similarity": 0.1685401052236557
+        }
+      ],
+      "ground_truth_labels": [
+        "/m/01s0vc",
+        "/m/09x0r"
+      ],
+      "ground_truth_human_labels": [
+        "Zipper (clothing)",
+        "Speech"
+      ]
+    },
+    {
+      "sample_id": 64,
+      "video_id": "-92cYmTgIjM",
+      "predicted_top1": "Pizzicato",
+      "top_k_predictions": [
+        {
+          "rank": 1,
+          "classname": "Pizzicato",
+          "similarity": 0.23495052754878998
+        },
+        {
+          "rank": 2,
+          "classname": "Musical instrument",
+          "similarity": 0.232828289270401
+        },
+        {
+          "rank": 3,
+          "classname": "Lullaby",
+          "similarity": 0.23113219439983368
+        },
+        {
+          "rank": 4,
+          "classname": "Tender music",
+          "similarity": 0.2117873877286911
+        },
+        {
+          "rank": 5,
+          "classname": "Harp",
+          "similarity": 0.20482847094535828
+        },
+        {
+          "rank": 6,
+          "classname": "Music",
+          "similarity": 0.19155555963516235
+        },
+        {
+          "rank": 7,
+          "classname": "Happy music",
+          "similarity": 0.18382754921913147
+        },
+        {
+          "rank": 8,
+          "classname": "Song",
+          "similarity": 0.18328896164894104
+        },
+        {
+          "rank": 9,
+          "classname": "Humming",
+          "similarity": 0.18155719339847565
+        },
+        {
+          "rank": 10,
+          "classname": "Independent music",
+          "similarity": 0.17923083901405334
+        }
+      ],
+      "ground_truth_labels": [
+        "/m/02fxyj"
+      ],
+      "ground_truth_human_labels": [
+        "Humming"
+      ]
+    },
+    {
+      "sample_id": 65,
+      "video_id": "-9ME9qMgkeY",
+      "predicted_top1": "Dental drill, dentist's drill",
+      "top_k_predictions": [
+        {
+          "rank": 1,
+          "classname": "Dental drill, dentist's drill",
+          "similarity": 0.3883843719959259
+        },
+        {
+          "rank": 2,
+          "classname": "Drill",
+          "similarity": 0.3347252905368805
+        },
+        {
+          "rank": 3,
+          "classname": "Helicopter",
+          "similarity": 0.3153853416442871
+        },
+        {
+          "rank": 4,
+          "classname": "Propeller, airscrew",
+          "similarity": 0.29803669452667236
+        },
+        {
+          "rank": 5,
+          "classname": "Truck",
+          "similarity": 0.29184165596961975
+        },
+        {
+          "rank": 6,
+          "classname": "Electric toothbrush",
+          "similarity": 0.28840354084968567
+        },
+        {
+          "rank": 7,
+          "classname": "Aircraft",
+          "similarity": 0.287497878074646
+        },
+        {
+          "rank": 8,
+          "classname": "Outside, rural or natural",
+          "similarity": 0.28511959314346313
+        },
+        {
+          "rank": 9,
+          "classname": "Jet engine",
+          "similarity": 0.28379401564598083
+        },
+        {
+          "rank": 10,
+          "classname": "Engine",
+          "similarity": 0.28301993012428284
+        }
+      ],
+      "ground_truth_labels": [
+        "/m/08j51y",
+        "/m/09ct_"
+      ],
+      "ground_truth_human_labels": [
+        "Dental drill, dentist's drill",
+        "Helicopter"
+      ]
+    },
+    {
+      "sample_id": 66,
+      "video_id": "-9c1c8G_WO8",
+      "predicted_top1": "Speech",
+      "top_k_predictions": [
+        {
+          "rank": 1,
+          "classname": "Speech",
+          "similarity": 0.2926650941371918
+        },
+        {
+          "rank": 2,
+          "classname": "Male speech, man speaking",
+          "similarity": 0.19660034775733948
+        },
+        {
+          "rank": 3,
+          "classname": "Conversation",
+          "similarity": 0.19298073649406433
+        },
+        {
+          "rank": 4,
+          "classname": "Female speech, woman speaking",
+          "similarity": 0.1771111935377121
+        },
+        {
+          "rank": 5,
+          "classname": "Electronica",
+          "similarity": 0.13486404716968536
+        },
+        {
+          "rank": 6,
+          "classname": "Reggae",
+          "similarity": 0.13320745527744293
+        },
+        {
+          "rank": 7,
+          "classname": "Hubbub, speech noise, speech babble",
+          "similarity": 0.123159259557724
+        },
+        {
+          "rank": 8,
+          "classname": "Television",
+          "similarity": 0.11999011039733887
+        },
+        {
+          "rank": 9,
+          "classname": "Music of Latin America",
+          "similarity": 0.11695414036512375
+        },
+        {
+          "rank": 10,
+          "classname": "Punk rock",
+          "similarity": 0.11452480405569077
+        }
+      ],
+      "ground_truth_labels": [
+        "/m/07c52",
+        "/m/09x0r"
+      ],
+      "ground_truth_human_labels": [
+        "Television",
+        "Speech"
+      ]
+    },
+    {
+      "sample_id": 67,
+      "video_id": "-9ek6eO0RtI",
+      "predicted_top1": "Ding-dong",
+      "top_k_predictions": [
+        {
+          "rank": 1,
+          "classname": "Ding-dong",
+          "similarity": 0.4218750298023224
+        },
+        {
+          "rank": 2,
+          "classname": "Doorbell",
+          "similarity": 0.402614951133728
+        },
+        {
+          "rank": 3,
+          "classname": "Ding",
+          "similarity": 0.3469238877296448
+        },
+        {
+          "rank": 4,
+          "classname": "Jingle, tinkle",
+          "similarity": 0.30318543314933777
+        },
+        {
+          "rank": 5,
+          "classname": "Vibraphone",
+          "similarity": 0.28113073110580444
+        },
+        {
+          "rank": 6,
+          "classname": "Lullaby",
+          "similarity": 0.277316689491272
+        },
+        {
+          "rank": 7,
+          "classname": "Jingle (music)",
+          "similarity": 0.27728816866874695
+        },
+        {
+          "rank": 8,
+          "classname": "Inside, small room",
+          "similarity": 0.2769620716571808
+        },
+        {
+          "rank": 9,
+          "classname": "Glockenspiel",
+          "similarity": 0.2762024402618408
+        },
+        {
+          "rank": 10,
+          "classname": "Keyboard (musical)",
+          "similarity": 0.27565163373947144
+        }
+      ],
+      "ground_truth_labels": [
+        "/m/03wwcy"
+      ],
+      "ground_truth_human_labels": [
+        "Doorbell"
+      ]
+    },
+    {
+      "sample_id": 68,
+      "video_id": "-9wxcZf43a4",
+      "predicted_top1": "Air conditioning",
+      "top_k_predictions": [
+        {
+          "rank": 1,
+          "classname": "Air conditioning",
+          "similarity": 0.4212570786476135
+        },
+        {
+          "rank": 2,
+          "classname": "Fixed-wing aircraft, airplane",
+          "similarity": 0.39645352959632874
+        },
+        {
+          "rank": 3,
+          "classname": "Aircraft",
+          "similarity": 0.38687920570373535
+        },
+        {
+          "rank": 4,
+          "classname": "Traffic noise, roadway noise",
+          "similarity": 0.3742963969707489
+        },
+        {
+          "rank": 5,
+          "classname": "Bus",
+          "similarity": 0.3737124800682068
+        },
+        {
+          "rank": 6,
+          "classname": "Outside, urban or manmade",
+          "similarity": 0.36915910243988037
+        },
+        {
+          "rank": 7,
+          "classname": "Propeller, airscrew",
+          "similarity": 0.3640519976615906
+        },
+        {
+          "rank": 8,
+          "classname": "Heavy engine (low frequency)",
+          "similarity": 0.36018550395965576
+        },
+        {
+          "rank": 9,
+          "classname": "Idling",
+          "similarity": 0.3557523488998413
+        },
+        {
+          "rank": 10,
+          "classname": "Vehicle",
+          "similarity": 0.35129597783088684
+        }
+      ],
+      "ground_truth_labels": [
+        "/m/0cj0r"
+      ],
+      "ground_truth_human_labels": [
+        "Pink noise"
+      ]
+    },
+    {
+      "sample_id": 69,
+      "video_id": "-ASYwidRD7M",
+      "predicted_top1": "Snoring",
+      "top_k_predictions": [
+        {
+          "rank": 1,
+          "classname": "Snoring",
+          "similarity": 0.395537793636322
+        },
+        {
+          "rank": 2,
+          "classname": "Inside, small room",
+          "similarity": 0.2970550060272217
+        },
+        {
+          "rank": 3,
+          "classname": "Lullaby",
+          "similarity": 0.27890318632125854
+        },
+        {
+          "rank": 4,
+          "classname": "Bee, wasp, etc.",
+          "similarity": 0.24714812636375427
+        },
+        {
+          "rank": 5,
+          "classname": "Sewing machine",
+          "similarity": 0.24023328721523285
+        },
+        {
+          "rank": 6,
+          "classname": "Growling",
+          "similarity": 0.23671740293502808
+        },
+        {
+          "rank": 7,
+          "classname": "Sad music",
+          "similarity": 0.23662737011909485
+        },
+        {
+          "rank": 8,
+          "classname": "Silence",
+          "similarity": 0.23127877712249756
+        },
+        {
+          "rank": 9,
+          "classname": "Ship",
+          "similarity": 0.2225770354270935
+        },
+        {
+          "rank": 10,
+          "classname": "Snort",
+          "similarity": 0.22065536677837372
+        }
+      ],
+      "ground_truth_labels": [
+        "/m/01d3sd"
+      ],
+      "ground_truth_human_labels": [
+        "Snoring"
+      ]
+    },
+    {
+      "sample_id": 70,
+      "video_id": "-A0MTi2NMGI",
+      "predicted_top1": "Sound effect",
+      "top_k_predictions": [
+        {
+          "rank": 1,
+          "classname": "Sound effect",
+          "similarity": 0.2042309194803238
+        },
+        {
+          "rank": 2,
+          "classname": "Angry music",
+          "similarity": 0.20310714840888977
+        },
+        {
+          "rank": 3,
+          "classname": "Propeller, airscrew",
+          "similarity": 0.2029399871826172
+        },
+        {
+          "rank": 4,
+          "classname": "Music",
+          "similarity": 0.19547715783119202
+        },
+        {
+          "rank": 5,
+          "classname": "Vehicle",
+          "similarity": 0.17026130855083466
+        },
+        {
+          "rank": 6,
+          "classname": "Engine starting",
+          "similarity": 0.1583869755268097
+        },
+        {
+          "rank": 7,
+          "classname": "Theme music",
+          "similarity": 0.1577708125114441
+        },
+        {
+          "rank": 8,
+          "classname": "Mechanisms",
+          "similarity": 0.1560370922088623
+        },
+        {
+          "rank": 9,
+          "classname": "Lawn mower",
+          "similarity": 0.1543610543012619
+        },
+        {
+          "rank": 10,
+          "classname": "Music of Asia",
+          "similarity": 0.1510009616613388
+        }
+      ],
+      "ground_truth_labels": [
+        "/t/dd00134"
+      ],
+      "ground_truth_human_labels": [
+        "Car passing by"
+      ]
+    },
+    {
+      "sample_id": 71,
+      "video_id": "-Ar7D-GARhI",
+      "predicted_top1": "Livestock, farm animals, working animals",
+      "top_k_predictions": [
+        {
+          "rank": 1,
+          "classname": "Livestock, farm animals, working animals",
+          "similarity": 0.2142874002456665
+        },
+        {
+          "rank": 2,
+          "classname": "Bleat",
+          "similarity": 0.19292208552360535
+        },
+        {
+          "rank": 3,
+          "classname": "Goat",
+          "similarity": 0.19175854325294495
+        },
+        {
+          "rank": 4,
+          "classname": "Speech",
+          "similarity": 0.1787807196378708
+        },
+        {
+          "rank": 5,
+          "classname": "Sheep",
+          "similarity": 0.16913019120693207
+        },
+        {
+          "rank": 6,
+          "classname": "Cattle, bovinae",
+          "similarity": 0.11509346961975098
+        },
+        {
+          "rank": 7,
+          "classname": "Male speech, man speaking",
+          "similarity": 0.084135040640831
+        },
+        {
+          "rank": 8,
+          "classname": "Middle Eastern music",
+          "similarity": 0.06365928798913956
+        },
+        {
+          "rank": 9,
+          "classname": "Conversation",
+          "similarity": 0.06270699203014374
+        },
+        {
+          "rank": 10,
+          "classname": "Narration, monologue",
+          "similarity": 0.0625968649983406
+        }
+      ],
+      "ground_truth_labels": [
+        "/m/07bgp",
+        "/m/07q0h5t",
+        "/m/09x0r"
+      ],
+      "ground_truth_human_labels": [
+        "Sheep",
+        "Bleat",
+        "Speech"
+      ]
+    },
+    {
+      "sample_id": 72,
+      "video_id": "-AIrHVeCgtM",
+      "predicted_top1": "Reversing beeps",
+      "top_k_predictions": [
+        {
+          "rank": 1,
+          "classname": "Reversing beeps",
+          "similarity": 0.3410571217536926
+        },
+        {
+          "rank": 2,
+          "classname": "Vehicle",
+          "similarity": 0.28777414560317993
+        },
+        {
+          "rank": 3,
+          "classname": "Medium engine (mid frequency)",
+          "similarity": 0.26434165239334106
+        },
+        {
+          "rank": 4,
+          "classname": "Heavy engine (low frequency)",
+          "similarity": 0.257418155670166
+        },
+        {
+          "rank": 5,
+          "classname": "Truck",
+          "similarity": 0.2563486099243164
+        },
+        {
+          "rank": 6,
+          "classname": "Outside, urban or manmade",
+          "similarity": 0.22095917165279388
+        },
+        {
+          "rank": 7,
+          "classname": "Speech",
+          "similarity": 0.2199328988790512
+        },
+        {
+          "rank": 8,
+          "classname": "Motor vehicle (road)",
+          "similarity": 0.21263429522514343
+        },
+        {
+          "rank": 9,
+          "classname": "Car alarm",
+          "similarity": 0.2082427591085434
+        },
+        {
+          "rank": 10,
+          "classname": "Outside, rural or natural",
+          "similarity": 0.2034081071615219
+        }
+      ],
+      "ground_truth_labels": [
+        "/m/02rhddq",
+        "/m/07r04",
+        "/m/07yv9",
+        "/m/09x0r"
+      ],
+      "ground_truth_human_labels": [
+        "Reversing beeps",
+        "Truck",
+        "Vehicle",
+        "Speech"
+      ]
+    },
+    {
+      "sample_id": 73,
+      "video_id": "-AswFDuOptQ",
+      "predicted_top1": "Song",
+      "top_k_predictions": [
+        {
+          "rank": 1,
+          "classname": "Song",
+          "similarity": 0.277971088886261
+        },
+        {
+          "rank": 2,
+          "classname": "Sound effect",
+          "similarity": 0.26824650168418884
+        },
+        {
+          "rank": 3,
+          "classname": "A capella",
+          "similarity": 0.2667299509048462
+        },
+        {
+          "rank": 4,
+          "classname": "Raindrop",
+          "similarity": 0.26256921887397766
+        },
+        {
+          "rank": 5,
+          "classname": "Background music",
+          "similarity": 0.26182305812835693
+        },
+        {
+          "rank": 6,
+          "classname": "Speech",
+          "similarity": 0.25887370109558105
+        },
+        {
+          "rank": 7,
+          "classname": "Electronic music",
+          "similarity": 0.25365176796913147
+        },
+        {
+          "rank": 8,
+          "classname": "Drip",
+          "similarity": 0.23159654438495636
+        },
+        {
+          "rank": 9,
+          "classname": "Tender music",
+          "similarity": 0.2245759814977646
+        },
+        {
+          "rank": 10,
+          "classname": "Chant",
+          "similarity": 0.2230844348669052
+        }
+      ],
+      "ground_truth_labels": [
+        "/m/04k94",
+        "/m/04rlf",
+        "/m/09x0r"
+      ],
+      "ground_truth_human_labels": [
+        "Liquid",
+        "Music",
+        "Speech"
+      ]
+    },
+    {
+      "sample_id": 74,
+      "video_id": "-BIMKnb3tlo",
+      "predicted_top1": "Traditional music",
+      "top_k_predictions": [
+        {
+          "rank": 1,
+          "classname": "Traditional music",
+          "similarity": 0.3314390778541565
+        },
+        {
+          "rank": 2,
+          "classname": "Folk music",
+          "similarity": 0.2816382050514221
+        },
+        {
+          "rank": 3,
+          "classname": "Middle Eastern music",
+          "similarity": 0.27155566215515137
+        },
+        {
+          "rank": 4,
+          "classname": "Tabla",
+          "similarity": 0.2707541882991791
+        },
+        {
+          "rank": 5,
+          "classname": "Sitar",
+          "similarity": 0.24500784277915955
+        },
+        {
+          "rank": 6,
+          "classname": "Music of Bollywood",
+          "similarity": 0.2357337325811386
+        },
+        {
+          "rank": 7,
+          "classname": "Musical instrument",
+          "similarity": 0.2323947697877884
+        },
+        {
+          "rank": 8,
+          "classname": "Carnatic music",
+          "similarity": 0.2310560941696167
+        },
+        {
+          "rank": 9,
+          "classname": "Bluegrass",
+          "similarity": 0.2254384309053421
+        },
+        {
+          "rank": 10,
+          "classname": "Song",
+          "similarity": 0.21739649772644043
+        }
+      ],
+      "ground_truth_labels": [
+        "/m/01p970",
+        "/m/026t6",
+        "/m/0l14md"
+      ],
+      "ground_truth_human_labels": [
+        "Tabla",
+        "Drum",
+        "Percussion"
+      ]
+    },
+    {
+      "sample_id": 75,
+      "video_id": "-BqpAyCLh7U",
+      "predicted_top1": "Typing",
+      "top_k_predictions": [
+        {
+          "rank": 1,
+          "classname": "Typing",
+          "similarity": 0.3058376908302307
+        },
+        {
+          "rank": 2,
+          "classname": "Gears",
+          "similarity": 0.25493448972702026
+        },
+        {
+          "rank": 3,
+          "classname": "Computer keyboard",
+          "similarity": 0.25465187430381775
+        },
+        {
+          "rank": 4,
+          "classname": "Patter",
+          "similarity": 0.2451189011335373
+        },
+        {
+          "rank": 5,
+          "classname": "Typewriter",
+          "similarity": 0.21308599412441254
+        },
+        {
+          "rank": 6,
+          "classname": "Clicking",
+          "similarity": 0.21086154878139496
+        },
+        {
+          "rank": 7,
+          "classname": "Narration, monologue",
+          "similarity": 0.20401029288768768
+        },
+        {
+          "rank": 8,
+          "classname": "Ratchet, pawl",
+          "similarity": 0.1821930855512619
+        },
+        {
+          "rank": 9,
+          "classname": "Keyboard (musical)",
+          "similarity": 0.17702344059944153
+        },
+        {
+          "rank": 10,
+          "classname": "Speech",
+          "similarity": 0.17486663162708282
+        }
+      ],
+      "ground_truth_labels": [
+        "/m/01m2v",
+        "/m/04rlf",
+        "/m/09x0r"
+      ],
+      "ground_truth_human_labels": [
+        "Computer keyboard",
+        "Music",
+        "Speech"
+      ]
+    },
+    {
+      "sample_id": 76,
+      "video_id": "-B3_mFE3pog",
+      "predicted_top1": "Dubstep",
+      "top_k_predictions": [
+        {
+          "rank": 1,
+          "classname": "Dubstep",
+          "similarity": 0.2515003979206085
+        },
+        {
+          "rank": 2,
+          "classname": "Rapping",
+          "similarity": 0.21151705086231232
+        },
+        {
+          "rank": 3,
+          "classname": "Sound effect",
+          "similarity": 0.1883954107761383
+        },
+        {
+          "rank": 4,
+          "classname": "Electronic music",
+          "similarity": 0.16677533090114594
+        },
+        {
+          "rank": 5,
+          "classname": "Zing",
+          "similarity": 0.1628248393535614
+        },
+        {
+          "rank": 6,
+          "classname": "Jingle, tinkle",
+          "similarity": 0.15543287992477417
+        },
+        {
+          "rank": 7,
+          "classname": "Hip hop music",
+          "similarity": 0.1547463834285736
+        },
+        {
+          "rank": 8,
+          "classname": "Music",
+          "similarity": 0.14266589283943176
+        },
+        {
+          "rank": 9,
+          "classname": "Drum and bass",
+          "similarity": 0.1350736767053604
+        },
+        {
+          "rank": 10,
+          "classname": "Glockenspiel",
+          "similarity": 0.13376379013061523
+        }
+      ],
+      "ground_truth_labels": [
+        "/m/07qfgpx"
+      ],
+      "ground_truth_human_labels": [
+        "Jingle, tinkle"
+      ]
+    },
+    {
+      "sample_id": 77,
+      "video_id": "-BxQ9nkrId4",
+      "predicted_top1": "Speech",
+      "top_k_predictions": [
+        {
+          "rank": 1,
+          "classname": "Speech",
+          "similarity": 0.2867414951324463
+        },
+        {
+          "rank": 2,
+          "classname": "Bus",
+          "similarity": 0.28271055221557617
+        },
+        {
+          "rank": 3,
+          "classname": "Crowd",
+          "similarity": 0.2693557143211365
+        },
+        {
+          "rank": 4,
+          "classname": "Inside, public space",
+          "similarity": 0.2627963423728943
+        },
+        {
+          "rank": 5,
+          "classname": "Chatter",
+          "similarity": 0.2573831081390381
+        },
+        {
+          "rank": 6,
+          "classname": "Subway, metro, underground",
+          "similarity": 0.25550374388694763
+        },
+        {
+          "rank": 7,
+          "classname": "Hubbub, speech noise, speech babble",
+          "similarity": 0.23662394285202026
+        },
+        {
+          "rank": 8,
+          "classname": "Vehicle",
+          "similarity": 0.2220277637243271
+        },
+        {
+          "rank": 9,
+          "classname": "Boat, Water vehicle",
+          "similarity": 0.21770372986793518
+        },
+        {
+          "rank": 10,
+          "classname": "Traffic noise, roadway noise",
+          "similarity": 0.20808708667755127
+        }
+      ],
+      "ground_truth_labels": [
+        "/m/07qv_x_"
+      ],
+      "ground_truth_human_labels": [
+        "Shuffle"
+      ]
+    },
+    {
+      "sample_id": 78,
+      "video_id": "-By_0iIghuE",
+      "predicted_top1": "Caterwaul",
+      "top_k_predictions": [
+        {
+          "rank": 1,
+          "classname": "Caterwaul",
+          "similarity": 0.515363872051239
+        },
+        {
+          "rank": 2,
+          "classname": "Cat",
+          "similarity": 0.43623316287994385
+        },
+        {
+          "rank": 3,
+          "classname": "Canidae, dogs, wolves",
+          "similarity": 0.42096978425979614
+        },
+        {
+          "rank": 4,
+          "classname": "Domestic animals, pets",
+          "similarity": 0.3967611789703369
+        },
+        {
+          "rank": 5,
+          "classname": "Animal",
+          "similarity": 0.3911490738391876
+        },
+        {
+          "rank": 6,
+          "classname": "Growling",
+          "similarity": 0.3747238516807556
+        },
+        {
+          "rank": 7,
+          "classname": "Meow",
+          "similarity": 0.36669278144836426
+        },
+        {
+          "rank": 8,
+          "classname": "Roaring cats (lions, tigers)",
+          "similarity": 0.34394633769989014
+        },
+        {
+          "rank": 9,
+          "classname": "Wild animals",
+          "similarity": 0.3405439853668213
+        },
+        {
+          "rank": 10,
+          "classname": "Yip",
+          "similarity": 0.33972007036209106
+        }
+      ],
+      "ground_truth_labels": [
+        "/m/01yrx",
+        "/m/068hy",
+        "/m/07r81j2",
+        "/m/0jbk"
+      ],
+      "ground_truth_human_labels": [
+        "Cat",
+        "Domestic animals, pets",
+        "Caterwaul",
+        "Animal"
+      ]
+    },
+    {
+      "sample_id": 79,
+      "video_id": "-BwM5Va6XFg",
+      "predicted_top1": "Cash register",
+      "top_k_predictions": [
+        {
+          "rank": 1,
+          "classname": "Cash register",
+          "similarity": 0.36854287981987
+        },
+        {
+          "rank": 2,
+          "classname": "Dishes, pots, and pans",
+          "similarity": 0.36587297916412354
+        },
+        {
+          "rank": 3,
+          "classname": "Cutlery, silverware",
+          "similarity": 0.3392381966114044
+        },
+        {
+          "rank": 4,
+          "classname": "Drawer open or close",
+          "similarity": 0.3153795599937439
+        },
+        {
+          "rank": 5,
+          "classname": "Microwave oven",
+          "similarity": 0.29172611236572266
+        },
+        {
+          "rank": 6,
+          "classname": "Gospel music",
+          "similarity": 0.2884383797645569
+        },
+        {
+          "rank": 7,
+          "classname": "Female speech, woman speaking",
+          "similarity": 0.28540927171707153
+        },
+        {
+          "rank": 8,
+          "classname": "Rapping",
+          "similarity": 0.2798006534576416
+        },
+        {
+          "rank": 9,
+          "classname": "Smash, crash",
+          "similarity": 0.27915728092193604
+        },
+        {
+          "rank": 10,
+          "classname": "Hammer",
+          "similarity": 0.2713126540184021
+        }
+      ],
+      "ground_truth_labels": [
+        "/m/023pjk",
+        "/m/04brg2"
+      ],
+      "ground_truth_human_labels": [
+        "Cutlery, silverware",
+        "Dishes, pots, and pans"
+      ]
+    },
+    {
+      "sample_id": 80,
+      "video_id": "-CUp_Tmg2Y0",
+      "predicted_top1": "Drum kit",
+      "top_k_predictions": [
+        {
+          "rank": 1,
+          "classname": "Drum kit",
+          "similarity": 0.3450731337070465
+        },
+        {
+          "rank": 2,
+          "classname": "Rimshot",
+          "similarity": 0.3274756669998169
+        },
+        {
+          "rank": 3,
+          "classname": "Drum roll",
+          "similarity": 0.3164527416229248
+        },
+        {
+          "rank": 4,
+          "classname": "Funk",
+          "similarity": 0.2770165801048279
+        },
+        {
+          "rank": 5,
+          "classname": "Bass drum",
+          "similarity": 0.258333683013916
+        },
+        {
+          "rank": 6,
+          "classname": "Drum",
+          "similarity": 0.24736839532852173
+        },
+        {
+          "rank": 7,
+          "classname": "Jazz",
+          "similarity": 0.23709522187709808
+        },
+        {
+          "rank": 8,
+          "classname": "Soundtrack music",
+          "similarity": 0.2104119062423706
+        },
+        {
+          "rank": 9,
+          "classname": "Punk rock",
+          "similarity": 0.20308925211429596
+        },
+        {
+          "rank": 10,
+          "classname": "Music",
+          "similarity": 0.19877195358276367
+        }
+      ],
+      "ground_truth_labels": [
+        "/m/01qbl",
+        "/m/026t6",
+        "/m/02hnl",
+        "/m/03qtq",
+        "/m/03t3fj",
+        "/m/0bm02",
+        "/m/0l14md"
+      ],
+      "ground_truth_human_labels": [
+        "Cymbal",
+        "Drum",
+        "Drum kit",
+        "Hi-hat",
+        "Rimshot",
+        "Bass drum",
+        "Percussion"
+      ]
+    },
+    {
+      "sample_id": 81,
+      "video_id": "-C5dEU4zpJg",
+      "predicted_top1": "Music",
+      "top_k_predictions": [
+        {
+          "rank": 1,
+          "classname": "Music",
+          "similarity": 0.285189688205719
+        },
+        {
+          "rank": 2,
+          "classname": "Exciting music",
+          "similarity": 0.25522977113723755
+        },
+        {
+          "rank": 3,
+          "classname": "Song",
+          "similarity": 0.23616772890090942
+        },
+        {
+          "rank": 4,
+          "classname": "Disco",
+          "similarity": 0.22963547706604004
+        },
+        {
+          "rank": 5,
+          "classname": "Happy music",
+          "similarity": 0.22249360382556915
+        },
+        {
+          "rank": 6,
+          "classname": "Bluegrass",
+          "similarity": 0.22187772393226624
+        },
+        {
+          "rank": 7,
+          "classname": "Electronic music",
+          "similarity": 0.20865437388420105
+        },
+        {
+          "rank": 8,
+          "classname": "Chopping (food)",
+          "similarity": 0.1973426342010498
+        },
+        {
+          "rank": 9,
+          "classname": "Salsa music",
+          "similarity": 0.19269755482673645
+        },
+        {
+          "rank": 10,
+          "classname": "Shuffling cards",
+          "similarity": 0.1879035085439682
+        }
+      ],
+      "ground_truth_labels": [
+        "/m/025_jnm",
+        "/m/04rlf"
+      ],
+      "ground_truth_human_labels": [
+        "Finger snapping",
+        "Music"
+      ]
+    },
+    {
+      "sample_id": 82,
+      "video_id": "-CIxoobEubQ",
+      "predicted_top1": "Sawing",
+      "top_k_predictions": [
+        {
+          "rank": 1,
+          "classname": "Sawing",
+          "similarity": 0.3005409240722656
+        },
+        {
+          "rank": 2,
+          "classname": "Filing (rasp)",
+          "similarity": 0.2816101312637329
+        },
+        {
+          "rank": 3,
+          "classname": "Sanding",
+          "similarity": 0.24430763721466064
+        },
+        {
+          "rank": 4,
+          "classname": "Tools",
+          "similarity": 0.2330586463212967
+        },
+        {
+          "rank": 5,
+          "classname": "Wood",
+          "similarity": 0.2318103164434433
+        },
+        {
+          "rank": 6,
+          "classname": "Outside, rural or natural",
+          "similarity": 0.20234569907188416
+        },
+        {
+          "rank": 7,
+          "classname": "Chopping (food)",
+          "similarity": 0.19437167048454285
+        },
+        {
+          "rank": 8,
+          "classname": "Music",
+          "similarity": 0.19424840807914734
+        },
+        {
+          "rank": 9,
+          "classname": "Chop",
+          "similarity": 0.18823997676372528
+        },
+        {
+          "rank": 10,
+          "classname": "Wind instrument, woodwind instrument",
+          "similarity": 0.1537962555885315
+        }
+      ],
+      "ground_truth_labels": [
+        "/m/02p01q",
+        "/m/07pdjhy",
+        "/m/083vt"
+      ],
+      "ground_truth_human_labels": [
+        "Filing (rasp)",
+        "Rub",
+        "Wood"
+      ]
+    },
+    {
+      "sample_id": 83,
+      "video_id": "-CHMeZVAe2s",
+      "predicted_top1": "Heart sounds, heartbeat",
+      "top_k_predictions": [
+        {
+          "rank": 1,
+          "classname": "Heart sounds, heartbeat",
+          "similarity": 0.41625988483428955
+        },
+        {
+          "rank": 2,
+          "classname": "Heart murmur",
+          "similarity": 0.3533327579498291
+        },
+        {
+          "rank": 3,
+          "classname": "Throbbing",
+          "similarity": 0.3512904942035675
+        },
+        {
+          "rank": 4,
+          "classname": "Run",
+          "similarity": 0.2972601354122162
+        },
+        {
+          "rank": 5,
+          "classname": "Outside, rural or natural",
+          "similarity": 0.2533133625984192
+        },
+        {
+          "rank": 6,
+          "classname": "Electronic music",
+          "similarity": 0.24489475786685944
+        },
+        {
+          "rank": 7,
+          "classname": "Sound effect",
+          "similarity": 0.24343916773796082
+        },
+        {
+          "rank": 8,
+          "classname": "Hum",
+          "similarity": 0.2426595687866211
+        },
+        {
+          "rank": 9,
+          "classname": "Horse",
+          "similarity": 0.238875150680542
+        },
+        {
+          "rank": 10,
+          "classname": "Walk, footsteps",
+          "similarity": 0.23724091053009033
+        }
+      ],
+      "ground_truth_labels": [
+        "/m/01jg1z"
+      ],
+      "ground_truth_human_labels": [
+        "Heart murmur"
+      ]
+    },
+    {
+      "sample_id": 84,
+      "video_id": "-DNkAalo7og",
+      "predicted_top1": "Jet engine",
+      "top_k_predictions": [
+        {
+          "rank": 1,
+          "classname": "Jet engine",
+          "similarity": 0.4009617567062378
+        },
+        {
+          "rank": 2,
+          "classname": "Propeller, airscrew",
+          "similarity": 0.3651343584060669
+        },
+        {
+          "rank": 3,
+          "classname": "Aircraft engine",
+          "similarity": 0.3231008052825928
+        },
+        {
+          "rank": 4,
+          "classname": "Fixed-wing aircraft, airplane",
+          "similarity": 0.30383747816085815
+        },
+        {
+          "rank": 5,
+          "classname": "Aircraft",
+          "similarity": 0.28585562109947205
+        },
+        {
+          "rank": 6,
+          "classname": "Medium engine (mid frequency)",
+          "similarity": 0.27065250277519226
+        },
+        {
+          "rank": 7,
+          "classname": "Vacuum cleaner",
+          "similarity": 0.2540879249572754
+        },
+        {
+          "rank": 8,
+          "classname": "Heavy engine (low frequency)",
+          "similarity": 0.24241626262664795
+        },
+        {
+          "rank": 9,
+          "classname": "Inside, large room or hall",
+          "similarity": 0.23834842443466187
+        },
+        {
+          "rank": 10,
+          "classname": "Engine",
+          "similarity": 0.23412299156188965
+        }
+      ],
+      "ground_truth_labels": [
+        "/m/02mk9",
+        "/m/07pb8fc",
+        "/t/dd00066"
+      ],
+      "ground_truth_human_labels": [
+        "Engine",
+        "Idling",
+        "Medium engine (mid frequency)"
+      ]
+    },
+    {
+      "sample_id": 85,
+      "video_id": "-CniGkDLq-Y",
+      "predicted_top1": "Music of Asia",
+      "top_k_predictions": [
+        {
+          "rank": 1,
+          "classname": "Music of Asia",
+          "similarity": 0.2894895076751709
+        },
+        {
+          "rank": 2,
+          "classname": "Singing",
+          "similarity": 0.22347700595855713
+        },
+        {
+          "rank": 3,
+          "classname": "Pop music",
+          "similarity": 0.2029503732919693
+        },
+        {
+          "rank": 4,
+          "classname": "Musical instrument",
+          "similarity": 0.191266268491745
+        },
+        {
+          "rank": 5,
+          "classname": "Rhythm and blues",
+          "similarity": 0.16388937830924988
+        },
+        {
+          "rank": 6,
+          "classname": "Soul music",
+          "similarity": 0.15419073402881622
+        },
+        {
+          "rank": 7,
+          "classname": "Music",
+          "similarity": 0.146376371383667
+        },
+        {
+          "rank": 8,
+          "classname": "Song",
+          "similarity": 0.13732470571994781
+        },
+        {
+          "rank": 9,
+          "classname": "Vocal music",
+          "similarity": 0.12221244722604752
+        },
+        {
+          "rank": 10,
+          "classname": "Keyboard (musical)",
+          "similarity": 0.11483578383922577
+        }
+      ],
+      "ground_truth_labels": [
+        "/m/04rlf",
+        "/t/dd00004"
+      ],
+      "ground_truth_human_labels": [
+        "Music",
+        "Female singing"
+      ]
+    },
+    {
+      "sample_id": 86,
+      "video_id": "-DBcp6YGi6k",
+      "predicted_top1": "Pig",
+      "top_k_predictions": [
+        {
+          "rank": 1,
+          "classname": "Pig",
+          "similarity": 0.5256497263908386
+        },
+        {
+          "rank": 2,
+          "classname": "Oink",
+          "similarity": 0.4783211350440979
+        },
+        {
+          "rank": 3,
+          "classname": "Livestock, farm animals, working animals",
+          "similarity": 0.4032796621322632
+        },
+        {
+          "rank": 4,
+          "classname": "Cattle, bovinae",
+          "similarity": 0.398240327835083
+        },
+        {
+          "rank": 5,
+          "classname": "Roaring cats (lions, tigers)",
+          "similarity": 0.3775159418582916
+        },
+        {
+          "rank": 6,
+          "classname": "Domestic animals, pets",
+          "similarity": 0.36580491065979004
+        },
+        {
+          "rank": 7,
+          "classname": "Bleat",
+          "similarity": 0.3349275588989258
+        },
+        {
+          "rank": 8,
+          "classname": "Snoring",
+          "similarity": 0.3296692669391632
+        },
+        {
+          "rank": 9,
+          "classname": "Cat",
+          "similarity": 0.3280675411224365
+        },
+        {
+          "rank": 10,
+          "classname": "Wild animals",
+          "similarity": 0.32794952392578125
+        }
+      ],
+      "ground_truth_labels": [
+        "/t/dd00018"
+      ],
+      "ground_truth_human_labels": [
+        "Oink"
+      ]
+    },
+    {
+      "sample_id": 87,
+      "video_id": "-CgdUiJaNdU",
+      "predicted_top1": "Belly laugh",
+      "top_k_predictions": [
+        {
+          "rank": 1,
+          "classname": "Belly laugh",
+          "similarity": 0.39543023705482483
+        },
+        {
+          "rank": 2,
+          "classname": "Crying, sobbing",
+          "similarity": 0.34472158551216125
+        },
+        {
+          "rank": 3,
+          "classname": "Laughter",
+          "similarity": 0.32700270414352417
+        },
+        {
+          "rank": 4,
+          "classname": "Giggle",
+          "similarity": 0.27754244208335876
+        },
+        {
+          "rank": 5,
+          "classname": "Snicker",
+          "similarity": 0.2755696177482605
+        },
+        {
+          "rank": 6,
+          "classname": "Speech",
+          "similarity": 0.2431163191795349
+        },
+        {
+          "rank": 7,
+          "classname": "Baby cry, infant cry",
+          "similarity": 0.23223398625850677
+        },
+        {
+          "rank": 8,
+          "classname": "Wail, moan",
+          "similarity": 0.2248430699110031
+        },
+        {
+          "rank": 9,
+          "classname": "Screaming",
+          "similarity": 0.211109921336174
+        },
+        {
+          "rank": 10,
+          "classname": "Babbling",
+          "similarity": 0.1965024769306183
+        }
+      ],
+      "ground_truth_labels": [
+        "/m/07sq110",
+        "/m/09x0r"
+      ],
+      "ground_truth_human_labels": [
+        "Belly laugh",
+        "Speech"
+      ]
+    },
+    {
+      "sample_id": 88,
+      "video_id": "-DWRAxaH_RY",
+      "predicted_top1": "Musical instrument",
+      "top_k_predictions": [
+        {
+          "rank": 1,
+          "classname": "Musical instrument",
+          "similarity": 0.2923736274242401
+        },
+        {
+          "rank": 2,
+          "classname": "Steelpan",
+          "similarity": 0.22633041441440582
+        },
+        {
+          "rank": 3,
+          "classname": "Pizzicato",
+          "similarity": 0.19532805681228638
+        },
+        {
+          "rank": 4,
+          "classname": "Salsa music",
+          "similarity": 0.18310122191905975
+        },
+        {
+          "rank": 5,
+          "classname": "Traditional music",
+          "similarity": 0.1829533576965332
+        },
+        {
+          "rank": 6,
+          "classname": "Bluegrass",
+          "similarity": 0.1776909977197647
+        },
+        {
+          "rank": 7,
+          "classname": "Jazz",
+          "similarity": 0.17360275983810425
+        },
+        {
+          "rank": 8,
+          "classname": "Wedding music",
+          "similarity": 0.1680651158094406
+        },
+        {
+          "rank": 9,
+          "classname": "Mandolin",
+          "similarity": 0.15050950646400452
+        },
+        {
+          "rank": 10,
+          "classname": "Music of Africa",
+          "similarity": 0.14114150404930115
+        }
+      ],
+      "ground_truth_labels": [
+        "/m/04rlf",
+        "/m/09x0r",
+        "/m/0l156b"
+      ],
+      "ground_truth_human_labels": [
+        "Music",
+        "Speech",
+        "Steelpan"
+      ]
+    },
+    {
+      "sample_id": 89,
+      "video_id": "-DLL8LaKq-c",
+      "predicted_top1": "Burst, pop",
+      "top_k_predictions": [
+        {
+          "rank": 1,
+          "classname": "Burst, pop",
+          "similarity": 0.29503509402275085
+        },
+        {
+          "rank": 2,
+          "classname": "Speech",
+          "similarity": 0.2576349973678589
+        },
+        {
+          "rank": 3,
+          "classname": "Breaking",
+          "similarity": 0.24634908139705658
+        },
+        {
+          "rank": 4,
+          "classname": "Fire",
+          "similarity": 0.23280954360961914
+        },
+        {
+          "rank": 5,
+          "classname": "Splinter",
+          "similarity": 0.22660067677497864
+        },
+        {
+          "rank": 6,
+          "classname": "Chop",
+          "similarity": 0.2241358906030655
+        },
+        {
+          "rank": 7,
+          "classname": "Firecracker",
+          "similarity": 0.22314806282520294
+        },
+        {
+          "rank": 8,
+          "classname": "Smash, crash",
+          "similarity": 0.21595150232315063
+        },
+        {
+          "rank": 9,
+          "classname": "Arrow",
+          "similarity": 0.21584855020046234
+        },
+        {
+          "rank": 10,
+          "classname": "Whoosh, swoosh, swish",
+          "similarity": 0.21082550287246704
+        }
+      ],
+      "ground_truth_labels": [
+        "/m/07pws3f",
+        "/m/09x0r"
+      ],
+      "ground_truth_human_labels": [
+        "Bang",
+        "Speech"
+      ]
+    },
+    {
+      "sample_id": 90,
+      "video_id": "-DZMYxyB6L8",
+      "predicted_top1": "Sad music",
+      "top_k_predictions": [
+        {
+          "rank": 1,
+          "classname": "Sad music",
+          "similarity": 0.32278966903686523
+        },
+        {
+          "rank": 2,
+          "classname": "Tender music",
+          "similarity": 0.2867407202720642
+        },
+        {
+          "rank": 3,
+          "classname": "Opera",
+          "similarity": 0.27053582668304443
+        },
+        {
+          "rank": 4,
+          "classname": "Classical music",
+          "similarity": 0.2566549777984619
+        },
+        {
+          "rank": 5,
+          "classname": "Wedding music",
+          "similarity": 0.24522966146469116
+        },
+        {
+          "rank": 6,
+          "classname": "Choir",
+          "similarity": 0.23396044969558716
+        },
+        {
+          "rank": 7,
+          "classname": "Christmas music",
+          "similarity": 0.22841817140579224
+        },
+        {
+          "rank": 8,
+          "classname": "Singing",
+          "similarity": 0.217808797955513
+        },
+        {
+          "rank": 9,
+          "classname": "Song",
+          "similarity": 0.210132896900177
+        },
+        {
+          "rank": 10,
+          "classname": "Music",
+          "similarity": 0.20609310269355774
+        }
+      ],
+      "ground_truth_labels": [
+        "/m/05lls"
+      ],
+      "ground_truth_human_labels": [
+        "Opera"
+      ]
+    },
+    {
+      "sample_id": 91,
+      "video_id": "-DcMk015qSA",
+      "predicted_top1": "Mechanisms",
+      "top_k_predictions": [
+        {
+          "rank": 1,
+          "classname": "Mechanisms",
+          "similarity": 0.31912750005722046
+        },
+        {
+          "rank": 2,
+          "classname": "Gears",
+          "similarity": 0.3052103817462921
+        },
+        {
+          "rank": 3,
+          "classname": "Speech",
+          "similarity": 0.2718040645122528
+        },
+        {
+          "rank": 4,
+          "classname": "Ratchet, pawl",
+          "similarity": 0.24907730519771576
+        },
+        {
+          "rank": 5,
+          "classname": "Tools",
+          "similarity": 0.24906279146671295
+        },
+        {
+          "rank": 6,
+          "classname": "Cutlery, silverware",
+          "similarity": 0.24311921000480652
+        },
+        {
+          "rank": 7,
+          "classname": "Pulleys",
+          "similarity": 0.20720995962619781
+        },
+        {
+          "rank": 8,
+          "classname": "Dishes, pots, and pans",
+          "similarity": 0.16100171208381653
+        },
+        {
+          "rank": 9,
+          "classname": "Hammer",
+          "similarity": 0.14993765950202942
+        },
+        {
+          "rank": 10,
+          "classname": "Musical instrument",
+          "similarity": 0.12628057599067688
+        }
+      ],
+      "ground_truth_labels": [
+        "/m/07qh7jl"
+      ],
+      "ground_truth_human_labels": [
+        "Creak"
+      ]
+    },
+    {
+      "sample_id": 92,
+      "video_id": "-D_ljLTbCK0",
+      "predicted_top1": "Helicopter",
+      "top_k_predictions": [
+        {
+          "rank": 1,
+          "classname": "Helicopter",
+          "similarity": 0.3248217701911926
+        },
+        {
+          "rank": 2,
+          "classname": "Propeller, airscrew",
+          "similarity": 0.24168740212917328
+        },
+        {
+          "rank": 3,
+          "classname": "Sound effect",
+          "similarity": 0.20887920260429382
+        },
+        {
+          "rank": 4,
+          "classname": "Outside, urban or manmade",
+          "similarity": 0.19732290506362915
+        },
+        {
+          "rank": 5,
+          "classname": "Fixed-wing aircraft, airplane",
+          "similarity": 0.19615861773490906
+        },
+        {
+          "rank": 6,
+          "classname": "Music",
+          "similarity": 0.19486631453037262
+        },
+        {
+          "rank": 7,
+          "classname": "Outside, rural or natural",
+          "similarity": 0.18643318116664886
+        },
+        {
+          "rank": 8,
+          "classname": "Vehicle",
+          "similarity": 0.18472331762313843
+        },
+        {
+          "rank": 9,
+          "classname": "Jackhammer",
+          "similarity": 0.18431037664413452
+        },
+        {
+          "rank": 10,
+          "classname": "Ship",
+          "similarity": 0.1643248349428177
+        }
+      ],
+      "ground_truth_labels": [
+        "/m/04rlf",
+        "/m/09ct_"
+      ],
+      "ground_truth_human_labels": [
+        "Music",
+        "Helicopter"
+      ]
+    },
+    {
+      "sample_id": 93,
+      "video_id": "-DeAdhYKbGE",
+      "predicted_top1": "Bagpipes",
+      "top_k_predictions": [
+        {
+          "rank": 1,
+          "classname": "Bagpipes",
+          "similarity": 0.43736696243286133
+        },
+        {
+          "rank": 2,
+          "classname": "Bluegrass",
+          "similarity": 0.3330065608024597
+        },
+        {
+          "rank": 3,
+          "classname": "Wedding music",
+          "similarity": 0.3189048767089844
+        },
+        {
+          "rank": 4,
+          "classname": "Wind instrument, woodwind instrument",
+          "similarity": 0.2936449944972992
+        },
+        {
+          "rank": 5,
+          "classname": "Traditional music",
+          "similarity": 0.29266923666000366
+        },
+        {
+          "rank": 6,
+          "classname": "Classical music",
+          "similarity": 0.2588980197906494
+        },
+        {
+          "rank": 7,
+          "classname": "Orchestra",
+          "similarity": 0.25072184205055237
+        },
+        {
+          "rank": 8,
+          "classname": "Folk music",
+          "similarity": 0.2498975694179535
+        },
+        {
+          "rank": 9,
+          "classname": "Music",
+          "similarity": 0.2418023943901062
+        },
+        {
+          "rank": 10,
+          "classname": "Field recording",
+          "similarity": 0.23415181040763855
+        }
+      ],
+      "ground_truth_labels": [
+        "/m/0192l",
+        "/m/085jw"
+      ],
+      "ground_truth_human_labels": [
+        "Bagpipes",
+        "Wind instrument, woodwind instrument"
+      ]
+    },
+    {
+      "sample_id": 94,
+      "video_id": "-Dtir74TiUM",
+      "predicted_top1": "Scratching (performance technique)",
+      "top_k_predictions": [
+        {
+          "rank": 1,
+          "classname": "Scratching (performance technique)",
+          "similarity": 0.3651134669780731
+        },
+        {
+          "rank": 2,
+          "classname": "Music",
+          "similarity": 0.23854607343673706
+        },
+        {
+          "rank": 3,
+          "classname": "Electronic music",
+          "similarity": 0.23237644135951996
+        },
+        {
+          "rank": 4,
+          "classname": "Sound effect",
+          "similarity": 0.22824479639530182
+        },
+        {
+          "rank": 5,
+          "classname": "Rapping",
+          "similarity": 0.21673282980918884
+        },
+        {
+          "rank": 6,
+          "classname": "Hip hop music",
+          "similarity": 0.21355479955673218
+        },
+        {
+          "rank": 7,
+          "classname": "Scratch",
+          "similarity": 0.20444108545780182
+        },
+        {
+          "rank": 8,
+          "classname": "Musical instrument",
+          "similarity": 0.19070972502231598
+        },
+        {
+          "rank": 9,
+          "classname": "Sampler",
+          "similarity": 0.1816486418247223
+        },
+        {
+          "rank": 10,
+          "classname": "Dubstep",
+          "similarity": 0.1763170212507248
+        }
+      ],
+      "ground_truth_labels": [
+        "/m/01hgjl",
+        "/m/0283d",
+        "/m/04rlf",
+        "/m/07qb_dv"
+      ],
+      "ground_truth_human_labels": [
+        "Scratching (performance technique)",
+        "Drum and bass",
+        "Music",
+        "Scratch"
+      ]
+    },
+    {
+      "sample_id": 95,
+      "video_id": "-Dj2PfPmynQ",
+      "predicted_top1": "Ska",
+      "top_k_predictions": [
+        {
+          "rank": 1,
+          "classname": "Ska",
+          "similarity": 0.3709764778614044
+        },
+        {
+          "rank": 2,
+          "classname": "Salsa music",
+          "similarity": 0.36010998487472534
+        },
+        {
+          "rank": 3,
+          "classname": "Folk music",
+          "similarity": 0.335131973028183
+        },
+        {
+          "rank": 4,
+          "classname": "Song",
+          "similarity": 0.3307987153530121
+        },
+        {
+          "rank": 5,
+          "classname": "Percussion",
+          "similarity": 0.3198055624961853
+        },
+        {
+          "rank": 6,
+          "classname": "Happy music",
+          "similarity": 0.31492725014686584
+        },
+        {
+          "rank": 7,
+          "classname": "Music",
+          "similarity": 0.31414660811424255
+        },
+        {
+          "rank": 8,
+          "classname": "Music of Africa",
+          "similarity": 0.3136531114578247
+        },
+        {
+          "rank": 9,
+          "classname": "Maraca",
+          "similarity": 0.3132699728012085
+        },
+        {
+          "rank": 10,
+          "classname": "Jazz",
+          "similarity": 0.3066173195838928
+        }
+      ],
+      "ground_truth_labels": [
+        "/m/04rlf",
+        "/m/0l14jd",
+        "/t/dd00003",
+        "/t/dd00004"
+      ],
+      "ground_truth_human_labels": [
+        "Music",
+        "Choir",
+        "Male singing",
+        "Female singing"
+      ]
+    },
+    {
+      "sample_id": 96,
+      "video_id": "-Dl-VzBPd9E",
+      "predicted_top1": "Applause",
+      "top_k_predictions": [
+        {
+          "rank": 1,
+          "classname": "Applause",
+          "similarity": 0.3929342031478882
+        },
+        {
+          "rank": 2,
+          "classname": "Cheering",
+          "similarity": 0.2826096713542938
+        },
+        {
+          "rank": 3,
+          "classname": "Musical instrument",
+          "similarity": 0.22716286778450012
+        },
+        {
+          "rank": 4,
+          "classname": "Classical music",
+          "similarity": 0.22683343291282654
+        },
+        {
+          "rank": 5,
+          "classname": "Inside, public space",
+          "similarity": 0.22166576981544495
+        },
+        {
+          "rank": 6,
+          "classname": "Wind instrument, woodwind instrument",
+          "similarity": 0.21045121550559998
+        },
+        {
+          "rank": 7,
+          "classname": "Shout",
+          "similarity": 0.20720726251602173
+        },
+        {
+          "rank": 8,
+          "classname": "Inside, large room or hall",
+          "similarity": 0.2034388929605484
+        },
+        {
+          "rank": 9,
+          "classname": "Outside, urban or manmade",
+          "similarity": 0.19183015823364258
+        },
+        {
+          "rank": 10,
+          "classname": "Orchestra",
+          "similarity": 0.1857939064502716
+        }
+      ],
+      "ground_truth_labels": [
+        "/m/028ght"
+      ],
+      "ground_truth_human_labels": [
+        "Applause"
+      ]
+    },
+    {
+      "sample_id": 97,
+      "video_id": "-DvxsHG1tuo",
+      "predicted_top1": "Screaming",
+      "top_k_predictions": [
+        {
+          "rank": 1,
+          "classname": "Screaming",
+          "similarity": 0.2751592993736267
+        },
+        {
+          "rank": 2,
+          "classname": "Yell",
+          "similarity": 0.27390170097351074
+        },
+        {
+          "rank": 3,
+          "classname": "Music",
+          "similarity": 0.2285766303539276
+        },
+        {
+          "rank": 4,
+          "classname": "Battle cry",
+          "similarity": 0.1814475804567337
+        },
+        {
+          "rank": 5,
+          "classname": "Musical instrument",
+          "similarity": 0.17497465014457703
+        },
+        {
+          "rank": 6,
+          "classname": "Electronic music",
+          "similarity": 0.17243081331253052
+        },
+        {
+          "rank": 7,
+          "classname": "Growling",
+          "similarity": 0.16815830767154694
+        },
+        {
+          "rank": 8,
+          "classname": "Music of Asia",
+          "similarity": 0.16634361445903778
+        },
+        {
+          "rank": 9,
+          "classname": "Shout",
+          "similarity": 0.16526955366134644
+        },
+        {
+          "rank": 10,
+          "classname": "Sound effect",
+          "similarity": 0.16366270184516907
+        }
+      ],
+      "ground_truth_labels": [
+        "/m/04rlf",
+        "/m/05zppz",
+        "/m/07sr1lc",
+        "/m/09x0r"
+      ],
+      "ground_truth_human_labels": [
+        "Music",
+        "Male speech, man speaking",
+        "Yell",
+        "Speech"
+      ]
+    },
+    {
+      "sample_id": 98,
+      "video_id": "-EDGR1davAc",
+      "predicted_top1": "Musical instrument",
+      "top_k_predictions": [
+        {
+          "rank": 1,
+          "classname": "Musical instrument",
+          "similarity": 0.3250109553337097
+        },
+        {
+          "rank": 2,
+          "classname": "Bicycle bell",
+          "similarity": 0.3099938631057739
+        },
+        {
+          "rank": 3,
+          "classname": "Bell",
+          "similarity": 0.2813868522644043
+        },
+        {
+          "rank": 4,
+          "classname": "Jingle bell",
+          "similarity": 0.2690083384513855
+        },
+        {
+          "rank": 5,
+          "classname": "Chime",
+          "similarity": 0.24701867997646332
+        },
+        {
+          "rank": 6,
+          "classname": "Tuning fork",
+          "similarity": 0.2425878643989563
+        },
+        {
+          "rank": 7,
+          "classname": "Outside, rural or natural",
+          "similarity": 0.23902109265327454
+        },
+        {
+          "rank": 8,
+          "classname": "Jingle, tinkle",
+          "similarity": 0.23714280128479004
+        },
+        {
+          "rank": 9,
+          "classname": "Carnatic music",
+          "similarity": 0.2349749058485031
+        },
+        {
+          "rank": 10,
+          "classname": "Harmonic",
+          "similarity": 0.22285886108875275
+        }
+      ],
+      "ground_truth_labels": [
+        "/m/0gy1t2s"
+      ],
+      "ground_truth_human_labels": [
+        "Bicycle bell"
+      ]
+    },
+    {
+      "sample_id": 99,
+      "video_id": "-ECK_BisOLM",
+      "predicted_top1": "Wedding music",
+      "top_k_predictions": [
+        {
+          "rank": 1,
+          "classname": "Wedding music",
+          "similarity": 0.2552725672721863
+        },
+        {
+          "rank": 2,
+          "classname": "Singing",
+          "similarity": 0.22330132126808167
+        },
+        {
+          "rank": 3,
+          "classname": "Musical instrument",
+          "similarity": 0.20840616524219513
+        },
+        {
+          "rank": 4,
+          "classname": "Gospel music",
+          "similarity": 0.2060379683971405
+        },
+        {
+          "rank": 5,
+          "classname": "Music",
+          "similarity": 0.1843869388103485
+        },
+        {
+          "rank": 6,
+          "classname": "Tender music",
+          "similarity": 0.18357200920581818
+        },
+        {
+          "rank": 7,
+          "classname": "Child speech, kid speaking",
+          "similarity": 0.17285983264446259
+        },
+        {
+          "rank": 8,
+          "classname": "Traditional music",
+          "similarity": 0.17276528477668762
+        },
+        {
+          "rank": 9,
+          "classname": "Keyboard (musical)",
+          "similarity": 0.166589617729187
+        },
+        {
+          "rank": 10,
+          "classname": "Country",
+          "similarity": 0.16603179275989532
+        }
+      ],
+      "ground_truth_labels": [
+        "/m/04rlf",
+        "/t/dd00006"
+      ],
+      "ground_truth_human_labels": [
+        "Music",
+        "Synthetic singing"
+      ]
+    }
+  ]
+}

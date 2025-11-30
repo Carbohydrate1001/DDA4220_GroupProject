@@ -9,6 +9,7 @@
 - ✅ **ModelScope Specific**: Only uses ModelScope's API, code is simpler
 - ✅ **Parquet Data Support**: Reads audio data directly from parquet files
 - ✅ **Zero-shot Classification**: Classify audio without training
+- ✅ **Comprehensive Evaluation Metrics**: Calculates top-k accuracy, F1 score (micro/macro), and mAP
 - ✅ **Prediction Output**: Outputs prediction results with ground truth labels for comparison
 
 ## Requirements
@@ -66,9 +67,11 @@ python test_clap_modelscope.py \
 Parquet files should contain the following columns:
 
 - `audio`: Dictionary format, containing `bytes` field (audio binary data)
-- `human_labels`: Human-readable labels (string or list)
-- `labels`: Machine-readable labels (optional, stored but not displayed)
+- `human_labels`: Human-readable labels (string or list) - **used for evaluation**
+- `labels`: Machine-readable labels (optional, stored but not used for evaluation)
 - `video_id`: Video/audio ID (optional)
+
+**Note**: The script uses `human_labels` for matching with predicted classnames. Make sure `human_labels` contains the actual class names that match the AudioSet class labels.
 
 ## Output Description
 
@@ -101,6 +104,34 @@ Using device: cuda:0
   Generating classification predictions...
   ✓ Generated 100 prediction results
 
+  Calculating evaluation metrics...
+  Debug: 100/100 samples have at least one matched ground truth label
+
+============================================================
+Evaluation Metrics:
+============================================================
+  Top-k Accuracy:
+    acc@1: 0.3100
+    acc@3: 0.6000
+    acc@5: 0.7000
+    acc@10: 0.8300
+
+  F1 Score:
+    F1 Micro: 0.2892
+    F1 Macro: 0.1217
+    Precision Micro: 0.2120
+    Recall Micro: 0.4549
+    Precision Macro: 0.1160
+    Recall Macro: 0.1280
+
+  Mean Average Precision:
+    mAP: 0.3679
+
+  Sample Statistics:
+    Valid samples (with ground truth): 100
+    Total samples: 100
+============================================================
+
 ============================================================
 Prediction Results Examples (first 5 samples, with ground truth comparison):
 ============================================================
@@ -109,21 +140,21 @@ Sample 1 (video_id: --PJHxphWEs):
   Top-1 Prediction: Speech
   Ground Truth (human_labels): Speech, Gush
   Top-5 Predictions:
-    1. Speech (similarity: 0.8234)
-    2. Music (similarity: 0.7123)
-    3. Gush (similarity: 0.6891)
-    4. Human voice (similarity: 0.6543)
-    5. Conversation (similarity: 0.6234)
+    1. Speech (similarity: 0.2909)
+    2. Children playing (similarity: 0.2408)
+    3. Male speech, man speaking (similarity: 0.1953)
+    4. Child speech, kid speaking (similarity: 0.1947)
+    5. Outside, urban or manmade (similarity: 0.1842)
 
 Sample 2 (video_id: --aE2O5G5WE):
-  Top-1 Prediction: Music
+  Top-1 Prediction: Basketball bounce
   Ground Truth (human_labels): Goat, Music, Speech
   Top-5 Predictions:
-    1. Music (similarity: 0.8765)
-    2. Musical instrument (similarity: 0.7890)
-    3. Speech (similarity: 0.7456)
-    4. Singing (similarity: 0.7123)
-    5. Goat (similarity: 0.6789)
+    1. Basketball bounce (similarity: 0.2456)
+    2. Music (similarity: 0.2234)
+    3. Musical instrument (similarity: 0.1987)
+    4. Speech (similarity: 0.1876)
+    5. Goat (similarity: 0.1754)
 
 ...
 
@@ -153,6 +184,21 @@ Results saved to: clap_modelscope_results_20251130_120000.json
     "mean": 0.2345,
     "std": 0.1234
   },
+  "metrics": {
+    "acc@1": 0.31,
+    "acc@3": 0.60,
+    "acc@5": 0.70,
+    "acc@10": 0.83,
+    "f1_micro": 0.2892,
+    "precision_micro": 0.2120,
+    "recall_micro": 0.4549,
+    "f1_macro": 0.1217,
+    "precision_macro": 0.1160,
+    "recall_macro": 0.1280,
+    "map": 0.3679,
+    "valid_samples": 100,
+    "total_samples": 100
+  },
   "predictions": [
     {
       "sample_id": 0,
@@ -162,22 +208,69 @@ Results saved to: clap_modelscope_results_20251130_120000.json
         {
           "rank": 1,
           "classname": "Speech",
-          "similarity": 0.8234
+          "similarity": 0.2909
         },
         {
           "rank": 2,
-          "classname": "Music",
-          "similarity": 0.7123
+          "classname": "Children playing",
+          "similarity": 0.2408
         },
         ...
       ],
-      "ground_truth_labels": ["Speech", "Gush"],
+      "ground_truth_labels": ["/m/09x0r", "/t/dd00088"],
       "ground_truth_human_labels": ["Speech", "Gush"]
     },
     ...
   ]
 }
 ```
+
+## Evaluation Metrics Explanation
+
+### Top-k Accuracy (acc@k)
+
+**Definition**: The percentage of samples where at least one ground truth label appears in the top-k predictions.
+
+**Interpretation**:
+- `acc@1`: How often the top-1 prediction matches a ground truth label
+- `acc@k` (k>1): How often at least one ground truth label appears in top-k predictions
+- Higher values indicate better performance
+
+**Example**: If ground truth is ["Speech", "Gush"] and top-3 predictions are ["Speech", "Music", "Noise"], this sample contributes to `acc@1` and `acc@3`.
+
+### F1 Score
+
+**Definition**: Harmonic mean of precision and recall.
+
+**Micro F1**: Calculated globally across all samples and classes
+- `f1_micro`: Overall F1 score
+- `precision_micro`: Percentage of predicted positives that are actually positive
+- `recall_micro`: Percentage of actual positives that are correctly predicted
+
+**Macro F1**: Average of F1 scores calculated per class
+- `f1_macro`: Average F1 across all classes
+- `precision_macro`: Average precision across all classes
+- `recall_macro`: Average recall across all classes
+
+**Interpretation**:
+- Micro F1 is more influenced by frequent classes
+- Macro F1 treats all classes equally, useful when classes are imbalanced
+- Higher values indicate better performance
+
+### mAP (mean Average Precision)
+
+**Definition**: Average of Average Precision (AP) across all samples. AP measures the quality of ranking by calculating precision at each relevant item position.
+
+**Calculation**:
+1. For each sample, rank all classes by similarity score
+2. Calculate precision at each position where a ground truth label appears
+3. Average these precisions to get AP for that sample
+4. Average all sample APs to get mAP
+
+**Interpretation**:
+- Higher mAP indicates better ranking quality
+- mAP considers the order of predictions, not just presence
+- Range: 0.0 to 1.0, higher is better
 
 ## Differences from test_clap_audioset.py
 
@@ -186,7 +279,7 @@ Results saved to: clap_modelscope_results_20251130_120000.json
 | Model Support | ModelScope only | ModelScope + laion_clap |
 | Code Complexity | Simple, ModelScope-specific | Complex, supports two models |
 | Functionality | Zero-shot classification | Zero-shot classification + audio-text matching |
-| Accuracy Calculation | No (only outputs predictions) | Yes (calculates accuracy metrics) |
+| Evaluation Metrics | Top-k accuracy, F1 (micro/macro), mAP | Similar metrics |
 | Recommended Use | Only need ModelScope | Need to compare two models |
 
 ## Troubleshooting
@@ -221,6 +314,15 @@ Results saved to: clap_modelscope_results_20251130_120000.json
 - Verify audio preprocessing (resampling, mono conversion)
 - Check if batch processing is working correctly
 
+### Issue 5: All Metrics Are Zero
+```
+Metrics all show 0.0
+```
+**Solution**:
+- Check if `human_labels` in parquet files match AudioSet class names
+- Verify that `human_labels` are human-readable class names (e.g., "Speech", "Music"), not AudioSet IDs (e.g., "/m/09x0r")
+- Check debug output for unmatched labels
+
 ## Examples
 
 ### Windows System
@@ -248,5 +350,6 @@ python test_clap_modelscope.py \
 2. **Memory Usage**: Large number of samples may require more memory, adjust `--num-samples` according to system configuration
 3. **Model Path**: If `--checkpoint` is not specified, the script will automatically download the model from ModelScope
 4. **Class Labels**: Ensure the class labels file exists, otherwise classification test cannot proceed
-5. **Ground Truth**: The script displays `human_labels` in console output, but stores both `labels` and `human_labels` in JSON output
-6. **No Accuracy Calculation**: This script only outputs prediction results and ground truth labels for manual comparison, it does not calculate accuracy metrics
+5. **Ground Truth Labels**: The script uses `human_labels` for evaluation (matching with predicted classnames). Make sure `human_labels` contains class names that match AudioSet class labels exactly (case-insensitive matching is used)
+6. **Evaluation Metrics**: Metrics are only calculated for samples that have `human_labels`. Samples without ground truth labels are excluded from metric calculations
+7. **Label Matching**: The script performs case-insensitive matching between `human_labels` and AudioSet class names. If labels don't match, check the debug output for unmatched labels
