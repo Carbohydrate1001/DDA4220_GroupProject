@@ -1,5 +1,6 @@
 """
 CLAP测试脚本 - 使用AudioSet parquet文件进行测试
+支持两种模型：laion_clap 和 ModelScope ClapModel
 """
 import argparse
 import os
@@ -18,7 +19,8 @@ from datetime import datetime
 if 'HF_ENDPOINT' not in os.environ:
     os.environ['HF_ENDPOINT'] = 'https://hf-mirror.com'
 
-import laion_clap
+# 根据模型类型选择导入
+USE_MODELSCOPE = False  # 将在运行时根据参数设置
 
 def calculate_evaluation_metrics(test_samples, classnames, class_similarity_np, audio_embeds):
     """计算评估指标：准确率、Top-k准确率、mAP等"""
@@ -202,15 +204,26 @@ def save_results_to_json(results, output_file):
     with open(output_file, 'w', encoding='utf-8') as f:
         json.dump(results_serializable, f, indent=2, ensure_ascii=False)
 
-def test_clap_with_parquet(parquet_dir, num_samples=100, audio_dir=None, device='cuda:0', output_json=None):
-    """使用parquet文件测试CLAP模型"""
+def test_clap_with_parquet(parquet_dir, num_samples=100, audio_dir=None, device='cuda:0', output_json=None, checkpoint_path=None, use_modelscope=False):
+    """使用parquet文件测试CLAP模型
+    
+    Parameters:
+    -----------
+    use_modelscope: bool
+        如果为True，使用ModelScope的ClapModel；如果为False，使用laion_clap
+    """
+    global USE_MODELSCOPE
+    USE_MODELSCOPE = use_modelscope
+    
     results = {
         "test_info": {
             "timestamp": datetime.now().isoformat(),
             "parquet_dir": parquet_dir,
             "num_samples": num_samples,
             "audio_dir": audio_dir,
-            "device": device
+            "device": device,
+            "checkpoint_path": checkpoint_path,
+            "use_modelscope": use_modelscope
         },
         "model_info": {},
         "data_info": {},
@@ -247,12 +260,162 @@ def test_clap_with_parquet(parquet_dir, num_samples=100, audio_dir=None, device=
                 pass
     
     try:
-        model = laion_clap.CLAP_Module(enable_fusion=False, device=device)
-        model.load_ckpt()
-        print("✓")
-        results["model_info"] = {"status": "success", "enable_fusion": False, "device": device}
+        if use_modelscope:
+            # 使用ModelScope的ClapModel
+            from modelscope import ClapModel, ClapProcessor
+            
+            print(f"\n  使用ModelScope ClapModel")
+            if checkpoint_path and os.path.exists(checkpoint_path):
+                print(f"  从本地路径加载: {checkpoint_path}")
+                model_path = checkpoint_path
+            else:
+                # 默认使用larger_clap_general
+                model_path = "laion/larger_clap_general"
+                print(f"  使用模型: {model_path}")
+            
+            # 转换device字符串为torch设备对象
+            if device.startswith('cuda'):
+                device_id = int(device.split(':')[1]) if ':' in device else 0
+                torch_device = torch.device(f'cuda:{device_id}')
+            else:
+                torch_device = torch.device('cpu')
+            
+            model = ClapModel.from_pretrained(model_path).to(torch_device)
+            processor = ClapProcessor.from_pretrained(model_path)
+            model.eval()
+            
+            # 包装model和processor以便后续使用
+            class ModelScopeWrapper:
+                def __init__(self, model, processor, device):
+                    self.model = model
+                    self.processor = processor
+                    self.device = device
+                    self._logit_scale = None
+                
+                def get_audio_features(self, audio_data):
+                    """从音频数据提取特征"""
+                    # 处理单个音频（numpy array）
+                    # ModelScope的processor期望音频是numpy array格式
+                    if isinstance(audio_data, list):
+                        # 如果是列表，处理第一个
+                        audio_data = audio_data[0]
+                    
+                    inputs = self.processor(audios=audio_data, return_tensors="pt").to(self.device)
+                    with torch.no_grad():
+                        audio_embed = self.model.get_audio_features(**inputs)
+                    
+                    # ModelScope的get_audio_features可能已经返回归一化的嵌入
+                    # 但为了保险，我们再次归一化
+                    if isinstance(audio_embed, torch.Tensor):
+                        audio_embed = torch.nn.functional.normalize(audio_embed, dim=-1)
+                        audio_embed = audio_embed.cpu().numpy()
+                    else:
+                        # 如果是numpy数组，也进行归一化
+                        norm = np.linalg.norm(audio_embed, axis=-1, keepdims=True)
+                        audio_embed = audio_embed / (norm + 1e-8)
+                    
+                    return audio_embed
+                
+                def get_text_features(self, texts):
+                    """从文本提取特征"""
+                    # 处理文本输入（可能是列表或单个字符串）
+                    if isinstance(texts, str):
+                        texts = [texts]
+                    
+                    inputs = self.processor(text=texts, return_tensors="pt", padding=True, truncation=True).to(self.device)
+                    with torch.no_grad():
+                        # 尝试不同的方法名
+                        if hasattr(self.model, 'get_text_features'):
+                            text_embed = self.model.get_text_features(**inputs)
+                        elif hasattr(self.model, 'encode_text'):
+                            text_embed = self.model.encode_text(**inputs)
+                        else:
+                            # 如果都没有，尝试直接forward
+                            text_embed = self.model(**inputs).text_embeds
+                    
+                    # ModelScope的get_text_features可能已经返回归一化的嵌入
+                    # 但为了保险，我们再次归一化
+                    if isinstance(text_embed, torch.Tensor):
+                        text_embed = torch.nn.functional.normalize(text_embed, dim=-1)
+                        text_embed = text_embed.cpu().numpy()
+                    else:
+                        # 如果是numpy数组，也进行归一化
+                        norm = np.linalg.norm(text_embed, axis=-1, keepdims=True)
+                        text_embed = text_embed / (norm + 1e-8)
+                    
+                    return text_embed
+                
+                def get_logit_scale(self):
+                    """获取logit scale（如果模型支持）"""
+                    # ModelScope的模型可能没有直接的logit_scale属性
+                    # 尝试从模型中获取
+                    if hasattr(self.model, 'logit_scale'):
+                        if isinstance(self.model.logit_scale, torch.nn.Parameter):
+                            return self.model.logit_scale.exp().cpu()
+                        else:
+                            return torch.tensor(float(self.model.logit_scale)).cpu()
+                    elif hasattr(self.model, 'logit_scale_a'):
+                        if isinstance(self.model.logit_scale_a, torch.nn.Parameter):
+                            return self.model.logit_scale_a.exp().cpu()
+                        else:
+                            return torch.tensor(float(self.model.logit_scale_a)).cpu()
+                    elif hasattr(self.model, 'clap') and hasattr(self.model.clap, 'logit_scale_a'):
+                        # 尝试从clap子模块获取
+                        return self.model.clap.logit_scale_a.exp().cpu()
+                    else:
+                        # 如果没有logit_scale，对于ModelScope模型
+                        # 检查模型内部是否有clap模块
+                        if hasattr(self.model, 'clap'):
+                            clap_model = self.model.clap
+                            if hasattr(clap_model, 'logit_scale_a'):
+                                return clap_model.logit_scale_a.exp().cpu()
+                            elif hasattr(clap_model, 'logit_scale'):
+                                if isinstance(clap_model.logit_scale, torch.nn.Parameter):
+                                    return clap_model.logit_scale.exp().cpu()
+                                else:
+                                    return torch.tensor(float(clap_model.logit_scale)).cpu()
+                        
+                        # 如果都没有找到，返回1.0（不使用额外缩放）
+                        # ModelScope的模型可能已经内置了logit_scale，或者不需要
+                        return torch.tensor(1.0)
+            
+            model_wrapper = ModelScopeWrapper(model, processor, torch_device)
+            print("✓")
+            results["model_info"] = {
+                "status": "success",
+                "model_type": "modelscope",
+                "device": str(torch_device),
+                "checkpoint_path": model_path
+            }
+        else:
+            # 使用laion_clap
+            import laion_clap
+            
+            print(f"\n  使用laion_clap")
+            model_wrapper = laion_clap.CLAP_Module(enable_fusion=False, device=device)
+            # 如果提供了checkpoint路径，使用自定义路径；否则使用默认下载
+            if checkpoint_path:
+                if os.path.exists(checkpoint_path):
+                    print(f"  使用自定义checkpoint: {checkpoint_path}")
+                    model_wrapper.load_ckpt(ckpt=checkpoint_path)
+                else:
+                    print(f"\n⚠ 警告: checkpoint路径不存在 {checkpoint_path}，将使用默认checkpoint")
+                    model_wrapper.load_ckpt()
+            else:
+                print(f"  使用默认checkpoint（将自动下载）")
+                model_wrapper.load_ckpt()
+            print("✓")
+            results["model_info"] = {
+                "status": "success", 
+                "model_type": "laion_clap",
+                "enable_fusion": False, 
+                "device": device,
+                "checkpoint_path": checkpoint_path if checkpoint_path and os.path.exists(checkpoint_path) else "default"
+            }
     except Exception as e:
         print(f"✗ 失败: {e}")
+        import traceback
+        traceback.print_exc()
         results["model_info"] = {"status": "failed", "error": str(e)}
         if output_json:
             save_results_to_json(results, output_json)
@@ -260,9 +423,55 @@ def test_clap_with_parquet(parquet_dir, num_samples=100, audio_dir=None, device=
     
     # 2. 读取parquet文件
     print(f"[2/4] 读取parquet文件...", end=' ', flush=True)
+    
+    # 处理路径：Windows上以/开头的路径可能是相对路径
+    original_parquet_dir = parquet_dir
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    
+    # 检查路径是否存在
+    if not os.path.exists(parquet_dir):
+        # 尝试多个可能的位置
+        possible_paths = []
+        
+        # 如果是绝对路径但不存在，尝试作为相对路径
+        if os.path.isabs(parquet_dir):
+            # Windows上以/开头的路径，去掉开头的/后作为相对路径
+            if parquet_dir.startswith('/') and not parquet_dir.startswith('//'):
+                possible_paths.append(os.path.join(script_dir, parquet_dir.lstrip('/')))
+                possible_paths.append(os.path.join(os.getcwd(), parquet_dir.lstrip('/')))
+        else:
+            # 相对路径：尝试多个可能的位置
+            possible_paths.append(parquet_dir)  # 当前工作目录
+            possible_paths.append(os.path.join(script_dir, parquet_dir))  # 脚本目录
+        
+        # 尝试每个可能的路径
+        for path in possible_paths:
+            normalized_path = os.path.normpath(path)
+            if os.path.exists(normalized_path):
+                parquet_dir = normalized_path
+                break
+        else:
+            # 所有路径都不存在，使用原始路径（稍后会报错）
+            parquet_dir = os.path.normpath(parquet_dir)
+    else:
+        # 路径存在，规范化它
+        parquet_dir = os.path.normpath(parquet_dir)
+    
+    if not os.path.exists(parquet_dir):
+        print(f"✗ 目录不存在: {parquet_dir}")
+        print(f"  原始路径: {original_parquet_dir}")
+        print(f"  当前工作目录: {os.getcwd()}")
+        results["data_info"]["status"] = "failed"
+        results["data_info"]["error"] = f"目录不存在: {parquet_dir} (原始路径: {original_parquet_dir})"
+        if output_json:
+            save_results_to_json(results, output_json)
+        return
+    
     parquet_files = glob.glob(os.path.join(parquet_dir, "*.parquet"))
     if not parquet_files:
         print(f"✗ 未找到parquet文件")
+        print(f"  查找目录: {parquet_dir}")
+        print(f"  目录内容: {os.listdir(parquet_dir)[:10]}...")  # 显示前10个文件
         results["data_info"]["status"] = "failed"
         results["data_info"]["error"] = f"在 {parquet_dir} 中未找到parquet文件"
         if output_json:
@@ -414,13 +623,35 @@ def test_clap_with_parquet(parquet_dir, num_samples=100, audio_dir=None, device=
                         processed_audio.append(audio)
                 
                 if processed_audio:
-                    # 确保所有音频都是480000长度
-                    processed_audio = [a[:max_len] if len(a) > max_len else np.pad(a, (0, max_len - len(a)), mode='constant') for a in processed_audio]
+                    if use_modelscope:
+                        # ModelScope方式：直接使用processor处理音频
+                        # ModelScope的processor会自动处理音频格式
+                        batch_embeds_list = []
+                        for audio in processed_audio:
+                            # ModelScope期望的音频格式：numpy array，采样率48kHz
+                            # 确保音频是float32格式，范围在[-1, 1]
+                            if audio.dtype != np.float32:
+                                audio = audio.astype(np.float32)
+                            max_val = np.abs(audio).max()
+                            if max_val > 1.0:
+                                audio = audio / max_val
+                            
+                            # 使用ModelScope的processor处理
+                            embed = model_wrapper.get_audio_features(audio)
+                            batch_embeds_list.append(embed)
+                        
+                        if batch_embeds_list:
+                            batch_embeds = np.vstack(batch_embeds_list)
+                            audio_embeds_list.append(batch_embeds)
+                    else:
+                        # laion_clap方式：确保所有音频都是480000长度
+                        processed_audio = [a[:max_len] if len(a) > max_len else np.pad(a, (0, max_len - len(a)), mode='constant') for a in processed_audio]
+                        
+                        # stack成(N, T)形状，所有音频都是480000长度
+                        batch_audio_array = np.stack(processed_audio)
+                        batch_embeds = model_wrapper.get_audio_embedding_from_data(x=batch_audio_array, use_tensor=False)
+                        audio_embeds_list.append(batch_embeds)
                     
-                    # stack成(N, T)形状，所有音频都是480000长度
-                    batch_audio_array = np.stack(processed_audio)
-                    batch_embeds = model.get_audio_embedding_from_data(x=batch_audio_array, use_tensor=False)
-                    audio_embeds_list.append(batch_embeds)
                     pbar.update(len(batch_samples))
             
             pbar.close()
@@ -443,7 +674,10 @@ def test_clap_with_parquet(parquet_dir, num_samples=100, audio_dir=None, device=
     
     try:
         print("    初始化tokenizer...", end=' ', flush=True)
-        test_embed = model.get_text_embedding([texts[0]], use_tensor=False)
+        if use_modelscope:
+            test_embed = model_wrapper.get_text_features([texts[0]])
+        else:
+            test_embed = model_wrapper.get_text_embedding([texts[0]], use_tensor=False)
         print("✓")
         
         text_embeds_list = []
@@ -453,13 +687,19 @@ def test_clap_with_parquet(parquet_dir, num_samples=100, audio_dir=None, device=
         for i in range(0, len(texts), batch_size):
             batch_texts = texts[i:i+batch_size]
             try:
-                batch_embeds = model.get_text_embedding(batch_texts, use_tensor=False)
+                if use_modelscope:
+                    batch_embeds = model_wrapper.get_text_features(batch_texts)
+                else:
+                    batch_embeds = model_wrapper.get_text_embedding(batch_texts, use_tensor=False)
                 text_embeds_list.append(batch_embeds)
                 pbar.update(len(batch_texts))
             except:
                 for text in batch_texts:
                     try:
-                        single_embed = model.get_text_embedding([text], use_tensor=False)
+                        if use_modelscope:
+                            single_embed = model_wrapper.get_text_features([text])
+                        else:
+                            single_embed = model_wrapper.get_text_embedding([text], use_tensor=False)
                         text_embeds_list.append(single_embed)
                         pbar.update(1)
                     except:
@@ -494,19 +734,62 @@ def test_clap_with_parquet(parquet_dir, num_samples=100, audio_dir=None, device=
                 class_texts = [f"This is a sound of {classname}." for classname in classnames]
                 
                 print(f"\n    加载 {len(classnames)} 个AudioSet类别...", end=' ', flush=True)
-                class_text_embeds = model.get_text_embedding(class_texts, use_tensor=False)
+                if use_modelscope:
+                    class_text_embeds = model_wrapper.get_text_features(class_texts)
+                else:
+                    class_text_embeds = model_wrapper.get_text_embedding(class_texts, use_tensor=False)
                 print("✓")
                 
-                # 计算每个音频与所有类别的相似度
+                # 计算每个音频与所有类别的相似度（遵循官方代码流程）
                 print(f"    计算相似度矩阵...", end=' ', flush=True)
-                audio_tensor = torch.from_numpy(audio_embeds).float()
-                class_text_tensor = torch.from_numpy(class_text_embeds).float()
+                # 转换device字符串为torch设备对象
+                if device.startswith('cuda'):
+                    device_id = int(device.split(':')[1]) if ':' in device else 0
+                    torch_device = torch.device(f'cuda:{device_id}')
+                else:
+                    torch_device = torch.device('cpu')
+                
+                audio_tensor = torch.from_numpy(audio_embeds).float().to(torch_device)
+                class_text_tensor = torch.from_numpy(class_text_embeds).float().to(torch_device)
+                
+                # 确保归一化（ModelScope的wrapper已经归一化，但为了保险再次归一化）
                 audio_tensor = torch.nn.functional.normalize(audio_tensor, dim=-1)
                 class_text_tensor = torch.nn.functional.normalize(class_text_tensor, dim=-1)
                 
-                # 相似度矩阵: (num_audio, num_classes)
-                class_similarity = audio_tensor @ class_text_tensor.t()
-                class_similarity_np = class_similarity.cpu().numpy()
+                # 获取logit_scale
+                if use_modelscope:
+                    # ModelScope方式：从wrapper获取logit_scale
+                    logit_scale_a = model_wrapper.get_logit_scale()
+                    logit_scale_value = logit_scale_a.item() if isinstance(logit_scale_a, torch.Tensor) else float(logit_scale_a)
+                    
+                    # 检查logit_scale是否合理（通常在1-10之间）
+                    # 如果太大，可能是获取错误，不使用缩放
+                    if logit_scale_value > 10.0 or logit_scale_value < 0.1:
+                        print(f"\n    ⚠ 警告: logit_scale值异常 ({logit_scale_value:.4f})，将不使用缩放")
+                        # 对于ModelScope，直接使用归一化嵌入的点积作为相似度
+                        class_similarity = (audio_tensor @ class_text_tensor.t()).detach().cpu()
+                    elif logit_scale_value == 1.0:
+                        # logit_scale为1.0，直接使用点积
+                        class_similarity = (audio_tensor @ class_text_tensor.t()).detach().cpu()
+                    else:
+                        # 使用logit_scale缩放
+                        class_similarity = (logit_scale_a * audio_tensor @ class_text_tensor.t()).detach().cpu()
+                else:
+                    # laion_clap方式：从模型获取logit_scale
+                    with torch.no_grad():
+                        logit_scale_a, logit_scale_t = model_wrapper.model(None, None, torch_device)
+                        logit_scale_a = logit_scale_a.cpu()
+                    # 使用logit_scale缩放
+                    class_similarity = (logit_scale_a * audio_tensor @ class_text_tensor.t()).detach().cpu()
+                
+                class_similarity_np = class_similarity.numpy()
+                
+                # 检查相似度值的范围（用于调试）
+                sim_min, sim_max = float(class_similarity_np.min()), float(class_similarity_np.max())
+                sim_mean = float(class_similarity_np.mean())
+                if sim_max > 10.0 or sim_min < -1.0:
+                    print(f"\n    ⚠ 警告: 相似度值范围异常 [min={sim_min:.2f}, max={sim_max:.2f}, mean={sim_mean:.2f}]")
+                
                 print("✓")
                 
                 # 为每个样本预测top-k类别
@@ -679,6 +962,8 @@ if __name__ == "__main__":
     parser.add_argument('--audio-dir', type=str, default=None, help='音频文件目录（如果parquet中包含相对路径）')
     parser.add_argument('--device', type=str, default='cuda:0', help='使用的设备 (cuda:0 或 cpu)')
     parser.add_argument('--output-json', type=str, default=None, help='输出JSON文件路径')
+    parser.add_argument('--checkpoint', type=str, default=None, help='CLAP模型checkpoint路径（可选，如果不提供则使用默认checkpoint）')
+    parser.add_argument('--use-modelscope', action='store_true', help='使用ModelScope的ClapModel（默认使用laion_clap）')
     
     args = parser.parse_args()
     
@@ -689,6 +974,8 @@ if __name__ == "__main__":
         num_samples=args.num_samples,
         audio_dir=args.audio_dir,
         device=args.device,
-        output_json=output_file
+        output_json=output_file,
+        checkpoint_path=args.checkpoint,
+        use_modelscope=args.use_modelscope
     )
 
