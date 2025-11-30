@@ -665,7 +665,7 @@ def calculate_metrics(predictions, classnames, similarity_matrix=None, valid_ind
     return metrics
 
 
-def predict_classification(audio_embeds, class_text_embeds, classnames, test_samples, valid_indices, top_k=5, use_hyperbolic=False, c=1.0, temperature=1.0):
+def predict_classification(audio_embeds, class_text_embeds, classnames, test_samples, valid_indices, top_k=10, use_hyperbolic=False, c=1.0, temperature=1.0):
     """Perform zero-shot classification prediction on audio"""
     print(f"\n  Calculating similarity matrix...")
     similarity_matrix = calculate_similarity(audio_embeds, class_text_embeds, use_hyperbolic=use_hyperbolic, c=c, temperature=temperature)
@@ -743,7 +743,7 @@ def main():
     parser.add_argument('--class-labels', type=str, 
                         default='CLAP/class_labels/audioset_class_labels_indices.json',
                         help='AudioSet class labels file path')
-    parser.add_argument('--top-k', type=int, default=5, help='Output top-k prediction results, default 5')
+    parser.add_argument('--top-k', type=int, default=10, help='Output top-k prediction results, default 10')
     parser.add_argument('--use-hyperbolic', action='store_true', help='Use hyperbolic projection and similarity')
     parser.add_argument('--projection-checkpoint', type=str, default=None, help='Path to hyperbolic projection checkpoint (required if --use-hyperbolic)')
     parser.add_argument('--c', type=float, default=1.0, help='Hyperbolic space curvature parameter (only used with --use-hyperbolic)')

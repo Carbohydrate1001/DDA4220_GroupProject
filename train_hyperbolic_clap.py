@@ -201,8 +201,6 @@ def train_epoch(model, clap_model, clap_processor, projection, criterion, datalo
     
     total_loss = 0.0
     num_batches = 0
-    total_positive_sim = 0.0
-    total_negative_sim = 0.0
     
     pbar = tqdm(dataloader, desc=f"  Epoch {epoch+1} 训练", unit="批次", leave=False)
     
@@ -244,28 +242,12 @@ def train_epoch(model, clap_model, clap_processor, projection, criterion, datalo
             labels = torch.arange(len(audio_hyperbolic), device=device)
             loss = criterion(audio_hyperbolic, text_hyperbolic, labels)
             
-            # 计算相似度统计（用于记录，不参与梯度计算）
-            with torch.no_grad():
-                from hyperbolic_projection import hyperbolic_similarity_matrix_batch
-                similarity_matrix = hyperbolic_similarity_matrix_batch(
-                    audio_hyperbolic, text_hyperbolic, c=criterion.c, temperature=criterion.temperature
-                )
-                # 正样本对的相似度（对角线）
-                positive_similarities = torch.diag(similarity_matrix)
-                avg_positive_sim = positive_similarities.mean().item()
-                # 负样本对的平均相似度（非对角线）
-                mask = ~torch.eye(len(audio_hyperbolic), dtype=torch.bool, device=device)
-                negative_similarities = similarity_matrix[mask]
-                avg_negative_sim = negative_similarities.mean().item()
-            
             # 反向传播
             optimizer.zero_grad()
             loss.backward()
             optimizer.step()
             
             total_loss += loss.item()
-            total_positive_sim += avg_positive_sim
-            total_negative_sim += avg_negative_sim
             num_batches += 1
             
             # 更新进度条
@@ -278,10 +260,8 @@ def train_epoch(model, clap_model, clap_processor, projection, criterion, datalo
     pbar.close()
     
     avg_loss = total_loss / num_batches if num_batches > 0 else 0.0
-    avg_positive_sim = total_positive_sim / num_batches if num_batches > 0 else 0.0
-    avg_negative_sim = total_negative_sim / num_batches if num_batches > 0 else 0.0
     
-    return avg_loss, avg_positive_sim, avg_negative_sim
+    return avg_loss
 
 
 def validate_epoch(model, clap_model, clap_processor, projection, criterion, dataloader, device, epoch):
@@ -291,8 +271,6 @@ def validate_epoch(model, clap_model, clap_processor, projection, criterion, dat
     
     total_loss = 0.0
     num_batches = 0
-    total_positive_sim = 0.0
-    total_negative_sim = 0.0
     
     pbar = tqdm(dataloader, desc=f"  Epoch {epoch+1} 验证", unit="批次", leave=False)
     
@@ -331,22 +309,7 @@ def validate_epoch(model, clap_model, clap_processor, projection, criterion, dat
                 labels = torch.arange(len(audio_hyperbolic), device=device)
                 loss = criterion(audio_hyperbolic, text_hyperbolic, labels)
                 
-                # 计算相似度统计
-                from hyperbolic_projection import hyperbolic_similarity_matrix_batch
-                similarity_matrix = hyperbolic_similarity_matrix_batch(
-                    audio_hyperbolic, text_hyperbolic, c=criterion.c, temperature=criterion.temperature
-                )
-                # 正样本对的相似度（对角线）
-                positive_similarities = torch.diag(similarity_matrix)
-                avg_positive_sim = positive_similarities.mean().item()
-                # 负样本对的平均相似度（非对角线）
-                mask = ~torch.eye(len(audio_hyperbolic), dtype=torch.bool, device=device)
-                negative_similarities = similarity_matrix[mask]
-                avg_negative_sim = negative_similarities.mean().item()
-                
                 total_loss += loss.item()
-                total_positive_sim += avg_positive_sim
-                total_negative_sim += avg_negative_sim
                 num_batches += 1
                 
                 pbar.set_postfix({'loss': f'{loss.item():.4f}'})
@@ -358,10 +321,8 @@ def validate_epoch(model, clap_model, clap_processor, projection, criterion, dat
     pbar.close()
     
     avg_loss = total_loss / num_batches if num_batches > 0 else 0.0
-    avg_positive_sim = total_positive_sim / num_batches if num_batches > 0 else 0.0
-    avg_negative_sim = total_negative_sim / num_batches if num_batches > 0 else 0.0
     
-    return avg_loss, avg_positive_sim, avg_negative_sim
+    return avg_loss
 
 
 def main():
@@ -589,13 +550,13 @@ def main():
         print("-" * 60)
         
         # 训练
-        train_loss, train_positive_sim, train_negative_sim = train_epoch(
+        train_loss = train_epoch(
             None, clap_model, clap_processor, projection, criterion,
             train_loader, optimizer, device, epoch
         )
         
         # 验证
-        val_loss, val_positive_sim, val_negative_sim = validate_epoch(
+        val_loss = validate_epoch(
             None, clap_model, clap_processor, projection, criterion,
             val_loader, device, epoch
         )
@@ -604,20 +565,12 @@ def main():
         print(f"  Epoch {epoch+1} 结果:")
         print(f"    训练损失: {train_loss:.4f}")
         print(f"    验证损失: {val_loss:.4f}")
-        print(f"    训练正样本相似度: {train_positive_sim:.4f}")
-        print(f"    训练负样本相似度: {train_negative_sim:.4f}")
-        print(f"    验证正样本相似度: {val_positive_sim:.4f}")
-        print(f"    验证负样本相似度: {val_negative_sim:.4f}")
         
         # 记录epoch结果到当前训练记录
         epoch_record = {
             'epoch': epoch + 1,
             'train_loss': float(train_loss),
             'val_loss': float(val_loss),
-            'train_positive_sim': float(train_positive_sim),
-            'train_negative_sim': float(train_negative_sim),
-            'val_positive_sim': float(val_positive_sim),
-            'val_negative_sim': float(val_negative_sim),
             'timestamp': datetime.now().isoformat()
         }
         current_run['epochs'].append(epoch_record)
@@ -628,10 +581,6 @@ def main():
                 swanlab.log({
                     "train_loss": float(train_loss),
                     "val_loss": float(val_loss),
-                    "train_positive_similarity": float(train_positive_sim),
-                    "train_negative_similarity": float(train_negative_sim),
-                    "val_positive_similarity": float(val_positive_sim),
-                    "val_negative_similarity": float(val_negative_sim),
                     "epoch": epoch + 1
                 })
             except Exception as e:
