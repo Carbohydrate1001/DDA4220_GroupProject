@@ -1,6 +1,6 @@
 """
-双曲投影层和双曲相似度计算模块
-实现Poincaré球模型的双曲空间投影和相似度计算
+Hyperbolic projection layer and hyperbolic similarity computation module
+Implements Poincaré ball model hyperbolic space projection and similarity computation
 """
 import torch
 import torch.nn as nn
@@ -62,6 +62,18 @@ class HyperbolicProjection(nn.Module):
         if self.clip_r < 1.0:
             scale = torch.clamp(self.clip_r / (y_norm + 1e-10), max=1.0)
             y = y * scale
+        
+        # 额外检查：确保范数严格小于1（双曲空间约束）
+        y_norm_final = torch.norm(y, dim=-1, keepdim=True)
+        if torch.any(y_norm_final >= 1.0):
+            # 如果还有超出范围的，强制裁剪到0.99
+            scale_final = torch.clamp(0.99 / (y_norm_final + 1e-10), max=1.0)
+            y = y * scale_final
+        
+        # 检查NaN或Inf
+        if torch.isnan(y).any() or torch.isinf(y).any():
+            # 如果出现NaN或Inf，返回零向量
+            y = torch.zeros_like(y)
         
         return y
     
@@ -282,3 +294,155 @@ class HyperbolicContrastiveLoss(nn.Module):
         
         return total_loss
 
+
+def pairwise_poincare_distance(x, y, c=1.0):
+    """
+    Compute pairwise Poincaré distance between two sets of hyperbolic embeddings.
+
+    Args:
+        x: [N, D], hyperbolic embeddings (||x|| < 1)
+        y: [M, D], hyperbolic embeddings (||y|| < 1)
+        c: curvature
+
+    Returns:
+        dist: [N, M]
+    """
+    device = x.device
+    dtype = x.dtype
+
+    x_norm_sq = torch.sum(x ** 2, dim=-1, keepdim=True)          # [N, 1]
+    y_norm_sq = torch.sum(y ** 2, dim=-1, keepdim=True).t()     # [1, M]
+
+    diff = x.unsqueeze(1) - y.unsqueeze(0)                      # [N, M, D]
+    diff_norm_sq = torch.sum(diff ** 2, dim=-1)                 # [N, M]
+
+    eps = 1e-9
+    x_norm_sq = torch.clamp(x_norm_sq, max=1.0 - eps)
+    y_norm_sq = torch.clamp(y_norm_sq, max=1.0 - eps)
+
+    denom = (1.0 - x_norm_sq) * (1.0 - y_norm_sq)
+    denom = torch.clamp(denom, min=eps)
+
+    z = 1.0 + 2.0 * diff_norm_sq / denom
+    z = torch.clamp(z, min=1.0 + eps)
+
+    sqrt_c = torch.sqrt(torch.tensor(c, device=device, dtype=dtype))
+
+    return torch.acosh(z) / sqrt_c
+
+
+# ============================================================
+# Hyperbolic Top-K Triplet Loss (Same-modality hierarchy loss)
+# ============================================================
+
+class HyperbolicTopKTripletLoss(nn.Module):
+    """
+    Hyperbolic triplet loss using top-k nearest neighbors as positives.
+    This loss is used to regularize hierarchy / clustering structure
+    inside hyperbolic space.
+    """
+    def __init__(self, c=1.0, margin=0.1, top_k=5):
+        super().__init__()
+        self.c = c
+        self.margin = margin
+        self.top_k = top_k
+
+    def forward(self, embeds, neg_samples=20, tau=0.1):
+        B = embeds.size(0)
+        device = embeds.device
+
+        dist = pairwise_poincare_distance(embeds, embeds, c=self.c)
+        dist.fill_diagonal_(float("inf"))
+
+        k = min(self.top_k, B - 1)
+        pos_dist, pos_idx = torch.topk(dist, k=k, largest=False, dim=1)
+
+        # positives: log-sum-exp
+        pos_term = torch.logsumexp(-pos_dist / tau, dim=1)  # [B]
+
+        # mask out top-k
+        mask = torch.ones_like(dist, dtype=torch.bool)
+        mask.scatter_(1, pos_idx, False)
+
+        neg_terms = []
+        for i in range(B):
+            neg_pool = dist[i][mask[i]]
+            idx = torch.randint(0, neg_pool.size(0), (neg_samples,), device=device)
+            neg_terms.append(
+                torch.logsumexp(-neg_pool[idx] / tau, dim=0)
+            )
+
+        neg_term = torch.stack(neg_terms)
+
+        loss = -(pos_term - neg_term)
+        return loss.mean()
+
+
+# ============================================================
+# Stage-2 Layered Hyperbolic Loss
+# ============================================================
+
+class HyperbolicLayeredLoss(nn.Module):
+    """
+    Stage-2 loss for hyperbolic CLAP:
+
+        L = L_cross_modal
+            + lambda_h * (L_text_hierarchy + L_audio_hierarchy)
+
+    - L_cross_modal: standard hyperbolic contrastive loss (same as stage 1)
+    - L_*_hierarchy: same-modality hyperbolic top-k triplet loss
+    """
+    def __init__(
+        self,
+        c=1.0,
+        temperature=1.0,
+        top_k=5,
+        margin=0.1,
+        lambda_h=0.01,
+    ):
+        super().__init__()
+
+        self.lambda_h = lambda_h
+
+        # Cross-modal alignment loss (do NOT change from stage 1)
+        self.cross_modal_loss = HyperbolicContrastiveLoss(
+            c=c,
+            temperature=temperature
+        )
+
+        # Same-modality hierarchy regularization
+        self.text_hierarchy_loss = HyperbolicTopKTripletLoss(
+            c=c,
+            margin=margin,
+            top_k=top_k
+        )
+
+        self.audio_hierarchy_loss = HyperbolicTopKTripletLoss(
+            c=c,
+            margin=margin,
+            top_k=top_k
+        )
+
+    def forward(self, audio_embeds, text_embeds, labels=None):
+        """
+        Args:
+            audio_embeds: [B, D] hyperbolic audio embeddings
+            text_embeds:  [B, D] hyperbolic text embeddings
+            labels: optional labels for cross-modal loss
+
+        Returns:
+            total_loss: scalar
+        """
+        # 1. Cross-modal alignment (anchor term)
+        loss_cross = self.cross_modal_loss(
+            audio_embeds, text_embeds, labels
+        )
+
+        # 2. Hierarchy regularization (same-modality)
+        loss_text_h = self.text_hierarchy_loss(text_embeds)
+        loss_audio_h = self.audio_hierarchy_loss(audio_embeds)
+
+        # 3. Total loss
+        total_loss = self.lambda_h * (loss_text_h + loss_audio_h)
+
+        return total_loss
