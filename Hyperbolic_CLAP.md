@@ -1,97 +1,87 @@
-# 双曲CLAP训练与推理使用手册
+# Hyperbolic CLAP Training and Inference Guide
 
-## 目录
+## Table of Contents
 
-1. [环境配置](#环境配置)
-2. [数据准备](#数据准备)
-3. [训练双曲投影器](#训练双曲投影器)
-4. [推理测试](#推理测试)
-5. [参数详解](#参数详解)
-6. [常见问题](#常见问题)
-7. [示例命令](#示例命令)
+1. [Environment Setup](#environment-setup)
+2. [Data Preparation](#data-preparation)
+3. [Training Hyperbolic Projector](#training-hyperbolic-projector)
+4. [Inference and Testing](#inference-and-testing)
+5. [Experimental Results](#experimental-results)
+6. [Parameters](#parameters)
+7. [Usage Examples](#usage-examples)
 
 ---
 
-## 环境配置
+## Environment Setup
 
-### 1. Python环境要求
+### Python Requirements
 
 - Python 3.8+
-- CUDA 11.8+ (如果使用GPU)
+- CUDA 11.8+ (for GPU usage)
 
-### 2. 安装依赖
+### Install Dependencies
 
-所有必需的依赖包都在 `requirements.txt` 中（注：python==3.10, torch使用2.9.1+cu128）。安装命令：
+Install required packages from `requirements.txt`:
 
 ```bash
 pip install -r requirements.txt
 ```
 
-### 3. 主要依赖包说明
+### Main Dependencies
 
-- **modelscope**: ModelScope模型库，用于加载CLAP预训练模型
-- **torch**: PyTorch深度学习框架
-- **pandas**: 数据处理
-- **librosa**: 音频处理
-- **soundfile**: 音频文件读写
-- **tqdm**: 进度条显示
-- **numpy**: 数值计算
-
-### 4. 验证环境
-
-运行以下命令验证环境是否正确安装：
-
-```bash
-python -c "import torch; import modelscope; print('✓ 环境配置正确')"
-```
+- **modelscope**: ModelScope library for loading CLAP pretrained models
+- **torch**: PyTorch deep learning framework
+- **pandas**: Data processing
+- **librosa**: Audio processing
+- **soundfile**: Audio file I/O
+- **tqdm**: Progress bar
+- **numpy**: Numerical computation
 
 ---
 
-## 数据准备
+## Data Preparation
 
-### 1. 数据集结构
+### Dataset Structure
 
-确保数据集目录结构如下：
+Ensure the dataset directory structure is as follows:
 
 ```
 Datasets/
 └── AudioSet/
-    ├── train_balanced/     # 训练集（用于训练双曲投影器）
+    ├── train_balanced/     # Training set
     │   ├── 00.parquet
     │   ├── 01.parquet
     │   └── ...
-    └── eval/                # 测试集（用于评估）
+    └── eval/                # Evaluation set
         ├── 00.parquet
         ├── 01.parquet
         └── ...
 ```
 
-### 2. Parquet文件格式要求
+### Parquet File Format
 
-每个parquet文件应包含以下列：
+Each parquet file should contain the following columns:
 
-- **`audio`**: 音频数据（字典格式，包含`bytes`字段，或直接为numpy数组）
-- **`human_labels`**: 人类可读的标签（字符串或列表），用于训练和评估
-- **`labels`**: 机器可读的标签（可选）
-- **`video_id`**: 视频/音频ID（可选）
+- **`audio`**: Audio data (dictionary format with `bytes` field, or numpy array)
+- **`human_labels`**: Human-readable labels (string or list) for training and evaluation
+- **`labels`**: Machine-readable labels (optional)
+- **`video_id`**: Video/audio ID (optional)
 
-**重要**: `human_labels`必须包含与AudioSet类别名称匹配的标签（例如："Speech", "Music", "Dog"等）
+### Class Labels File
 
-### 3. 类别标签文件
-
-确保存在AudioSet类别标签文件：
+Ensure the AudioSet class labels file exists:
 
 ```
 CLAP/class_labels/audioset_class_labels_indices.json
 ```
 
-该文件包含527个AudioSet类别的映射关系。
+This file contains mappings for 527 AudioSet classes.
 
 ---
 
-## 训练双曲投影器
+## Training Hyperbolic Projector
 
-### 1. 基本训练命令
+### Basic Training Command
 
 ```bash
 python train_hyperbolic_clap.py \
@@ -105,117 +95,59 @@ python train_hyperbolic_clap.py \
     --c 1.0 \
     --temperature 1.0 \
     --train-ratio 0.8
-
-# 启用SwanLab记录训练过程
-python train_hyperbolic_clap.py \
-    --parquet-dir ./Datasets/AudioSet/train_balanced \
-    --num-samples 10000 \
-    --device cuda:0 \
-    --output-dir ./checkpoints_hyperbolic \
-    --epochs 10 \
-    --batch-size 16 \
-    --learning-rate 1e-4 \
-    --c 1.0 \
-    --temperature 1.0 \
-    --train-ratio 0.8 \
-    --use-swanlab \
-    --swanlab-project Hyperbolic_CLAP \
-    --swanlab-workspace Centauri
 ```
 
-### 2. 训练过程说明
+### Training Process
 
-训练过程分为以下步骤：
+The training process includes:
 
-1. **加载CLAP模型**: 自动从本地缓存加载预训练的CLAP模型（`C:\Users\Centauri\.cache\modelscope\hub\models\laion\larger_clap_general`）
-2. **创建双曲投影层**: 初始化一个线性投影层，将CLAP嵌入投影到双曲空间
-3. **加载数据集**: 从parquet文件读取音频和标签数据
-4. **数据分割**: 按8:2比例分割训练集和验证集
-5. **训练循环**: 
-   - 冻结CLAP模型参数（不更新）
-   - 只训练双曲投影层
-   - 使用双曲对比损失进行优化
+1. **Load CLAP model**: Automatically loads pretrained CLAP model from local cache
+2. **Create hyperbolic projection layer**: Initializes a linear projection layer to map CLAP embeddings to hyperbolic space
+3. **Load dataset**: Reads audio and label data from parquet files
+4. **Data split**: Splits data into training and validation sets (8:2 ratio)
+5. **Training loop**: 
+   - Freezes CLAP model parameters
+   - Trains only the hyperbolic projection layer
+   - Optimizes using hyperbolic contrastive loss
 
-### 3. 训练输出
+### Training Output
 
-训练过程中会显示：
+Training outputs include:
 
-- 每个epoch的训练损失和验证损失
-- 训练和验证的正样本相似度（匹配对的平均相似度）
-- 训练和验证的负样本相似度（不匹配对的平均相似度）
-- 进度条显示训练进度
-- 最佳模型会自动保存
+- Training and validation loss for each epoch
+- Positive and negative sample similarities for training and validation sets
+- Progress bar showing training progress
+- Best model is automatically saved
 
-**输出文件**:
-- `{output_dir}/projection_epoch_{epoch}.pth`: 每个epoch的检查点
-- `{output_dir}/best_projection_epoch_{epoch}.pth`: 最佳模型（验证损失最低）
-- `{output_dir}/setup.json`: 训练记录文件（包含所有参数和每个epoch的loss）
+**Output files**:
+- `{output_dir}/projection_epoch_{epoch}.pth`: Checkpoint for each epoch
+- `{output_dir}/best_projection_epoch_{epoch}.pth`: Best model (lowest validation loss)
+- `{output_dir}/setup.json`: Training log file (contains all parameters and epoch losses)
 
-### 4. 检查点文件内容
+### Checkpoint File Contents
 
-每个检查点文件包含：
+Each checkpoint file contains:
 
 ```python
 {
-    'epoch': 训练轮数,
-    'projection_state_dict': 投影层参数（包含linear层的weight和bias）,
-    'optimizer_state_dict': 优化器状态,
-    'train_loss': 训练损失,
-    'val_loss': 验证损失,
-    'c': 曲率参数,
-    'temperature': 温度参数,
-    'embed_dim': 嵌入维度（通常是512）
-}
-```
-
-### 5. setup.json训练记录
-
-`setup.json`文件记录每次训练的完整信息：
-
-```json
-{
-  "training_runs": [
-    {
-      "timestamp": "训练开始时间",
-      "parameters": {
-        "所有训练超参数"
-      },
-      "epochs": [
-        {
-          "epoch": 1,
-          "train_loss": 训练损失,
-          "val_loss": 验证损失,
-          "train_positive_sim": 训练正样本相似度,
-          "train_negative_sim": 训练负样本相似度,
-          "val_positive_sim": 验证正样本相似度,
-          "val_negative_sim": 验证负样本相似度,
-          "timestamp": "epoch时间戳"
-        },
-        ...
-      ],
-      "summary": {
-        "best_val_loss": 最佳验证损失,
-        "final_train_loss": 最终训练损失,
-        "final_val_loss": 最终验证损失,
-        "total_epochs": 总epoch数,
-        "best_epoch": 最佳epoch编号,
-        "best_epoch_train_loss": 最佳epoch的训练损失,
-        "best_epoch_val_loss": 最佳epoch的验证损失
-      }
-    },
-    ...
-  ]
+    'epoch': epoch number,
+    'projection_state_dict': projection layer parameters,
+    'optimizer_state_dict': optimizer state,
+    'train_loss': training loss,
+    'val_loss': validation loss,
+    'c': curvature parameter,
+    'temperature': temperature parameter,
+    'embed_dim': embedding dimension (usually 512)
 }
 ```
 
 ---
 
-## 推理测试
+## Inference and Testing
 
-### 方法1: 使用原始测试脚本（带双曲选项，推荐）
+### Hyperbolic CLAP Testing
 
 ```bash
-# 双曲CLAP（双曲相似度）
 python test_clap_modelscope.py \
     --parquet-dir ./Datasets/AudioSet/eval \
     --num-samples 100 \
@@ -226,181 +158,155 @@ python test_clap_modelscope.py \
     --temperature 1.0
 ```
 
-**注意**: 如果`results_hyperbolic.json`已存在，会自动添加序号后缀（如`results_hyperbolic_1.json`）避免覆盖。
-
-### 方法2: 使用原始CLAP（cosine相似度）
+### Original CLAP Testing
 
 ```bash
-# 原始CLAP（cosine相似度）
 python test_clap_modelscope.py \
     --parquet-dir ./Datasets/AudioSet/eval \
     --num-samples 100 \
     --output-json results_original.json
 ```
 
-### 推理过程说明
+### Inference Process
 
-1. **加载模型**: 加载CLAP模型和训练好的双曲投影层
-2. **提取嵌入**: 
-   - 提取音频的CLAP嵌入
-   - 提取文本（类别）的CLAP嵌入
-   - 将两者投影到双曲空间
-3. **计算相似度**: 使用双曲相似度计算音频-文本相似度矩阵
-4. **分类预测**: 基于相似度进行零样本分类
-5. **评估指标**: 计算top-k准确率、F1分数和mAP
+1. **Load models**: Loads CLAP model and trained hyperbolic projection layer
+2. **Extract embeddings**: 
+   - Extracts CLAP embeddings for audio
+   - Extracts CLAP embeddings for text (categories)
+   - Projects both to hyperbolic space
+3. **Compute similarity**: Uses hyperbolic similarity to compute audio-text similarity matrix
+4. **Classification**: Performs zero-shot classification based on similarity
+5. **Evaluation metrics**: Computes top-k accuracy, F1 score, and mAP
 
-### 输出结果
+### Output Results
 
-测试会生成JSON文件，包含：
+The test generates a JSON file containing:
 
-- **test_info**: 测试配置信息
-- **model_info**: 模型信息（是否使用双曲投影）
-- **similarity_stats**: 相似度统计
-- **metrics**: 评估指标
-  - `acc@1`, `acc@3`, `acc@5`, `acc@10`: Top-k准确率
-  - `f1_micro`, `f1_macro`: F1分数（微平均和宏平均）
-  - `precision_micro`, `precision_macro`: 精确率
-  - `recall_micro`, `recall_macro`: 召回率
-  - `map`: 平均精度均值
-- **predictions**: 每个样本的预测结果
-
----
-
-## 参数详解
-
-### 训练脚本参数 (`train_hyperbolic_clap.py`)
-
-| 参数 | 类型 | 默认值 | 说明 |
-|------|------|--------|------|
-| `--parquet-dir` | str | **必需** | train_balanced数据集目录 |
-| `--num-samples` | int | None | 使用的样本数量（None表示使用全部） |
-| `--device` | str | cuda:0 | 计算设备（cuda:0或cpu） |
-| `--checkpoint` | str | 本地缓存路径 | ModelScope模型路径 |
-| `--output-dir` | str | ./checkpoints_hyperbolic | 输出目录 |
-| `--epochs` | int | 10 | 训练轮数 |
-| `--batch-size` | int | 16 | 批次大小 |
-| `--learning-rate` | float | 1e-4 | 学习率 |
-| `--c` | float | 1.0 | 双曲空间曲率参数（越小曲率越大） |
-| `--temperature` | float | 1.0 | 温度参数（用于缩放相似度） |
-| `--train-ratio` | float | 0.8 | 训练集比例（剩余为验证集） |
-| `--seed` | int | 42 | 随机种子 |
-| `--use-swanlab` | flag | False | 启用SwanLab日志记录 |
-| `--swanlab-project` | str | Hyperbolic_CLAP | SwanLab项目名称 |
-| `--swanlab-workspace` | str | Centauri | SwanLab工作空间 |
-
-### 测试脚本参数 (`test_hyperbolic_clap_modelscope.py`)
-
-| 参数 | 类型 | 默认值 | 说明 |
-|------|------|--------|------|
-| `--parquet-dir` | str | **必需** | eval数据集目录 |
-| `--projection-checkpoint` | str | **必需** | 双曲投影层检查点路径 |
-| `--num-samples` | int | 100 | 测试样本数量 |
-| `--device` | str | cuda:0 | 计算设备 |
-| `--checkpoint` | str | 本地缓存路径 | ModelScope模型路径 |
-| `--output-json` | str | None | 输出JSON文件路径 |
-| `--class-labels` | str | CLAP/class_labels/... | AudioSet类别标签文件路径 |
-| `--top-k` | int | 5 | 输出top-k预测结果 |
-| `--c` | float | 1.0 | 双曲空间曲率参数（应与训练时一致） |
-| `--temperature` | float | 1.0 | 温度参数（应与训练时一致） |
-
-### 双曲空间参数说明
-
-#### 曲率参数 (`c`)
-
-- **默认值**: 1.0
-- **作用**: 控制双曲空间的曲率
-- **影响**: 
-  - `c`越小，曲率越大，双曲空间越"弯曲"
-  - `c`越大，曲率越小，接近欧几里得空间
-- **建议**: 通常使用1.0，可根据实验结果调整
-
-#### 温度参数 (`temperature`)
-
-- **默认值**: 1.0
-- **作用**: 缩放相似度分布
-- **影响**:
-  - `temperature`越小，相似度分布越尖锐（差异更明显）
-  - `temperature`越大，相似度分布越平滑
-- **建议**: 通常使用1.0，可根据实验结果调整
+- **test_info**: Test configuration information
+- **model_info**: Model information (whether hyperbolic projection is used)
+- **similarity_stats**: Similarity statistics
+- **metrics**: Evaluation metrics
+  - `acc@1`, `acc@3`, `acc@5`, `acc@10`: Top-k accuracy
+  - `f1_micro`, `f1_macro`: F1 scores (micro and macro average)
+  - `precision_micro`, `precision_macro`: Precision
+  - `recall_micro`, `recall_macro`: Recall
+  - `map`: Mean average precision
+- **predictions**: Prediction results for each sample
 
 ---
 
-## 常见问题
+## Experimental Results
 
-### Q1: 训练时出现CUDA内存不足
+### Experimental Setup
 
-**问题**: `CUDA out of memory`
+All experiments were conducted on the AudioSet evaluation set with 500 samples. The experiments compare the performance of original CLAP (using cosine similarity) and hyperbolic CLAP (using Poincaré distance).
 
-**解决方案**:
-1. 减小`--batch-size`（例如从16改为8或4）
-2. 减小`--num-samples`（使用更少的训练样本）
-3. 使用CPU模式：`--device cpu`（速度较慢）
+### Results Summary
 
-### Q2: 训练损失不下降
+| Model Type | Curvature (c) | Temperature (τ) | Acc@1 | Acc@3 | Acc@5 | Acc@10 | mAP | F1 (micro) | F1 (macro) |
+|------------|---------------|-----------------|-------|-------|-------|--------|-----|-----------|-----------|
+| Original CLAP (cosine) | - | - | - | - | - | - | - | - | - |
+| Hyperbolic CLAP | 0.01 | 1.0 | 36.07% | 57.31% | 66.33% | 79.16% | 38.32% | 28.00% | 28.49% |
+| Hyperbolic CLAP | 0.01 | 10.0 | 20.64% | 36.07% | 42.69% | 56.11% | 20.97% | 14.86% | 15.52% |
+| Hyperbolic CLAP | 0.1 | 1.0 | 33.27% | 49.90% | 57.11% | 70.34% | 33.15% | 23.23% | 24.57% |
 
-**可能原因**:
-1. 学习率过大或过小
-2. 数据质量问题
-3. 双曲参数设置不当
+**Notes**: 
+- Original CLAP uses cosine similarity with range [-1, 1]
+- Hyperbolic CLAP uses Poincaré distance with range (-∞, 0], where larger values (closer to 0) indicate higher similarity
+- All experiments use the same test set (500 samples, 499 valid samples)
 
-**解决方案**:
-1. 尝试调整`--learning-rate`（例如1e-5或1e-3）
-2. 检查数据中的`human_labels`是否正确
-3. 尝试不同的`--c`和`--temperature`值
+### Key Findings
 
-### Q3: 测试时找不到投影层检查点
+1. **Curvature parameter impact**: 
+   - Best performance with `c=0.01`, achieving Acc@1 of 36.07% and mAP of 38.32%
+   - Performance slightly decreases with `c=0.1`, but still better than temperature=10.0
+   - Smaller curvature parameter (c=0.01) provides better representation capability in hyperbolic space
 
-**问题**: `投影层检查点不存在`
+2. **Temperature parameter impact**:
+   - Performance is significantly better with `temperature=1.0` than `temperature=10.0`
+   - Too large temperature parameter leads to overly smooth similarity distribution, reducing classification performance
 
-**解决方案**:
-1. 检查`--projection-checkpoint`路径是否正确
-2. 确保训练已完成并生成了检查点文件
-3. 使用绝对路径而不是相对路径
+3. **Similarity distribution**:
+   - Hyperbolic CLAP similarity values are negative (range -54.72 to -36.45 for c=0.01, τ=1.0)
+   - Original CLAP similarity values range [-1, 1] with mean near 0
+   - Hyperbolic space similarity distribution is more concentrated, beneficial for distinguishing positive and negative samples
 
-### Q4: 相似度值异常（NaN或Inf）
+### Result Files
 
-**问题**: 相似度矩阵包含异常值
-
-**解决方案**:
-1. 检查双曲参数`--c`和`--temperature`是否与训练时一致
-2. 检查投影层是否正确加载
-3. 尝试增大`--c`值（例如2.0）以提高数值稳定性
-
-### Q5: 所有预测结果相同
-
-**问题**: 相似度矩阵的行几乎相同
-
-**解决方案**:
-1. 检查音频数据是否正确加载
-2. 检查CLAP模型是否正确加载
-3. 检查投影层是否正确训练
-
-### Q6: 评估指标全为0
-
-**问题**: 无法匹配真实标签
-
-**解决方案**:
-1. 检查`human_labels`是否包含正确的类别名称
-2. 确保类别名称与AudioSet类别标签文件中的名称匹配（大小写不敏感）
-3. 查看调试输出中的"未匹配标签示例"
-
-### Q7: Windows路径问题
-
-**问题**: 路径中包含反斜杠导致错误
-
-**解决方案**:
-- 使用原始字符串：`r"C:\Users\..."` 
-- 或使用正斜杠：`"C:/Users/..."`
-- 或使用双反斜杠：`"C:\\Users\\..."`
+All experimental results are saved in the `result/` directory:
+- `results_hyperbolic_c0_01.json`: Results for c=0.01, τ=1.0
+- `results_hyperbolic_c0_01_t10.json`: Results for c=0.01, τ=10.0
+- `results_hyperbolic_c0_1.json`: Results for c=0.1, τ=1.0
+- `clap_modelscope_results_*.json`: Original CLAP results
 
 ---
 
-## 示例命令
+## Parameters
 
-### 完整训练流程示例
+### Training Script Parameters (`train_hyperbolic_clap.py`)
+
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `--parquet-dir` | str | **Required** | Directory of train_balanced dataset |
+| `--num-samples` | int | None | Number of samples to use (None means all) |
+| `--device` | str | cuda:0 | Computing device (cuda:0 or cpu) |
+| `--checkpoint` | str | Local cache path | ModelScope model path |
+| `--output-dir` | str | ./checkpoints_hyperbolic | Output directory |
+| `--epochs` | int | 10 | Number of training epochs |
+| `--batch-size` | int | 16 | Batch size |
+| `--learning-rate` | float | 1e-4 | Learning rate |
+| `--c` | float | 1.0 | Hyperbolic space curvature parameter |
+| `--temperature` | float | 1.0 | Temperature parameter for similarity scaling |
+| `--train-ratio` | float | 0.8 | Training set ratio (remainder is validation set) |
+| `--seed` | int | 42 | Random seed |
+| `--use-swanlab` | flag | False | Enable SwanLab logging |
+| `--swanlab-project` | str | Hyperbolic_CLAP | SwanLab project name |
+| `--swanlab-workspace` | str | Centauri | SwanLab workspace |
+
+### Testing Script Parameters (`test_clap_modelscope.py`)
+
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `--parquet-dir` | str | **Required** | Directory of eval dataset |
+| `--projection-checkpoint` | str | **Required** | Path to hyperbolic projection layer checkpoint |
+| `--num-samples` | int | 100 | Number of test samples |
+| `--device` | str | cuda:0 | Computing device |
+| `--checkpoint` | str | Local cache path | ModelScope model path |
+| `--output-json` | str | None | Output JSON file path |
+| `--class-labels` | str | CLAP/class_labels/... | AudioSet class labels file path |
+| `--top-k` | int | 5 | Output top-k predictions |
+| `--c` | float | 1.0 | Hyperbolic space curvature parameter (should match training) |
+| `--temperature` | float | 1.0 | Temperature parameter (should match training) |
+| `--use-hyperbolic` | flag | False | Use hyperbolic projection |
+
+### Hyperbolic Space Parameters
+
+#### Curvature Parameter (`c`)
+
+- **Default**: 1.0
+- **Effect**: Controls the curvature of hyperbolic space
+- **Impact**: 
+  - Smaller `c` means larger curvature, more "curved" hyperbolic space
+  - Larger `c` means smaller curvature, closer to Euclidean space
+- **Recommendation**: Typically use 1.0, adjust based on experimental results
+
+#### Temperature Parameter (`temperature`)
+
+- **Default**: 1.0
+- **Effect**: Scales similarity distribution
+- **Impact**:
+  - Smaller `temperature` makes similarity distribution sharper (more distinct differences)
+  - Larger `temperature` makes similarity distribution smoother
+- **Recommendation**: Typically use 1.0, adjust based on experimental results
+
+---
+
+## Usage Examples
+
+### Complete Training Pipeline
 
 ```bash
-# 1. 训练双曲投影器（使用10000个样本，训练10个epoch）
+# 1. Train hyperbolic projector (10000 samples, 10 epochs)
 python train_hyperbolic_clap.py \
     --parquet-dir ./Datasets/AudioSet/train_balanced \
     --num-samples 10000 \
@@ -413,7 +319,7 @@ python train_hyperbolic_clap.py \
     --temperature 1.0 \
     --train-ratio 0.8
 
-# 2. 使用训练好的模型进行测试
+# 2. Test with trained model
 python test_clap_modelscope.py \
     --parquet-dir ./Datasets/AudioSet/eval \
     --num-samples 1000 \
@@ -426,10 +332,10 @@ python test_clap_modelscope.py \
     --temperature 1.0
 ```
 
-### 快速测试示例（小规模）
+### Quick Test Example
 
 ```bash
-# 训练（快速测试，使用1000个样本，3个epoch）
+# Training (quick test, 1000 samples, 3 epochs)
 python train_hyperbolic_clap.py \
     --parquet-dir ./Datasets/AudioSet/train_balanced \
     --num-samples 1000 \
@@ -437,7 +343,7 @@ python train_hyperbolic_clap.py \
     --batch-size 8 \
     --output-dir ./checkpoints_test
 
-# 测试
+# Testing
 python test_clap_modelscope.py \
     --parquet-dir ./Datasets/AudioSet/eval \
     --num-samples 100 \
@@ -445,10 +351,10 @@ python test_clap_modelscope.py \
     --projection-checkpoint ./checkpoints_test/best_projection_epoch_3.pth
 ```
 
-### CPU模式示例
+### CPU Mode Example
 
 ```bash
-# 如果GPU不可用，使用CPU（速度较慢）
+# If GPU is unavailable, use CPU (slower)
 python train_hyperbolic_clap.py \
     --parquet-dir ./Datasets/AudioSet/train_balanced \
     --device cpu \
@@ -456,223 +362,138 @@ python train_hyperbolic_clap.py \
     --num-samples 1000
 ```
 
-### 对比测试示例
+### Comparison Testing
 
 ```bash
-# 1. 测试原始CLAP（cosine相似度）
+# 1. Test original CLAP (cosine similarity)
 python test_clap_modelscope.py \
     --parquet-dir ./Datasets/AudioSet/eval \
     --num-samples 100 \
     --output-json results_original.json
 
-# 2. 测试双曲CLAP（双曲相似度）
+# 2. Test hyperbolic CLAP (hyperbolic similarity)
 python test_clap_modelscope.py \
     --parquet-dir ./Datasets/AudioSet/eval \
     --num-samples 100 \
     --use-hyperbolic \
     --projection-checkpoint ./checkpoints_hyperbolic/best_projection_epoch_10.pth \
     --output-json results_hyperbolic.json
-
-# 3. 对比两个结果文件
 ```
 
 ---
 
-## 性能优化建议
+## Technical Details
 
-### 1. 训练优化
+### Hyperbolic Projection Layer
 
-- **批次大小**: 根据GPU内存调整，通常16-32效果较好
-- **学习率**: 从1e-4开始，如果损失不下降可尝试1e-5
-- **数据量**: 建议至少使用10000个样本进行训练
-- **训练轮数**: 通常10-20个epoch足够，观察验证损失不再下降即可停止
+This project uses the **Poincaré ball model** to implement hyperbolic space projection. The hyperbolic projection layer consists of two main components:
 
-### 2. 推理优化
+#### 1. Linear Projection Layer
 
-- **批次大小**: 可以设置较大（32-64）以提高速度
-- **样本数量**: 根据需求调整，建议至少100个样本进行评估
-- **GPU使用**: 确保使用GPU以加速推理
-
-### 3. 内存优化
-
-- 如果内存不足，减小批次大小
-- 使用`--num-samples`限制数据量
-- 考虑使用梯度累积（需要修改代码）
-
-### 4. SwanLab监控
-
-- 使用`--use-swanlab`启用实时训练监控
-- 在SwanLab平台查看训练曲线和指标变化
-- 记录的训练指标包括：
-  - `train_loss`, `val_loss`: 训练和验证损失
-  - `train_positive_similarity`, `train_negative_similarity`: 训练集相似度统计
-  - `val_positive_similarity`, `val_negative_similarity`: 验证集相似度统计
-
----
-
-## 技术细节
-
-### 双曲投影层结构
-
-本项目使用**Poincaré球模型**实现双曲空间投影。双曲投影层由两个主要组件组成：
-
-#### 1. 线性投影层
-
-首先通过一个可学习的线性变换将CLAP嵌入映射到目标维度：
+First, a learnable linear transformation maps CLAP embeddings to the target dimension:
 
 ```
 x_proj = Linear(x) = W·x + b
 ```
 
-其中：
-- `x`: CLAP嵌入 [batch_size, 512]
-- `W`: 可学习权重矩阵 [512, 512]
-- `b`: 可学习偏置向量 [512]
-- `x_proj`: 线性投影后的特征 [batch_size, 512]
+Where:
+- `x`: CLAP embedding [batch_size, 512]
+- `W`: Learnable weight matrix [512, 512]
+- `b`: Learnable bias vector [512]
+- `x_proj`: Linearly projected features [batch_size, 512]
 
-**初始化**: 使用Xavier均匀初始化权重，偏置初始化为0。
+**Initialization**: Weights are initialized using Xavier uniform initialization, bias is initialized to 0.
 
-#### 2. 指数映射（Exponential Map）
+#### 2. Exponential Map
 
-将欧几里得空间的点映射到Poincaré球模型：
+Maps points from Euclidean space to the Poincaré ball model:
 
 ```
 y = expmap(x_proj) = (tanh(√c · ||x_proj||) / (√c · ||x_proj||)) · x_proj
 ```
 
-**数学公式**：
+**Numerical stability**:
+- If `||x||` is close to 0, use `tanh(√c·||x||) / (√c·||x||) ≈ 1` to avoid division by zero
+- After projection, clip to a ball with radius `clip_r` (default 0.9) to prevent numerical instability
 
-对于输入向量 `x_proj`，指数映射定义为：
+**Output constraint**: Projected points satisfy `||y|| < 1` (inside Poincaré ball)
 
-\[
-\text{expmap}(x) = \frac{\tanh(\sqrt{c} \|x\|)}{\sqrt{c} \|x\|} \cdot x
-\]
+### Poincaré Distance
 
-其中：
-- `c`: 曲率参数（默认1.0）
-- `||x||`: 向量的L2范数
-- `tanh`: 双曲正切函数
-
-**数值稳定性处理**：
-- 如果 `||x||` 接近0，使用 `tanh(√c·||x||) / (√c·||x||) ≈ 1` 避免除零
-- 投影后裁剪到半径为 `clip_r`（默认0.9）的球内，防止数值不稳定
-
-**输出约束**: 投影后的点满足 `||y|| < 1`（在Poincaré球内）
-
-### Poincaré距离计算
-
-在Poincaré球模型中，两点 `x` 和 `y` 之间的双曲距离定义为：
-
-\[
-d_{\mathbb{H}}(x, y) = \frac{1}{\sqrt{c}} \cdot \text{arccosh}\left(1 + \frac{2\|x - y\|^2}{(1 - \|x\|^2)(1 - \|y\|^2)}\right)
-\]
-
-其中：
-- `c`: 曲率参数
-- `||x||²`, `||y||²`: 点的欧几里得范数的平方
-- `||x - y||²`: 两点差值的欧几里得距离的平方
-- `arccosh`: 反双曲余弦函数
-
-**约束条件**: 
-- `||x|| < 1` 且 `||y|| < 1`（必须在Poincaré球内）
-- `arccosh` 的参数必须 ≥ 1
-
-### 双曲相似度
-
-双曲相似度定义为Poincaré距离的负值，并应用温度缩放：
-
-\[
-\text{sim}(x, y) = -\frac{d_{\mathbb{H}}(x, y)}{\tau}
-\]
-
-其中：
-- `τ`: 温度参数（默认1.0）
-- 相似度值域: `(-∞, 0]`，值越大（越接近0）表示越相似
-
-### 双曲对比损失函数
-
-训练使用**双曲对比损失**，计算过程如下：
-
-#### 步骤1: 计算相似度矩阵
-
-对于批次大小为 `B` 的音频-文本对：
-
-\[
-S_{ij} = \text{sim}(h_a^{(i)}, h_t^{(j)}) = -\frac{d_{\mathbb{H}}(h_a^{(i)}, h_t^{(j)})}{\tau}
-\]
-
-其中：
-- `h_a^{(i)}`: 第i个音频的双曲嵌入
-- `h_t^{(j)}`: 第j个文本的双曲嵌入
-- `S`: 相似度矩阵 [B, B]
-
-#### 步骤2: 计算交叉熵损失
-
-**音频到文本的损失**：
-
-\[
-\mathcal{L}_{a \to t} = -\frac{1}{B}\sum_{i=1}^{B} \log \frac{\exp(S_{ii} / \tau)}{\sum_{j=1}^{B} \exp(S_{ij} / \tau)}
-\]
-
-**文本到音频的损失**：
-
-\[
-\mathcal{L}_{t \to a} = -\frac{1}{B}\sum_{i=1}^{B} \log \frac{\exp(S_{ii} / \tau)}{\sum_{j=1}^{B} \exp(S_{ji} / \tau)}
-\]
-
-**总损失**：
-
-\[
-\mathcal{L} = \frac{\mathcal{L}_{a \to t} + \mathcal{L}_{t \to a}}{2}
-\]
-
-#### 损失函数解释
-
-- **正样本对**: 对角线元素 `S_{ii}` 表示匹配的音频-文本对的相似度
-- **负样本对**: 非对角线元素 `S_{ij}` (i≠j) 表示不匹配的音频-文本对的相似度
-- **优化目标**: 最大化正样本对的相似度，最小化负样本对的相似度
-- **温度参数**: `τ` 控制softmax分布的尖锐程度，`τ` 越小，分布越尖锐
-
-### 模型架构
+In the Poincaré ball model, the hyperbolic distance between two points `x` and `y` is defined as:
 
 ```
-音频输入 → CLAP音频编码器 → 音频嵌入（512维，归一化）
-                                    ↓
-                            线性投影层（可训练）
-                                    ↓
-                            指数映射（expmap）
-                                    ↓
-                            双曲音频嵌入（||h_a|| < 1）
-
-文本输入 → CLAP文本编码器 → 文本嵌入（512维，归一化）
-                                    ↓
-                            线性投影层（可训练）
-                                    ↓
-                            指数映射（expmap）
-                                    ↓
-                            双曲文本嵌入（||h_t|| < 1）
-
-双曲音频嵌入 ↔ Poincaré距离 ↔ 双曲文本嵌入
-                    ↓
-            双曲相似度矩阵 S
-                    ↓
-            双曲对比损失 L
+d_H(x, y) = (1/√c) · arccosh(1 + 2||x - y||² / ((1 - ||x||²)(1 - ||y||²)))
 ```
 
-### 训练过程
+**Constraints**: 
+- `||x|| < 1` and `||y|| < 1` (must be inside Poincaré ball)
+- The argument of `arccosh` must be ≥ 1
 
-1. **冻结CLAP参数**: CLAP编码器的参数保持不变，只训练投影层
-2. **前向传播**: 
-   - 提取CLAP嵌入（音频和文本）
-   - 通过线性投影层
-   - 应用指数映射到双曲空间
-3. **计算损失**: 使用双曲相似度矩阵计算对比损失
-4. **反向传播**: 更新投影层的参数（W和b）
-5. **优化目标**: 使匹配的音频-文本对在双曲空间中更接近（距离更小，相似度更大）
+### Hyperbolic Similarity
+
+Hyperbolic similarity is defined as the negative of Poincaré distance with temperature scaling:
+
+```
+sim(x, y) = -d_H(x, y) / τ
+```
+
+Where:
+- `τ`: Temperature parameter (default 1.0)
+- Similarity range: `(-∞, 0]`, where larger values (closer to 0) indicate higher similarity
+
+### Hyperbolic Contrastive Loss
+
+Training uses **hyperbolic contrastive loss**:
+
+1. **Compute similarity matrix**: For batch size `B` audio-text pairs, compute similarity matrix `S` [B, B]
+2. **Compute cross-entropy loss**: 
+   - Audio-to-text loss: maximizes diagonal elements
+   - Text-to-audio loss: maximizes diagonal elements
+   - Total loss: average of both directions
+
+**Optimization objective**: Maximize similarity of positive pairs (matched audio-text), minimize similarity of negative pairs (unmatched audio-text)
+
+### Model Architecture
+
+```
+Audio Input → CLAP Audio Encoder → Audio Embedding (512-dim, normalized)
+                                          ↓
+                                   Linear Projection (trainable)
+                                          ↓
+                                   Exponential Map
+                                          ↓
+                                   Hyperbolic Audio Embedding (||h_a|| < 1)
+
+Text Input → CLAP Text Encoder → Text Embedding (512-dim, normalized)
+                                          ↓
+                                   Linear Projection (trainable)
+                                          ↓
+                                   Exponential Map
+                                          ↓
+                                   Hyperbolic Text Embedding (||h_t|| < 1)
+
+Hyperbolic Audio Embedding ↔ Poincaré Distance ↔ Hyperbolic Text Embedding
+                                          ↓
+                                   Hyperbolic Similarity Matrix S
+                                          ↓
+                                   Hyperbolic Contrastive Loss L
+```
+
+### Training Process
+
+1. **Freeze CLAP parameters**: CLAP encoder parameters remain fixed, only projection layer is trained
+2. **Forward pass**: 
+   - Extract CLAP embeddings (audio and text)
+   - Pass through linear projection layer
+   - Apply exponential map to hyperbolic space
+3. **Compute loss**: Calculate contrastive loss using hyperbolic similarity matrix
+4. **Backward pass**: Update projection layer parameters (W and b)
+5. **Optimization objective**: Make matched audio-text pairs closer in hyperbolic space (smaller distance, larger similarity)
 
 ---
 
-## 参考文献
+## References
 
 - **CLAP**: Learning Audio Concepts from Natural Language Supervision
   - Paper: https://arxiv.org/abs/2206.04769
@@ -682,18 +503,3 @@ S_{ij} = \text{sim}(h_a^{(i)}, h_t^{(j)}) = -\frac{d_{\mathbb{H}}(h_a^{(i)}, h_t
   
 - **Hyperbolic Neural Networks**
   - Paper: https://arxiv.org/abs/1805.09112
-
----
-
-## 支持与反馈
-
-如有问题或建议，请检查：
-1. 本文档的"常见问题"部分
-2. 代码中的注释和文档字符串
-3. 运行时的错误信息和调试输出
-
----
-
-**版本**: 1.0  
-**最后更新**: 2025年
-
